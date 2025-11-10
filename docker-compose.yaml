@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:17
+    container_name: schedule_db
+    environment:
+      POSTGRES_DB: schedule_system
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  test_db:
+    image: postgres:17
+    container_name: schedule_test_db
+    environment:
+      POSTGRES_DB: schedule_system_test
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+  postgres_test_data:
