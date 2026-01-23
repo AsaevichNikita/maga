@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule System UI</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .controls {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .delete-btn {
+            background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+        }
+        
+        .get-btn {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        }
+        
+        .post-btn {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+        }
+        
+        .put-btn {
+            background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+        }
+        
+        .data-display {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        
+        .response-section {
+            margin-top: 20px;
+        }
+        
+        .response-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .json-display {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .json-key {
+            color: #e06c75;
+        }
+        
+        .json-string {
+            color: #98c379;
+        }
+        
+        .json-number {
+            color: #d19a66;
+        }
+        
+        .json-boolean {
+            color: #56b6c2;
+        }
+        
+        .json-null {
+            color: #c678dd;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        
+        .status-success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .status-error {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        
+        .status-pending {
+            background: #fed7e2;
+            color: #702459;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #718096;
+            font-size: 14px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        @media (max-width: 768px) {
+            .button-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📅 Schedule System UI</h1>
+            <p class="subtitle">Простой интерфейс для управления расписанием курсов</p>
+        </header>
+        
+        <div class="controls">
+            <h2>📊 КУРСЫ (Courses)</h2>
+            <div class="button-grid">
+                <button class="get-btn" onclick="getCourses()">GET Все курсы</button>
+                <button class="get-btn" onclick="getCourseCategories()">GET Категории курсов</button>
+                <button class="post-btn" onclick="showCreateCourseForm()">POST Создать курс</button>
+                <button class="get-btn" onclick="promptGetCourse()">GET Конкретный курс</button>
+                <button class="put-btn" onclick="promptUpdateCourse()">PUT Обновить курс</button>
+                <button class="delete-btn" onclick="promptDeleteCourse()">DELETE Удалить курс</button>
+            </div>
+            
+            <h2>👨‍🏫 ПРЕПОДАВАТЕЛИ (Teachers)</h2>
+            <div class="button-grid">
+                <button class="get-btn" onclick="getTeachers()">GET Все преподаватели</button>
+                <button class="post-btn" onclick="showCreateTeacherForm()">POST Создать преподавателя</button>
+            </div>
+            
+            <h2>👥 СТУДЕНТЫ (Students)</h2>
+            <div class="button-grid">
+                <button class="get-btn" onclick="getStudents()">GET Все студенты</button>
+                <button class="post-btn" onclick="showCreateStudentForm()">POST Создать студента</button>
+                <button class="get-btn" onclick="promptGetStudent()">GET Конкретный студент</button>
+                <button class="put-btn" onclick="promptUpdateStudent()">PUT Обновить студента</button>
+                <button class="delete-btn" onclick="promptDeleteStudent()">DELETE Удалить студента</button>
+            </div>
+            
+            <h2>⏰ РАСПИСАНИЕ (Schedule)</h2>
+            <div class="button-grid">
+                <button class="get-btn" onclick="getSchedule()">GET Все слоты</button>
+                <button class="post-btn" onclick="showCreateSlotForm()">POST Создать слот</button>
+                <button class="get-btn" onclick="promptGetSlot()">GET Конкретный слот</button>
+                <button class="put-btn" onclick="promptUpdateSlot()">PUT Обновить слот</button>
+                <button class="delete-btn" onclick="promptDeleteSlot()">DELETE Удалить слот</button>
+            </div>
+            
+            <h2>📝 РЕГИСТРАЦИЯ (Registration)</h2>
+            <div class="button-grid">
+                <button class="post-btn" onclick="showEnrollForm()">POST Записать студента</button>
+                <button class="get-btn" onclick="getFilteredSlots()">GET Фильтр слотов</button>
+                <button class="post-btn" onclick="promptCompleteRegistration()">POST Завершить регистрацию</button>
+                <button class="post-btn" onclick="promptCompleteCourse()">POST Завершить курс</button>
+            </div>
+            
+            <h2>📋 ИНФОРМАЦИЯ О КУРСЕ</h2>
+            <div class="button-grid">
+                <button class="get-btn" onclick="promptCourseStudents()">GET Студенты курса</button>
+                <button class="get-btn" onclick="promptCourseSlots()">GET Слоты курса</button>
+            </div>
+        </div>
+        
+        <div class="data-display" id="forms-section" style="display: none;">
+            <!-- Формы будут отображаться здесь -->
+        </div>
+        
+        <div class="data-display" id="response-section" style="display: none;">
+            <div class="response-info">
+                <span id="response-status"></span>
+                <span id="response-endpoint"></span>
+                <span id="response-time"></span>
+            </div>
+            <div id="json-display" class="json-display"></div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Schedule System UI &copy; 2024 | API Endpoint: <span id="api-url">http://localhost:5000</span></p>
+    </footer>
+
+    <script>
+        const API_BASE = 'http://localhost:5000';
+        
+        // Форматирование JSON для красивого отображения
+        function syntaxHighlight(json) {
+            if (typeof json !== 'string') {
+                json = JSON.stringify(json, null, 2);
+            }
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(
+                /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+                function(match) {
+                    let cls = 'json-number';
+                    if (/^"/.test(match)) {
+                        if (/:$/.test(match)) {
+                            cls = 'json-key';
+                        } else {
+                            cls = 'json-string';
+                        }
+                    } else if (/true|false/.test(match)) {
+                        cls = 'json-boolean';
+                    } else if (/null/.test(match)) {
+                        cls = 'json-null';
+                    }
+                    return '<span class="' + cls + '">' + match + '</span>';
+                }
+            );
+        }
+        
+        // Отображение ответа
+        function displayResponse(endpoint, method, status, data, responseTime) {
+            const section = document.getElementById('response-section');
+            const statusElem = document.getElementById('response-status');
+            const endpointElem = document.getElementById('response-endpoint');
+            const timeElem = document.getElementById('response-time');
+            const jsonDisplay = document.getElementById('json-display');
+            
+            statusElem.innerHTML = `<span class="status-indicator ${status >= 200 && status < 300 ? 'status-success' : 'status-error'}">${method} ${status}</span>`;
+            endpointElem.textContent = endpoint;
+            timeElem.textContent = `${responseTime}ms`;
+            
+            if (typeof data === 'object' && data !== null) {
+                jsonDisplay.innerHTML = syntaxHighlight(data);
+            } else {
+                jsonDisplay.textContent = data || 'Нет данных';
+            }
+            
+            section.style.display = 'block';
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Общая функция для запросов
+        async function makeRequest(method, endpoint, data = null) {
+            const startTime = Date.now();
+            const url = endpoint.startsWith('http') ? endpoint : `${API_BASE}${endpoint}`;
+            
+            const options = {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            };
+            
+            if (data && method !== 'GET') {
+                options.body = JSON.stringify(data);
+            }
+            
+            try {
+                const response = await fetch(url, options);
+                const responseTime = Date.now() - startTime;
+                
+                let responseData;
+                try {
+                    responseData = await response.json();
+                } catch {
+                    responseData = await response.text();
+                }
+                
+                displayResponse(endpoint, method, response.status, responseData, responseTime);
+                return responseData;
+            } catch (error) {
+                const responseTime = Date.now() - startTime;
+                displayResponse(endpoint, method, 0, { error: error.message }, responseTime);
+                throw error;
+            }
+        }
+        
+        // Вспомогательные функции для prompt
+        function promptId(message) {
+            return prompt(message);
+        }
+        
+        // ==================== КУРСЫ ====================
+        function getCourses() {
+            makeRequest('GET', '/courses/');
+        }
+        
+        function getCourseCategories() {
+            makeRequest('GET', '/course-categories/');
+        }
+        
+        function showCreateCourseForm() {
+            const formsSection = document.getElementById('forms-section');
+            formsSection.innerHTML = `
+                <h2>Создать новый курс</h2>
+                <form id="create-course-form" onsubmit="event.preventDefault(); createCourse();">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Название курса *</label>
+                            <input type="text" id="course-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>ID категории *</label>
+                            <input type="number" id="course-category" required>
+                        </div>
+                        <div class="form-group">
+                            <label>ID преподавателя *</label>
+                            <input type="number" id="course-teacher" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Макс. студентов</label>
+                            <input type="number" id="course-max" value="15">
+                        </div>
+                        <div class="form-group">
+                            <label>Длительность (мин)</label>
+                            <input type="number" id="course-duration" value="90">
+                        </div>
+                        <div class="form-group">
+                            <label>Цена</label>
+                            <input type="number" step="0.01" id="course-price" value="0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Описание</label>
+                        <textarea id="course-description"></textarea>
+                    </div>
+                    <button type="submit" class="post-btn">Создать курс</button>
+                    <button type="button" onclick="hideForms()">Отмена</button>
+                </form>
+            `;
+            formsSection.style.display = 'block';
+        }
+        
+        function createCourse() {
+            const data = {
+                name: document.getElementById('course-name').value,
+                category_id: parseInt(document.getElementById('course-category').value),
+                teacher_id: parseInt(document.getElementById('course-teacher').value),
+                max_students: parseInt(document.getElementById('course-max').value),
+                duration_minutes: parseInt(document.getElementById('course-duration').value),
+                price: parseFloat(document.getElementById('course-price').value),
+                description: document.getElementById('course-description').value,
+                is_active: true
+            };
+            
+            makeRequest('POST', '/courses/', data);
+            hideForms();
+        }
+        
+        function promptGetCourse() {
+            const courseId = promptId('Введите ID курса:');
+            if (courseId) {
+                makeRequest('GET', `/courses/${courseId}`);
+            }
+        }
+        
+        function promptUpdateCourse() {
+            const courseId = promptId('Введите ID курса для обновления:');
+            if (courseId) {
+                const name = prompt('Новое название (оставьте пустым, чтобы не менять):');
+                const max = prompt('Макс. студентов (оставьте пустым, чтобы не менять):');
+                
+                const data = {};
+                if (name) data.name = name;
+                if (max) data.max_students = parseInt(max);
+                
+                if (Object.keys(data).length > 0) {
+                    makeRequest('PUT', `/courses/${courseId}`, data);
+                }
+            }
+        }
+        
+        function promptDeleteCourse() {
+            const courseId = promptId('Введите ID курса для удаления:');
+            if (courseId && confirm(`Удалить курс ${courseId}?`)) {
+                makeRequest('DELETE', `/courses/${courseId}`);
+            }
+        }
+        
+        // ==================== ПРЕПОДАВАТЕЛИ ====================
+        function getTeachers() {
+            makeRequest('GET', '/teachers/');
+        }
+        
+        function showCreateTeacherForm() {
+            alert('Функция создания преподавателя требует реализации соответствующего эндпоинта на бэкенде');
+        }
+        
+        // ==================== СТУДЕНТЫ ====================
+        function getStudents() {
+            makeRequest('GET', '/students/');
+        }
+        
+        function showCreateStudentForm() {
+            const formsSection = document.getElementById('forms-section');
+            formsSection.innerHTML = `
+                <h2>Создать нового студента</h2>
+                <form id="create-student-form" onsubmit="event.preventDefault(); createStudent();">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Имя *</label>
+                            <input type="text" id="student-firstname" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Фамилия *</label>
+                            <input type="text" id="student-lastname" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Отчество</label>
+                            <input type="text" id="student-surname">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Дата рождения * (ГГГГ-ММ-ДД)</label>
+                            <input type="date" id="student-birthday" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Телефон</label>
+                            <input type="tel" id="student-phone">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="student-email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Адрес *</label>
+                        <input type="text" id="student-address" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Учебное заведение *</label>
+                            <input type="text" id="student-institution" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Группа *</label>
+                            <input type="text" id="student-group" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Тип обучения *</label>
+                            <select id="student-edu-type" required>
+                                <option value="">Выберите тип</option>
+                                <option value="budget">Бюджет</option>
+                                <option value="contract">Контракт</option>
+                                <option value="distance">Дистанционное</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="student-enrolled"> Зачислен в этом году
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="post-btn">Создать студента</button>
+                    <button type="button" onclick="hideForms()">Отмена</button>
+                </form>
+            `;
+            formsSection.style.display = 'block';
+        }
+        
+        function createStudent() {
+            const data = {
+                firstname: document.getElementById('student-firstname').value,
+                lastname: document.getElementById('student-lastname').value,
+                surname: document.getElementById('student-surname').value,
+                phone_number: document.getElementById('student-phone').value,
+                email: document.getElementById('student-email').value,
+                birthday: document.getElementById('student-birthday').value,
+                address: document.getElementById('student-address').value,
+                educational_institution: document.getElementById('student-institution').value,
+                group_name: document.getElementById('student-group').value,
+                education_type: document.getElementById('student-edu-type').value,
+                enrolled_this_year: document.getElementById('student-enrolled').checked
+            };
+            
+            makeRequest('POST', '/students/', data);
+            hideForms();
+        }
+        
+        function promptGetStudent() {
+            const studentId = promptId('Введите ID студента:');
+            if (studentId) {
+                makeRequest('GET', `/students/${studentId}`);
+            }
+        }
+        
+        function promptUpdateStudent() {
+            const studentId = promptId('Введите ID студента для обновления:');
+            if (studentId) {
+                const phone = prompt('Новый телефон (оставьте пустым, чтобы не менять):');
+                const email = prompt('Новый email (оставьте пустым, чтобы не менять):');
+                
+                const data = {};
+                if (phone) data.phone_number = phone;
+                if (email) data.email = email;
+                
+                if (Object.keys(data).length > 0) {
+                    makeRequest('PUT', `/students/${studentId}`, data);
+                }
+            }
+        }
+        
+        function promptDeleteStudent() {
+            const studentId = promptId('Введите ID студента для удаления:');
+            if (studentId && confirm(`Удалить студента ${studentId}?`)) {
+                makeRequest('DELETE', `/students/${studentId}`);
+            }
+        }
+        
+        // ==================== РАСПИСАНИЕ ====================
+        function getSchedule() {
+            makeRequest('GET', '/schedule/');
+        }
+        
+        function showCreateSlotForm() {
+            const formsSection = document.getElementById('forms-section');
+            formsSection.innerHTML = `
+                <h2>Создать новый слот расписания</h2>
+                <form id="create-slot-form" onsubmit="event.preventDefault(); createSlot();">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ID курса *</label>
+                            <input type="number" id="slot-course" required>
+                        </div>
+                        <div class="form-group">
+                            <label>День недели * (1-7)</label>
+                            <input type="number" id="slot-day" min="1" max="7" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Аудитория *</label>
+                            <input type="text" id="slot-classroom" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Время начала * (ЧЧ:ММ)</label>
+                            <input type="time" id="slot-start" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Время окончания * (ЧЧ:ММ)</label>
+                            <input type="time" id="slot-end" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="post-btn">Создать слот</button>
+                    <button type="button" onclick="hideForms()">Отмена</button>
+                </form>
+            `;
+            formsSection.style.display = 'block';
+        }
+        
+        function createSlot() {
+            const data = {
+                course_id: parseInt(document.getElementById('slot-course').value),
+                day_of_week: parseInt(document.getElementById('slot-day').value),
+                classroom: document.getElementById('slot-classroom').value,
+                start_time: document.getElementById('slot-start').value.slice(0, 5),
+                end_time: document.getElementById('slot-end').value.slice(0, 5)
+            };
+            
+            makeRequest('POST', '/schedule/', data);
+            hideForms();
+        }
+        
+        function promptGetSlot() {
+            const slotId = promptId('Введите ID слота:');
+            if (slotId) {
+                makeRequest('GET', `/schedule/${slotId}`);
+            }
+        }
+        
+        function promptUpdateSlot() {
+            const slotId = promptId('Введите ID слота для обновления:');
+            if (slotId) {
+                const classroom = prompt('Новая аудитория (оставьте пустым, чтобы не менять):');
+                const time = prompt('Новое время (ЧЧ:ММ-ЧЧ:ММ) или оставьте пустым:');
+                
+                const data = {};
+                if (classroom) data.classroom = classroom;
+                if (time) {
+                    const [start, end] = time.split('-');
+                    data.start_time = start;
+                    data.end_time = end;
+                }
+                
+                if (Object.keys(data).length > 0) {
+                    makeRequest('PUT', `/schedule/${slotId}`, data);
+                }
+            }
+        }
+        
+        function promptDeleteSlot() {
+            const slotId = promptId('Введите ID слота для удаления:');
+            if (slotId && confirm(`Удалить слот ${slotId}?`)) {
+                makeRequest('DELETE', `/schedule/${slotId}`);
+            }
+        }
+        
+        // ==================== РЕГИСТРАЦИЯ ====================
+        function showEnrollForm() {
+            const formsSection = document.getElementById('forms-section');
+            formsSection.innerHTML = `
+                <h2>Записать студента на курс</h2>
+                <form id="enroll-form" onsubmit="event.preventDefault(); enrollStudent();">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ID студента *</label>
+                            <input type="number" id="enroll-student" required>
+                        </div>
+                        <div class="form-group">
+                            <label>ID слота расписания *</label>
+                            <input type="number" id="enroll-slot" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="post-btn">Записать студента</button>
+                    <button type="button" onclick="hideForms()">Отмена</button>
+                </form>
+            `;
+            formsSection.style.display = 'block';
+        }
+        
+        function enrollStudent() {
+            const data = {
+                student_id: parseInt(document.getElementById('enroll-student').value),
+                slot_id: parseInt(document.getElementById('enroll-slot').value)
+            };
+            
+            makeRequest('POST', '/registration/enroll', data);
+            hideForms();
+        }
+        
+        function getFilteredSlots() {
+            const courseId = prompt('ID курса (оставьте пустым, чтобы пропустить):');
+            const classroom = prompt('Аудитория (оставьте пустым, чтобы пропустить):');
+            const day = prompt('День недели 1-7 (оставьте пустым, чтобы пропустить):');
+            
+            let url = '/registration/filter_slots?';
+            const params = [];
+            if (courseId) params.push(`course_id=${courseId}`);
+            if (classroom) params.push(`classroom=${classroom}`);
+            if (day) params.push(`day=${day}`);
+            
+            makeRequest('GET', url + params.join('&'));
+        }
+        
+        function promptCompleteRegistration() {
+            const regId = promptId('Введите ID регистрации:');
+            if (regId) {
+                makeRequest('POST', `/courses/complete_registration/${regId}`);
+            }
+        }
+        
+        function promptCompleteCourse() {
+            const regId = promptId('Введите ID регистрации:');
+            if (regId) {
+                makeRequest('POST', `/registration/complete/${regId}`);
+            }
+        }
+        
+        // ==================== ИНФОРМАЦИЯ О КУРСЕ ====================
+        function promptCourseStudents() {
+            const courseId = promptId('Введите ID курса:');
+            if (courseId) {
+                makeRequest('GET', `/courses/${courseId}/students`);
+            }
+        }
+        
+        function promptCourseSlots() {
+            const courseId = promptId('Введите ID курса:');
+            if (courseId) {
+                makeRequest('GET', `/courses/${courseId}/slots`);
+            }
+        }
+        
+        // ==================== ВСПОМОГАТЕЛЬНЫЕ ====================
+        function hideForms() {
+            document.getElementById('forms-section').style.display = 'none';
+        }
+        
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('api-url').textContent = API_BASE;
+        });
+    </script>
+</body>
+</html>

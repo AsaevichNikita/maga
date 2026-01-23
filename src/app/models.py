@@ -24,28 +24,17 @@ course_students = Table(
     'course_students',
     db.Model.metadata,
     db.Column('student_id', Integer, ForeignKey('students.id', ondelete='CASCADE'), primary_key=True),
-    db.Column('course_id', Integer, ForeignKey('courses.id', ondelete='CASCADE'), primary_key=True)
+    db.Column('course_id', Integer, ForeignKey('courses.id', ondelete='CASCADE'), primary_key=True),
+    extend_existing=True
 )
-
-# ------------------------
-# Новая таблица с разрешённым временем
-# ------------------------
-class AvailableTimeSlot(db.Model):
-    __tablename__ = 'available_time_slots'
-    id = db.Column(Integer, primary_key=True)
-    day_of_week = db.Column(Integer, nullable=False)  # 1 = Пн, 7 = Вс
-    start_time = db.Column(Time, nullable=False)
-    end_time = db.Column(Time, nullable=False)
-
-    __table_args__ = (
-        CheckConstraint('day_of_week BETWEEN 1 AND 7', name='check_valid_available_day'),
-    )
 
 # ------------------------
 # Остальные модели
 # ------------------------
 class Student(db.Model):
     __tablename__ = 'students'
+    __table_args__ = {'extend_existing': True} 
+
     id = db.Column(Integer, primary_key=True)
     firstname = db.Column(String(100), nullable=False)
     lastname = db.Column(String(100), nullable=False)
@@ -67,6 +56,8 @@ class Student(db.Model):
 
 class Parent(db.Model):
     __tablename__ = 'parents'
+    __table_args__ = {'extend_existing': True} 
+
     id = db.Column(Integer, primary_key=True)
     firstname = db.Column(String(100), nullable=False)
     lastname = db.Column(String(100), nullable=False)
@@ -83,6 +74,8 @@ class Parent(db.Model):
 
 class Teacher(db.Model):
     __tablename__ = 'teachers'
+    __table_args__ = {'extend_existing': True} 
+
     id = db.Column(Integer, primary_key=True)
     firstname = db.Column(String(100), nullable=False)
     lastname = db.Column(String(100), nullable=False)
@@ -92,10 +85,13 @@ class Teacher(db.Model):
     email = db.Column(String(100), unique=True, nullable=False)
 
     courses = relationship('Course', back_populates='teacher')
+    schedule_slots = relationship('ScheduleSlot', back_populates='teacher')
 
 
 class CourseCategory(db.Model):
     __tablename__ = 'course_categories'
+    __table_args__ = {'extend_existing': True} 
+
     id = db.Column(Integer, primary_key=True)
     name = db.Column(String(100), unique=True, nullable=False)
     description = db.Column(Text)
@@ -108,12 +104,16 @@ class CourseCategory(db.Model):
 
 class Course(db.Model):
     __tablename__ = 'courses'
+    __table_args__ = {'extend_existing': True} 
+
     id = db.Column(Integer, primary_key=True)
     name = db.Column(String(100), nullable=False)
     description = db.Column(Text)
     category_id = db.Column(Integer, ForeignKey('course_categories.id', ondelete='SET NULL'))
     teacher_id = db.Column(Integer, ForeignKey('teachers.id', ondelete='SET NULL'))
     max_students = db.Column(Integer, nullable=False, default=15)
+    # если True — максимум учеников для этого курса определяется вместимостью аудитории
+    use_classroom_capacity = db.Column(Boolean, nullable=False, default=False)
     duration_minutes = db.Column(Integer, nullable=False, default=90)
     price = db.Column(Numeric(10, 2))
     is_active = db.Column(Boolean, default=True)
@@ -123,6 +123,7 @@ class Course(db.Model):
     schedule_slots = relationship('ScheduleSlot', back_populates='course', cascade='all, delete-orphan', passive_deletes=True)
     registrations = relationship('CourseRegistration', back_populates='course', cascade='all, delete-orphan', passive_deletes=True)
     students = relationship('Student', secondary=course_students, back_populates='courses')
+    informatics_blocks = relationship('InformaticsBlock', back_populates='course', cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
@@ -132,26 +133,71 @@ class Course(db.Model):
             'category': self.category.name if self.category else None,
             'teacher': f"{self.teacher.lastname} {self.teacher.firstname}" if self.teacher else None,
             'max_students': self.max_students,
+            'use_classroom_capacity': self.use_classroom_capacity,
             'duration_minutes': self.duration_minutes,
             'price': float(self.price) if self.price else None,
             'is_active': self.is_active
         }
 
 
-class ScheduleSlot(db.Model):
-    __tablename__ = 'schedule_slots'
+class Classroom(db.Model):
+    """
+    Аудитория / кабинет с указанием вместимости.
+    Для информатики максимум учеников определяется вместимостью этой аудитории.
+    """
+    __tablename__ = 'classrooms'
+    __table_args__ = {'extend_existing': True}
+
+    id = db.Column(Integer, primary_key=True)
+    name = db.Column(String(50), unique=True, nullable=False)
+    capacity = db.Column(Integer, nullable=False, default=15)
+
+    schedule_slots = relationship('ScheduleSlot', back_populates='classroom')
+
+
+class InformaticsBlock(db.Model):
+    """
+    'Крупный блок' для групп информатики.
+    Внутри блока студент выбирает только слот (время), при регистрации указывает навыки.
+    """
+    __tablename__ = 'informatics_blocks'
+    __table_args__ = {'extend_existing': True}
+
     id = db.Column(Integer, primary_key=True)
     course_id = db.Column(Integer, ForeignKey('courses.id', ondelete='CASCADE'), nullable=False)
+    name = db.Column(String(100), nullable=False)
+    description = db.Column(Text)
+    # список навыков/тегов, которые студент указывает при регистрации в этом блоке
+    skills = db.Column(ARRAY(String))
+    created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
+
+    course = relationship('Course', back_populates='informatics_blocks')
+    schedule_slots = relationship('ScheduleSlot', back_populates='block', cascade='all, delete-orphan')
+
+
+class ScheduleSlot(db.Model):
+    __tablename__ = 'schedule_slots'
+    __table_args__ = (
+        CheckConstraint('day_of_week >= 1 AND day_of_week <= 7', name='check_day_of_week'),
+        {'extend_existing': True}
+    )
+
+    id = db.Column(Integer, primary_key=True)
+    course_id = db.Column(Integer, ForeignKey('courses.id', ondelete='CASCADE'), nullable=False)
+    teacher_id = db.Column(Integer, ForeignKey('teachers.id', ondelete='CASCADE'), nullable=False)
     day_of_week = db.Column(Integer, nullable=False)
     start_time = db.Column(Time, nullable=False)
     end_time = db.Column(Time, nullable=False)
-    classroom = db.Column(String(10), nullable=False)
 
-    __table_args__ = (
-        CheckConstraint('day_of_week >= 1 AND day_of_week <= 7', name='check_day_of_week'),
-    )
+    # привязка слота к конкретной аудитории
+    classroom_id = db.Column(Integer, ForeignKey('classrooms.id', ondelete='SET NULL'))
+    # опционально: слот может принадлежать информатическому блоку
+    block_id = db.Column(Integer, ForeignKey('informatics_blocks.id', ondelete='CASCADE'))
 
     course = relationship('Course', back_populates='schedule_slots')
+    teacher = relationship('Teacher', back_populates='schedule_slots')
+    classroom = relationship('Classroom', back_populates='schedule_slots')
+    block = relationship('InformaticsBlock', back_populates='schedule_slots')
     registrations = relationship('CourseRegistration', back_populates='slot', cascade='all, delete-orphan', passive_deletes=True)
 
     def to_dict(self):
@@ -163,12 +209,16 @@ class ScheduleSlot(db.Model):
             'day_of_week': self.day_of_week,
             'start_time': self.start_time.strftime('%H:%M'),
             'end_time': self.end_time.strftime('%H:%M'),
-            'classroom': self.classroom
+            'classroom': self.classroom.name if self.classroom else None,
+            'classroom_capacity': self.classroom.capacity if self.classroom else None,
+            'block_id': self.block_id
         }
 
 
 class StudentPreference(db.Model):
     __tablename__ = 'student_preferences'
+    __table_args__ = {'extend_existing': True} 
+
     id = db.Column(Integer, primary_key=True)
     student_id = db.Column(Integer, ForeignKey('students.id', ondelete='CASCADE'), nullable=False)
     preference_text = db.Column(Text, nullable=False)
@@ -182,43 +232,54 @@ class StudentPreference(db.Model):
 
 class CourseRegistration(db.Model):
     __tablename__ = 'course_registrations'
+    __table_args__ = (
+        CheckConstraint("status IN ('pending', 'approved', 'rejected')", name='check_status'),
+        UniqueConstraint('student_id', 'course_id', name='unique_student_course'),
+        {'extend_existing': True}
+    )
+
     id = db.Column(Integer, primary_key=True)
     student_id = db.Column(Integer, ForeignKey('students.id', ondelete='CASCADE'), nullable=False)
     course_id = db.Column(Integer, ForeignKey('courses.id', ondelete='CASCADE'), nullable=False)
+    # если регистрация для информатики — привязка к блоку
+    block_id = db.Column(Integer, ForeignKey('informatics_blocks.id', ondelete='SET NULL'))
     schedule_slot_id = db.Column(Integer, ForeignKey('schedule_slots.id', ondelete='CASCADE'))
     preference_id = db.Column(Integer, ForeignKey('student_preferences.id'))
     status = db.Column(String(20), default='pending')
+    # Skills/уровень, которые студент указывает при записи на информатику
+    skills = db.Column(ARRAY(String))
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
-
-    __table_args__ = (
-        CheckConstraint("status IN ('pending', 'approved', 'rejected')", name='check_status'),
-        UniqueConstraint('student_id', 'course_id', name='unique_student_course')
-    )
 
     student = relationship('Student', back_populates='registrations')
     course = relationship('Course', back_populates='registrations')
     slot = relationship('ScheduleSlot', back_populates='registrations')
     preference = relationship('StudentPreference', back_populates='registrations')
+    block = relationship('InformaticsBlock')
 
 
 class StudentRegistration(db.Model):
     __tablename__ = 'student_registrations'
+    __table_args__ = {'extend_existing': True} 
+
     id = db.Column(Integer, primary_key=True)
     student_id = db.Column(Integer, ForeignKey('students.id', ondelete='CASCADE'), nullable=False)
     parent_id = db.Column(Integer, ForeignKey('parents.id', ondelete='CASCADE'), nullable=False)
 
     student = relationship('Student', back_populates='parent_registrations')
     parent = relationship('Parent', back_populates='student_registrations')
+
+
 class ReservedTime(db.Model):
     __tablename__ = 'reserved_times'
-    id = db.Column(Integer, primary_key=True)
-    day_of_week = db.Column(Integer, nullable=False)  # 1–7
-    start_time = db.Column(Time, nullable=False)
-    end_time = db.Column(Time, nullable=False)
-
     __table_args__ = (
         CheckConstraint('day_of_week >= 1 AND day_of_week <= 7', name='check_reserved_day'),
+        {'extend_existing': True}
     )
+
+    id = db.Column(Integer, primary_key=True)
+    day_of_week = db.Column(Integer, nullable=False)
+    start_time = db.Column(Time, nullable=False)
+    end_time = db.Column(Time, nullable=False)
 
     def to_dict(self):
         return {
@@ -227,6 +288,8 @@ class ReservedTime(db.Model):
             'start_time': self.start_time.strftime('%H:%M'),
             'end_time': self.end_time.strftime('%H:%M')
         }
+
+
 
 
 
