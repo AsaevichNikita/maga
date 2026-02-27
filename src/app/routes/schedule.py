@@ -1,232 +1,136 @@
 from flask import Blueprint, request, Response
-from src.app import db
-from app.models import ScheduleSlot, Course, ReservedTime
+from sqlalchemy.exc import IntegrityError
+from datetime import datetime
 import json
-from datetime import datetime, time
 
-schedule_bp = Blueprint('schedule', __name__)
+from src.app import db
+from src.app.models import ScheduleSlot, CourseGroup, Classroom
+
+
+schedule_bp = Blueprint("schedule", __name__, url_prefix="/schedule")
+
 
 def json_response(data, status=200):
-    """Возвращает JSON с поддержкой русских символов"""
     return Response(
         json.dumps(data, ensure_ascii=False, indent=2),
-        mimetype='application/json; charset=utf-8',
+        mimetype="application/json; charset=utf-8",
         status=status
     )
 
-# ------------------------
-# CRUD слотов
-# ------------------------
-@schedule_bp.route('/', methods=['GET', 'POST'])
+
+@schedule_bp.route("/", methods=["GET", "POST"], strict_slashes=False)
 def slots_list_create():
-    """
-    Получение списка слотов или создание нового
-    ---
-    get:
-      description: Получить список всех слотов
-      responses:
-        200:
-          description: Список слотов
-    post:
-      description: Создать новый слот
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - course_id
-                - day_of_week
-                - start_time
-                - end_time
-                - classroom
-              properties:
-                course_id:
-                  type: integer
-                day_of_week:
-                  type: integer
-                start_time:
-                  type: string
-                  example: "09:00"
-                end_time:
-                  type: string
-                  example: "10:30"
-                classroom:
-                  type: string
-      responses:
-        201:
-          description: Слот успешно создан
-        400:
-          description: Ошибка данных или конфликт времени
-    """
-    if request.method == 'GET':
-        slots = ScheduleSlot.query.all()
-        return json_response([s.to_dict() for s in slots])
+    if request.method == "GET":
+        group_id = request.args.get("group_id", type=int)
+        q = ScheduleSlot.query
+        if group_id:
+            q = q.filter(ScheduleSlot.group_id == group_id)
+        items = q.order_by(ScheduleSlot.id.asc()).all()
+        return json_response([s.to_dict() for s in items])
 
-    if request.method == 'POST':
-        data = request.json
-        course_id = data.get('course_id')
-        day_of_week = data.get('day_of_week')
-        start_time_str = data.get('start_time')
-        end_time_str = data.get('end_time')
-        classroom = data.get('classroom')
+    data = request.json or {}
 
-        if not all([course_id, day_of_week, start_time_str, end_time_str, classroom]):
-            return json_response({'error': 'Missing fields'}, status=400)
+    group_id = data.get("group_id")
+    day_of_week = data.get("day_of_week")
+    start_time_str = data.get("start_time")
+    end_time_str = data.get("end_time")
 
-        course = Course.query.get(course_id)
-        if not course:
-            return json_response({'error': 'Course not found'}, status=404)
-
-        start_time = datetime.strptime(start_time_str, '%H:%M').time()
-        end_time = datetime.strptime(end_time_str, '%H:%M').time()
-
-        # Проверка пересечения преподавателя
-        conflict = ScheduleSlot.query.join(Course).filter(
-            Course.teacher_id == course.teacher_id,
-            ScheduleSlot.day_of_week == day_of_week,
-            db.or_(
-                db.and_(ScheduleSlot.start_time <= start_time, ScheduleSlot.end_time > start_time),
-                db.and_(ScheduleSlot.start_time < end_time, ScheduleSlot.end_time >= end_time),
-                db.and_(ScheduleSlot.start_time >= start_time, ScheduleSlot.end_time <= end_time)
-            )
-        ).first()
-        if conflict:
-            return json_response({'error': 'Преподаватель уже ведет занятие в это время'}, status=400)
-
-        # Проверка пересечения аудитории
-        conflict_room = ScheduleSlot.query.filter_by(
-            day_of_week=day_of_week,
-            classroom=classroom
-        ).filter(
-            db.or_(
-                db.and_(ScheduleSlot.start_time <= start_time, ScheduleSlot.end_time > start_time),
-                db.and_(ScheduleSlot.start_time < end_time, ScheduleSlot.end_time >= end_time),
-                db.and_(ScheduleSlot.start_time >= start_time, ScheduleSlot.end_time <= end_time)
-            )
-        ).first()
-        if conflict_room:
-            return json_response({'error': 'Аудитория занята в это время'}, status=400)
-
-        slot = ScheduleSlot(
-            course_id=course_id,
-            day_of_week=day_of_week,
-            start_time=start_time,
-            end_time=end_time,
-            classroom=classroom
+    if not all([group_id, day_of_week, start_time_str, end_time_str]):
+        return json_response(
+            {"error": "Missing required fields: group_id, day_of_week, start_time, end_time"},
+            status=400
         )
-        db.session.add(slot)
+
+    group = CourseGroup.query.get(group_id)
+    if not group:
+        return json_response({"error": "group_id not found"}, status=400)
+
+    try:
+        start_time = datetime.strptime(start_time_str, "%H:%M").time()
+        end_time = datetime.strptime(end_time_str, "%H:%M").time()
+    except ValueError:
+        return json_response({"error": "start_time/end_time must be HH:MM"}, status=400)
+
+    classroom_id = data.get("classroom_id")
+    classroom_name = data.get("classroom_name")
+
+    classroom = None
+    if classroom_id is not None:
+        classroom = Classroom.query.get(classroom_id)
+        if not classroom:
+            return json_response({"error": "classroom_id not found"}, status=400)
+    elif classroom_name:
+        classroom = Classroom.query.filter_by(name=classroom_name).first()
+        if not classroom:
+            classroom = Classroom(name=classroom_name, capacity=15)
+            db.session.add(classroom)
+            db.session.flush()  # получим id до commit
+
+    slot = ScheduleSlot(
+        group_id=group_id,
+        day_of_week=int(day_of_week),
+        start_time=start_time,
+        end_time=end_time,
+        classroom_id=classroom.id if classroom else None
+    )
+
+    db.session.add(slot)
+    try:
         db.session.commit()
-        return json_response(slot.to_dict(), status=201)
+    except IntegrityError as e:
+        db.session.rollback()
+        # тут часто прилетит uq_schedule_slot_group (если пытаемся создать второй слот группе)
+        return json_response({"error": "IntegrityError", "details": str(e.orig)}, status=400)
 
-# ------------------------
-# CRUD конкретного слота
-# ------------------------
-@schedule_bp.route('/<int:slot_id>', methods=['GET','PUT','DELETE'])
-def slot_detail(slot_id):
-    """
-    Получение, обновление или удаление слота по ID
-    ---
-    parameters:
-      - name: slot_id
-        in: path
-        required: true
-        schema:
-          type: integer
-    get:
-      description: Получить слот
-      responses:
-        200:
-          description: Данные слота
-        404:
-          description: Слот не найден
-    put:
-      description: Обновить слот
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                start_time:
-                  type: string
-                  example: "10:45"
-                end_time:
-                  type: string
-                  example: "12:15"
-                classroom:
-                  type: string
-      responses:
-        200:
-          description: Слот успешно обновлен
-        400:
-          description: Конфликт времени
-        404:
-          description: Слот не найден
-    delete:
-      description: Удалить слот
-      responses:
-        200:
-          description: Слот успешно удален
-        404:
-          description: Слот не найден
-    """
-    slot = ScheduleSlot.query.get(slot_id)
-    if not slot:
-        return json_response({'error': 'Slot not found'}, status=404)
+    return json_response(slot.to_dict(), status=201)
 
-    if request.method == 'GET':
-        return json_response(slot.to_dict())
 
-    if request.method == 'PUT':
-        data = request.json
-        start_time_str = data.get('start_time')
-        end_time_str = data.get('end_time')
-        classroom = data.get('classroom')
+@schedule_bp.route("/<int:slot_id>", methods=["GET", "PUT", "DELETE"], strict_slashes=False)
+def slot_detail(slot_id: int):
+    s = ScheduleSlot.query.get(slot_id)
+    if not s:
+        return json_response({"error": "ScheduleSlot not found"}, status=404)
 
-        start_time = datetime.strptime(start_time_str, '%H:%M').time() if start_time_str else slot.start_time
-        end_time = datetime.strptime(end_time_str, '%H:%M').time() if end_time_str else slot.end_time
-        classroom = classroom if classroom else slot.classroom
+    if request.method == "GET":
+        return json_response(s.to_dict())
 
-        conflict = ScheduleSlot.query.join(Course).filter(
-            Course.teacher_id == slot.course.teacher_id,
-            ScheduleSlot.day_of_week == slot.day_of_week,
-            ScheduleSlot.id != slot.id,
-            db.or_(
-                db.and_(ScheduleSlot.start_time <= start_time, ScheduleSlot.end_time > start_time),
-                db.and_(ScheduleSlot.start_time < end_time, ScheduleSlot.end_time >= end_time),
-                db.and_(ScheduleSlot.start_time >= start_time, ScheduleSlot.end_time <= end_time)
-            )
-        ).first()
-        if conflict:
-            return json_response({'error': 'Преподаватель уже ведет занятие в это время'}, status=400)
+    if request.method == "PUT":
+        data = request.json or {}
+        if "day_of_week" in data: s.day_of_week = int(data["day_of_week"])
 
-        conflict_room = ScheduleSlot.query.filter(
-            ScheduleSlot.day_of_week == slot.day_of_week,
-            ScheduleSlot.classroom == classroom,
-            ScheduleSlot.id != slot.id
-        ).filter(
-            db.or_(
-                db.and_(ScheduleSlot.start_time <= start_time, ScheduleSlot.end_time > start_time),
-                db.and_(ScheduleSlot.start_time < end_time, ScheduleSlot.end_time >= end_time),
-                db.and_(ScheduleSlot.start_time >= start_time, ScheduleSlot.end_time <= end_time)
-            )
-        ).first()
-        if conflict_room:
-            return json_response({'error': 'Аудитория занята в это время'}, status=400)
+        if "start_time" in data:
+            try:
+                s.start_time = datetime.strptime(data["start_time"], "%H:%M").time()
+            except ValueError:
+                return json_response({"error": "start_time must be HH:MM"}, status=400)
 
-        slot.start_time = start_time
-        slot.end_time = end_time
-        slot.classroom = classroom
-        db.session.commit()
-        return json_response(slot.to_dict())
+        if "end_time" in data:
+            try:
+                s.end_time = datetime.strptime(data["end_time"], "%H:%M").time()
+            except ValueError:
+                return json_response({"error": "end_time must be HH:MM"}, status=400)
 
-    if request.method == 'DELETE':
-        db.session.delete(slot)
-        db.session.commit()
-        return json_response({'message': 'Deleted successfully'})
+        if "classroom_id" in data:
+            cid = data["classroom_id"]
+            if cid is None:
+                s.classroom_id = None
+            else:
+                c = Classroom.query.get(cid)
+                if not c:
+                    return json_response({"error": "classroom_id not found"}, status=400)
+                s.classroom_id = c.id
+
+        try:
+            db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()
+            return json_response({"error": "IntegrityError", "details": str(e.orig)}, status=400)
+
+        return json_response(s.to_dict())
+
+    db.session.delete(s)
+    db.session.commit()
+    return json_response({"message": "Deleted successfully"})
 
 
 
