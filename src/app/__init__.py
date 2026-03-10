@@ -60,5 +60,6 @@ def create_app(config_object=None):
     app.register_blueprint(assistant_substitutions_bp, url_prefix=f"{API_PREFIX}/assistant-substitutions")
     from .routes.informatics_blocks import informatics_blocks_bp
     app.register_blueprint(informatics_blocks_bp, url_prefix=f"{API_PREFIX}/informatics-blocks")
-    
+    from src.app.routes.search import search_bp
+    app.register_blueprint(search_bp, url_prefix=f"{API_PREFIX}/search")
     return app
