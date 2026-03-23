@@ -29,24 +29,27 @@ def create_app(config_object=None):
     # важно: чтобы SQLAlchemy "увидел" модели
     from src.app import models  # noqa: F401
 
-    # ✅ imports blueprints (ВАЖНО: через src.app / относительные)
+    # imports blueprints
     from .routes.main import main_bp
     from .routes.schedule import schedule_bp
+    from .routes.schedule_generation import schedule_generation_bp
     from .routes.registration import registration_bp
     from .routes.students import students_bp
     from .routes.courses import courses_bp
     from .routes.teachers import teachers_bp
-
     from .routes.assistants import assistants_bp
     from .routes.course_categories import course_categories_bp
     from .routes.course_groups import course_groups_bp
     from .routes.classrooms import classrooms_bp
     from .routes.assistant_substitutions import assistant_substitutions_bp
+    from .routes.informatics_blocks import informatics_blocks_bp
+    from .routes.search import search_bp
 
     API_PREFIX = "/api"
 
     app.register_blueprint(main_bp, url_prefix=API_PREFIX)
     app.register_blueprint(schedule_bp, url_prefix=f"{API_PREFIX}/schedule")
+    app.register_blueprint(schedule_generation_bp, url_prefix=f"{API_PREFIX}/schedule-generation")
     app.register_blueprint(registration_bp, url_prefix=f"{API_PREFIX}/registration")
 
     app.register_blueprint(students_bp, url_prefix=f"{API_PREFIX}/students")
@@ -58,8 +61,7 @@ def create_app(config_object=None):
     app.register_blueprint(classrooms_bp, url_prefix=f"{API_PREFIX}/classrooms")
     app.register_blueprint(assistants_bp, url_prefix=f"{API_PREFIX}/assistants")
     app.register_blueprint(assistant_substitutions_bp, url_prefix=f"{API_PREFIX}/assistant-substitutions")
-    from .routes.informatics_blocks import informatics_blocks_bp
     app.register_blueprint(informatics_blocks_bp, url_prefix=f"{API_PREFIX}/informatics-blocks")
-    from src.app.routes.search import search_bp
     app.register_blueprint(search_bp, url_prefix=f"{API_PREFIX}/search")
+
     return app
