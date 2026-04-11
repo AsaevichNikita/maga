@@ -1,0 +1,82 @@
+[
+  {
+    "firstname": "Наталья",
+    "lastname": "Иванова",
+    "surname": "Алексеевна",
+    "birthday": "1998-05-12",
+    "phone_number": "+79992000001",
+    "email": "assistant1@maga.local"
+  },
+  {
+    "firstname": "Павел",
+    "lastname": "Орлов",
+    "surname": "Павлович",
+    "birthday": "2001-01-01",
+    "phone_number": "+79992000002",
+    "email": "assistant2@maga.local"
+  },
+  {
+    "firstname": "Мария",
+    "lastname": "Кузнецова",
+    "surname": "Андреевна",
+    "birthday": "2000-05-20",
+    "phone_number": "+79992000003",
+    "email": "assistant3@maga.local"
+  },
+  {
+    "firstname": "Артём",
+    "lastname": "Фёдоров",
+    "surname": "Павлович",
+    "birthday": "2005-03-18",
+    "phone_number": "+79992000004",
+    "email": "assistant4@maga.local"
+  },
+  {
+    "firstname": "Татьяна",
+    "lastname": "Сидорова",
+    "surname": "Дмитриевна",
+    "birthday": "1999-07-26",
+    "phone_number": "+79992000005",
+    "email": "assistant5@maga.local"
+  },
+  {
+    "firstname": "Сергей",
+    "lastname": "Зайцев",
+    "surname": "Дмитриевич",
+    "birthday": "2004-07-22",
+    "phone_number": "+79992000006",
+    "email": "assistant6@maga.local"
+  },
+  {
+    "firstname": "Светлана",
+    "lastname": "Волкова",
+    "surname": "Павловна",
+    "birthday": "2002-01-22",
+    "phone_number": "+79992000007",
+    "email": "assistant7@maga.local"
+  },
+  {
+    "firstname": "Сергей",
+    "lastname": "Сидоров",
+    "surname": "Максимович",
+    "birthday": "1999-01-08",
+    "phone_number": "+79992000008",
+    "email": "assistant8@maga.local"
+  },
+  {
+    "firstname": "Дарья",
+    "lastname": "Иванова",
+    "surname": "Петровна",
+    "birthday": "1999-09-19",
+    "phone_number": "+79992000009",
+    "email": "assistant9@maga.local"
+  },
+  {
+    "firstname": "Артём",
+    "lastname": "Сидоров",
+    "surname": "Павлович",
+    "birthday": "2004-09-08",
+    "phone_number": "+79992000010",
+    "email": "assistant10@maga.local"
+  }
+]

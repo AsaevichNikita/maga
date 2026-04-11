@@ -4,10 +4,11 @@ from datetime import datetime
 import json
 
 from src.app import db
-from src.app.models import Assistant, CourseGroup
+from src.app.keycloak_auth import roles_required
+from src.app.models import Assistant
 
 
-assistants_bp = Blueprint("assistants", __name__, url_prefix="/assistants")
+assistants_bp = Blueprint("assistants", __name__)
 
 
 def json_response(data, status=200):
@@ -41,13 +42,17 @@ def assistant_to_dict(a: Assistant, with_groups: bool = False):
     return d
 
 
-@assistants_bp.route("/", methods=["GET", "POST"], strict_slashes=False)
-def assistants_list_create():
-    if request.method == "GET":
-        with_groups = request.args.get("with_groups", "0") == "1"
-        items = Assistant.query.order_by(Assistant.id.asc()).all()
-        return json_response([assistant_to_dict(a, with_groups=with_groups) for a in items])
+@assistants_bp.route("/", methods=["GET"], strict_slashes=False)
+@roles_required("manager", "admin")
+def assistants_list():
+    with_groups = request.args.get("with_groups", "0") == "1"
+    items = Assistant.query.order_by(Assistant.id.asc()).all()
+    return json_response([assistant_to_dict(a, with_groups=with_groups) for a in items])
 
+
+@assistants_bp.route("/", methods=["POST"], strict_slashes=False)
+@roles_required("manager", "admin")
+def assistants_create():
     data = request.json or {}
     firstname = data.get("firstname")
     lastname = data.get("lastname")
@@ -83,44 +88,64 @@ def assistants_list_create():
     return json_response(assistant_to_dict(a), status=201)
 
 
-@assistants_bp.route("/<int:assistant_id>", methods=["GET", "PUT", "DELETE"], strict_slashes=False)
-def assistant_detail(assistant_id: int):
+@assistants_bp.route("/<int:assistant_id>", methods=["GET"], strict_slashes=False)
+@roles_required("manager", "admin")
+def assistant_get(assistant_id: int):
     a = Assistant.query.get(assistant_id)
     if not a:
         return json_response({"error": "Assistant not found"}, status=404)
 
-    if request.method == "GET":
-        return json_response(assistant_to_dict(a, with_groups=True))
+    return json_response(assistant_to_dict(a, with_groups=True))
 
-    if request.method == "PUT":
-        data = request.json or {}
-        if "firstname" in data: a.firstname = data["firstname"]
-        if "lastname" in data: a.lastname = data["lastname"]
-        if "surname" in data: a.surname = data["surname"]
-        if "phone_number" in data: a.phone_number = data["phone_number"]
-        if "email" in data: a.email = data["email"]
 
-        if "birthday" in data:
-            try:
-                a.birthday = datetime.strptime(data["birthday"], "%Y-%m-%d").date()
-            except ValueError:
-                return json_response({"error": "birthday must be in YYYY-MM-DD format"}, status=400)
+@assistants_bp.route("/<int:assistant_id>", methods=["PUT"], strict_slashes=False)
+@roles_required("manager", "admin")
+def assistant_update(assistant_id: int):
+    a = Assistant.query.get(assistant_id)
+    if not a:
+        return json_response({"error": "Assistant not found"}, status=404)
 
+    data = request.json or {}
+    if "firstname" in data:
+        a.firstname = data["firstname"]
+    if "lastname" in data:
+        a.lastname = data["lastname"]
+    if "surname" in data:
+        a.surname = data["surname"]
+    if "phone_number" in data:
+        a.phone_number = data["phone_number"]
+    if "email" in data:
+        a.email = data["email"]
+
+    if "birthday" in data:
         try:
-            db.session.commit()
-        except IntegrityError as e:
-            db.session.rollback()
-            return json_response({"error": "IntegrityError", "details": str(e.orig)}, status=400)
+            a.birthday = datetime.strptime(data["birthday"], "%Y-%m-%d").date()
+        except ValueError:
+            return json_response({"error": "birthday must be in YYYY-MM-DD format"}, status=400)
 
-        return json_response(assistant_to_dict(a, with_groups=True))
+    try:
+        db.session.commit()
+    except IntegrityError as e:
+        db.session.rollback()
+        return json_response({"error": "IntegrityError", "details": str(e.orig)}, status=400)
 
-    # DELETE
+    return json_response(assistant_to_dict(a, with_groups=True))
+
+
+@assistants_bp.route("/<int:assistant_id>", methods=["DELETE"], strict_slashes=False)
+@roles_required("admin")
+def assistant_delete(assistant_id: int):
+    a = Assistant.query.get(assistant_id)
+    if not a:
+        return json_response({"error": "Assistant not found"}, status=404)
+
     db.session.delete(a)
     db.session.commit()
     return json_response({"message": "Deleted successfully"})
 
 
 @assistants_bp.route("/<int:assistant_id>/groups", methods=["GET"], strict_slashes=False)
+@roles_required("manager", "admin")
 def assistant_groups(assistant_id: int):
     a = Assistant.query.get(assistant_id)
     if not a:

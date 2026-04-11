@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schedule System UI — Главная</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="topbar-row">
+        <div>
+          <div class="brand-title">📚 Schedule System UI</div>
+          <div class="brand-subtitle">
+            Публичный каталог программ, персональные кабинеты сотрудников и административная панель.
+          </div>
+        </div>
+
+        <nav class="topnav">
+          <a href="index.html" data-nav>Главная</a>
+          <a href="search.html" data-nav>Поиск</a>
+          <a href="schedule-generation.html" data-nav>Генерация расписания</a>
+        </nav>
+
+        <div class="auth-panel" style="display:flex; align-items:center; gap:12px; margin-left:16px;">
+          <div id="auth-user-box" style="text-align:right;"></div>
+          <button id="auth-login-btn" class="post-btn" type="button">Войти</button>
+          <button id="auth-logout-btn" class="ghost-btn" type="button" style="display:none;">Выйти</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero-grid">
+      <div class="panel">
+        <div class="panel-title">Что доступно без входа</div>
+        <div class="panel-subtitle">
+          Можно просматривать направления, курсы, блоки и доступные временные окна для записи.
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">Публично</div>
+            <div class="metric-value">Каталог</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Teacher</div>
+            <div class="metric-value">Мой кабинет</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Manager</div>
+            <div class="metric-value">CRUD</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Как пользоваться</div>
+        <div class="panel-subtitle">
+          Гости смотрят каталог. Преподаватели работают со своими слотами и расписанием. Менеджеры и администраторы управляют системой.
+        </div>
+      </div>
+    </section>
+
+    <div class="page-grid">
+      <main>
+        <section class="section-card">
+          <div class="section-head">
+            <div>
+              <div class="section-title">🌐 Публичные данные</div>
+              <div class="section-note">Доступно без авторизации.</div>
+            </div>
+          </div>
+
+          <h2 class="section-title" style="margin-bottom:12px;">📘 Курсы</h2>
+          <div class="button-grid">
+            <button class="get-btn" onclick="getCourses()">GET Все курсы</button>
+            <button class="get-btn" onclick="promptGetCourse()">GET Курс по ID</button>
+          </div>
+
+          <h2 class="section-title" style="margin:22px 0 12px;">🧭 Направления</h2>
+          <div class="button-grid">
+            <button class="get-btn" onclick="getCourseCategories()">GET Все направления</button>
+            <button class="get-btn" onclick="promptGetCourseCategory()">GET Направление по ID</button>
+          </div>
+
+          <h2 class="section-title" style="margin:22px 0 12px;">🧩 Блоки информатики</h2>
+          <div class="button-grid">
+            <button class="get-btn" onclick="getInformaticsBlocks()">GET Все блоки</button>
+            <button class="get-btn" onclick="promptGetInformaticsBlock()">GET Блок по ID</button>
+          </div>
+
+          <h2 class="section-title" style="margin:22px 0 12px;">🗓 Доступные окна преподавателей</h2>
+          <div class="button-grid">
+            <button class="get-btn" onclick="getTeacherOfferingSlotsPublic()">GET Все доступные окна</button>
+            <button class="get-btn" onclick="promptGetTeacherOfferingSlotPublic()">GET Окно по ID</button>
+          </div>
+
+          <h2 class="section-title" style="margin:22px 0 12px;">📝 Запись</h2>
+          <div class="button-grid">
+            <button class="get-btn" onclick="getFilteredSlots()">GET Фильтр слотов</button>
+            <button class="post-btn" onclick="showEnrollForm()">POST Подать заявку</button>
+          </div>
+        </section>
+
+        <section class="section-card" data-roles="teacher,admin">
+          <div class="section-head">
+            <div>
+              <div class="section-title">👨‍🏫 Кабинет преподавателя</div>
+              <div class="section-note">Персональные действия текущего преподавателя.</div>
+            </div>
+          </div>
+
+          <div class="button-grid">
+            <button class="get-btn" onclick="getMyTeacherProfile()">GET Мой профиль</button>
+            <button class="get-btn" onclick="getMyTeacherOfferingSlots()">GET Мои слоты</button>
+            <button class="get-btn" onclick="getMyTeacherSchedule()">GET Моё расписание</button>
+          </div>
+        </section>
+
+        <section class="section-card" data-roles="manager,admin">
+          <div class="section-head">
+            <div>
+              <div class="section-title">🛠 Управление системой</div>
+              <div class="section-note">Доступно менеджеру и администратору.</div>
+            </div>
+          </div>
+
+          <h2 class="section-title" style="margin-bottom:12px;">📘 Курсы</h2>
+          <div class="button-grid">
+            <button class="post-btn" onclick="showCreateCourseForm()">POST Создать курс</button>
+            <button class="put-btn" onclick="promptUpdateCourse()">PUT Обновить курс</button>
+            <button class="delete-btn" onclick="promptDeleteCourse()">DELETE Удалить курс</button>
+          </div>
+
+          <h2 class="section-title" style="margin:22px 0 12px;">🧭 Направления</h2>
+          <div class="button-grid">
+            <button class="post-btn" onclick="showCreateCourseCategoryForm()">POST Создать направление</button>
+            <button class="put-btn" onclick="promptUpdateCourseCategory()">PUT Обновить направление</button>
+            <button class="delete-btn" onclick="promptDeleteCourseCategory()">DELETE Удалить направление</button>
+          </div>
+
+          <h2 class="section-title" style="margin:22px 0 12px;">👥 Группы</h2>
+          <div class="button-grid">
+            <button class="get-btn" onclick="getCourseGroups()">GET Все группы</button>
+            <button class="post-btn" onclick="showCreateCourseGroupForm()">POST Создать группу</button>
+            <button class="get-btn" onclick="promptGetCourseGroup()">GET Группа по ID</button>
+            <button class="put-btn" onclick="promptUpdateCourseGroup()">PUT Обновить группу</button>
+            <button class="delete-btn" onclick="promptDeleteCourseGroup()">DELETE Удалить группу</button>
+          </div>
+
+          <h2 class="section-title" style="margin:22px 0 12px;">🏫 Аудитории</h2>
+          <div class="button-grid">
+            <button class="get-btn" onclick="getClassrooms()">GET Все аудитории</button>
+            <button class="post-btn" onclick="showCreateClassroomForm()">POST Создать аудиторию</button>
+            <button class="get-btn" onclick="promptGetClassroom()">GET Аудитория по ID</button>
+            <button class="put-btn" onclick="promptUpdateClassroom()">PUT Обновить аудиторию</button>
+            <button class="delete-btn" onclick="promptDeleteClassroom()">DELETE Удалить аудиторию</button>
+          </div>
+
+          <h2 class="section-title" style="margin:22px 0 12px;">🧩 Блоки информатики</h2>
+          <div class="button-grid">
+            <button class="post-btn" onclick="showCreateInformaticsBlockForm()">POST Создать блок</button>
+            <button class="put-btn" onclick="promptUpdateInformaticsBlock()">PUT Обновить блок</button>
+            <button class="delete-btn" onclick="promptDeleteInformaticsBlock()">DELETE Удалить блок</button>
+          </div>
+
+          <h2 class="section-title" style="margin:22px 0 12px;">👨‍🏫 Преподаватели</h2>
+          <div class="button-grid">
+            <button class="get-btn" onclick="getTeachers()">GET Все преподаватели</button>
+            <button class="post-btn" onclick="showCreateTeacherForm()">POST Создать преподавателя</button>
+            <button class="get-btn" onclick="promptGetTeacher()">GET Преподаватель по ID</button>
+            <button class="put-btn" onclick="promptUpdateTeacher()">PUT Обновить преподавателя</button>
+            <button class="delete-btn" onclick="promptDeleteTeacher()">DELETE Удалить преподавателя</button>
+          </div>
+
+          <h2 class="section-title" style="margin:22px 0 12px;">🧑‍💼 Ассистенты</h2>
+          <div class="button-grid">
+            <button class="get-btn" onclick="getAssistants()">GET Все ассистенты</button>
+            <button class="post-btn" onclick="showCreateAssistantForm()">POST Создать ассистента</button>
+            <button class="get-btn" onclick="promptGetAssistant()">GET Ассистент по ID</button>
+            <button class="put-btn" onclick="promptUpdateAssistant()">PUT Обновить ассистента</button>
+            <button class="delete-btn" onclick="promptDeleteAssistant()">DELETE Удалить ассистента</button>
+          </div>
+
+          <h2 class="section-title" style="margin:22px 0 12px;">🎓 Студенты</h2>
+          <div class="button-grid">
+            <button class="get-btn" onclick="getStudents()">GET Все студенты</button>
+            <button class="post-btn" onclick="showCreateStudentForm()">POST Создать студента</button>
+            <button class="get-btn" onclick="promptGetStudent()">GET Студент по ID</button>
+            <button class="put-btn" onclick="promptUpdateStudent()">PUT Обновить студента</button>
+            <button class="delete-btn" onclick="promptDeleteStudent()">DELETE Удалить студента</button>
+          </div>
+
+          <h2 class="section-title" style="margin:22px 0 12px;">⏰ Слоты расписания</h2>
+          <div class="button-grid">
+            <button class="post-btn" onclick="showCreateSlotForm()">POST Создать слот</button>
+            <button class="put-btn" onclick="promptUpdateSlot()">PUT Обновить слот</button>
+            <button class="delete-btn" onclick="promptDeleteSlot()">DELETE Удалить слот</button>
+          </div>
+
+          <h2 class="section-title" style="margin:22px 0 12px;">🔁 Подмены ассистентов</h2>
+          <div class="button-grid">
+            <button class="get-btn" onclick="getAssistantSubstitutions()">GET Все подмены</button>
+            <button class="post-btn" onclick="showCreateAssistantSubstitutionForm()">POST Создать подмену</button>
+            <button class="get-btn" onclick="promptGetAssistantSubstitution()">GET Подмена по ID</button>
+            <button class="put-btn" onclick="promptUpdateAssistantSubstitution()">PUT Обновить подмену</button>
+            <button class="delete-btn" onclick="promptDeleteAssistantSubstitution()">DELETE Удалить подмену</button>
+          </div>
+        </section>
+      </main>
+
+      <aside>
+        <section id="forms-section" class="section-card hidden"></section>
+
+        <section id="response-section" class="response-panel hidden">
+          <div class="response-info">
+            <span id="response-status"></span>
+            <span id="response-endpoint"></span>
+            <span id="response-time"></span>
+          </div>
+          <div id="json-display" class="json-display"></div>
+        </section>
+      </aside>
+    </div>
+
+    <footer class="footer">
+      Schedule System UI · Публичный каталог, личный кабинет и администрирование
+    </footer>
+  </div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/access.js"></script>
+
+  <script src="assets/js/courseCategories.js"></script>
+  <script src="assets/js/courseGroups.js"></script>
+  <script src="assets/js/classrooms.js"></script>
+  <script src="assets/js/informaticsBlocks.js"></script>
+  <script src="assets/js/assistants.js"></script>
+  <script src="assets/js/assistantSubstitutions.js"></script>
+  <script src="assets/js/courses.js"></script>
+  <script src="assets/js/teachers.js"></script>
+  <script src="assets/js/students.js"></script>
+  <script src="assets/js/schedule.js"></script>
+  <script src="assets/js/registration.js"></script>
+  <script src="assets/js/courseInfo.js"></script>
+  <script src="assets/js/teacherOfferingSlots.js"></script>
+  <script src="assets/js/teacherOfferingSlotsPublic.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.authInit) window.authInit();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+(function () {
+  function syntaxHighlight(json) {
+    if (typeof json !== 'string') {
+      json = JSON.stringify(json, null, 2);
+    }
+
+    json = json
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    return json.replace(
+      /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+      function (match) {
+        let cls = 'json-number';
+        if (/^"/.test(match)) {
+          cls = /:$/.test(match) ? 'json-key' : 'json-string';
+        } else if (/true|false/.test(match)) {
+          cls = 'json-boolean';
+        } else if (/null/.test(match)) {
+          cls = 'json-null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+      }
+    );
+  }
+
+  function displayResponse(endpoint, method, status, data, responseTime) {
+    const section = document.getElementById('response-section');
+    const statusElem = document.getElementById('response-status');
+    const endpointElem = document.getElementById('response-endpoint');
+    const timeElem = document.getElementById('response-time');
+    const jsonDisplay = document.getElementById('json-display');
+
+    statusElem.innerHTML =
+      `<span class="status-indicator ${status >= 200 && status < 300 ? 'status-success' : 'status-error'}">` +
+      `${method} ${status}</span>`;
+
+    endpointElem.textContent = endpoint;
+    timeElem.textContent = `${responseTime}ms`;
+
+    if (typeof data === 'object' && data !== null) {
+      jsonDisplay.innerHTML = syntaxHighlight(data);
+    } else {
+      jsonDisplay.textContent = data || 'Нет данных';
+    }
+
+    section.style.display = 'block';
+  }
+
+  function promptId(message) {
+    return prompt(message);
+  }
+
+  function hideForms() {
+    const formsSection = document.getElementById('forms-section');
+    formsSection.style.display = 'none';
+    formsSection.innerHTML = '';
+  }
+
+  function showForm(html) {
+    const formsSection = document.getElementById('forms-section');
+    formsSection.innerHTML = html;
+    formsSection.style.display = 'block';
+  }
+
+  function parseCsvNumbers(value) {
+    if (!value) return [];
+    return value
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .map((n) => parseInt(n, 10))
+      .filter((n) => !Number.isNaN(n));
+  }
+
+  function parseCsvStrings(value) {
+    if (!value) return [];
+    return value.split(',').map((s) => s.trim()).filter(Boolean);
+  }
+
+  window.syntaxHighlight = syntaxHighlight;
+  window.displayResponse = displayResponse;
+  window.promptId = promptId;
+  window.hideForms = hideForms;
+  window.showForm = showForm;
+  window.parseCsvNumbers = parseCsvNumbers;
+  window.parseCsvStrings = parseCsvStrings;
+})();

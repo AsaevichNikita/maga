@@ -1,0 +1,59 @@
+(function () {
+  async function makeRequest(method, endpoint, data = null) {
+    const startTime = Date.now();
+    const safeEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    const url = safeEndpoint.startsWith('http')
+      ? safeEndpoint
+      : `${window.API_BASE}${safeEndpoint}`;
+
+    const headers = { 'Content-Type': 'application/json' };
+
+    const token = localStorage.getItem('token');
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    const options = { method, headers };
+    if (data && method !== 'GET') {
+      options.body = JSON.stringify(data);
+    }
+
+    try {
+      const response = await fetch(url, options);
+      const responseTime = Date.now() - startTime;
+
+      const rawText = await response.text();
+
+      let responseData = rawText;
+      if (rawText) {
+        try {
+          responseData = JSON.parse(rawText);
+        } catch {
+          responseData = rawText;
+        }
+      }
+
+      window.displayResponse(
+        safeEndpoint,
+        method,
+        response.status,
+        responseData,
+        responseTime
+      );
+
+      return responseData;
+    } catch (error) {
+      const responseTime = Date.now() - startTime;
+
+      window.displayResponse(
+        safeEndpoint,
+        method,
+        0,
+        { error: error.message },
+        responseTime
+      );
+
+      throw error;
+    }
+  }
+
+  window.makeRequest = makeRequest;
+})();

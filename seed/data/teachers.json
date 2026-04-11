@@ -1,0 +1,194 @@
+[
+  {
+    "firstname": "Артём",
+    "lastname": "Петров",
+    "surname": "Иванович",
+    "birthday": "1991-08-19",
+    "phone_number": "+79991000001",
+    "email": "teacher1@maga.local"
+  },
+  {
+    "firstname": "Ирина",
+    "lastname": "Кузнецова",
+    "surname": "Алексеевна",
+    "birthday": "1978-02-17",
+    "phone_number": "+79991000002",
+    "email": "teacher2@maga.local"
+  },
+  {
+    "firstname": "Владимир",
+    "lastname": "Петров",
+    "surname": "Петрович",
+    "birthday": "1988-03-30",
+    "phone_number": "+79991000003",
+    "email": "teacher3@maga.local"
+  },
+  {
+    "firstname": "Светлана",
+    "lastname": "Иванова",
+    "surname": "Ивановна",
+    "birthday": "1977-02-06",
+    "phone_number": "+79991000004",
+    "email": "teacher4@maga.local"
+  },
+  {
+    "firstname": "Сергей",
+    "lastname": "Кузнецов",
+    "surname": "Иванович",
+    "birthday": "1987-08-03",
+    "phone_number": "+79991000005",
+    "email": "teacher5@maga.local"
+  },
+  {
+    "firstname": "Елена",
+    "lastname": "Зайцева",
+    "surname": "Павловна",
+    "birthday": "1979-12-11",
+    "phone_number": "+79991000006",
+    "email": "teacher6@maga.local"
+  },
+  {
+    "firstname": "Никита",
+    "lastname": "Волков",
+    "surname": "Дмитриевич",
+    "birthday": "1993-02-25",
+    "phone_number": "+79991000007",
+    "email": "teacher7@maga.local"
+  },
+  {
+    "firstname": "Полина",
+    "lastname": "Иванова",
+    "surname": "Сергеевна",
+    "birthday": "1990-08-29",
+    "phone_number": "+79991000008",
+    "email": "teacher8@maga.local"
+  },
+  {
+    "firstname": "Максим",
+    "lastname": "Орлов",
+    "surname": "Дмитриевич",
+    "birthday": "1978-06-27",
+    "phone_number": "+79991000009",
+    "email": "teacher9@maga.local"
+  },
+  {
+    "firstname": "Елена",
+    "lastname": "Орлова",
+    "surname": "Петровна",
+    "birthday": "1977-01-29",
+    "phone_number": "+79991000010",
+    "email": "teacher10@maga.local"
+  },
+  {
+    "firstname": "Максим",
+    "lastname": "Петров",
+    "surname": "Андреевич",
+    "birthday": "1994-01-03",
+    "phone_number": "+79991000011",
+    "email": "teacher11@maga.local"
+  },
+  {
+    "firstname": "Наталья",
+    "lastname": "Волкова",
+    "surname": "Дмитриевна",
+    "birthday": "1993-02-06",
+    "phone_number": "+79991000012",
+    "email": "teacher12@maga.local"
+  },
+  {
+    "firstname": "Иван",
+    "lastname": "Зайцев",
+    "surname": "Максимович",
+    "birthday": "1987-01-10",
+    "phone_number": "+79991000013",
+    "email": "teacher13@maga.local"
+  },
+  {
+    "firstname": "Мария",
+    "lastname": "Васильева",
+    "surname": "Петровна",
+    "birthday": "1987-05-20",
+    "phone_number": "+79991000014",
+    "email": "teacher14@maga.local"
+  },
+  {
+    "firstname": "Дмитрий",
+    "lastname": "Соколов",
+    "surname": "Андреевич",
+    "birthday": "1987-12-13",
+    "phone_number": "+79991000015",
+    "email": "teacher15@maga.local"
+  },
+  {
+    "firstname": "Елена",
+    "lastname": "Зайцева",
+    "surname": "Петровна",
+    "birthday": "1976-01-11",
+    "phone_number": "+79991000016",
+    "email": "teacher16@maga.local"
+  },
+  {
+    "firstname": "Артём",
+    "lastname": "Кузнецов",
+    "surname": "Дмитриевич",
+    "birthday": "1976-10-15",
+    "phone_number": "+79991000017",
+    "email": "teacher17@maga.local"
+  },
+  {
+    "firstname": "Полина",
+    "lastname": "Кузнецова",
+    "surname": "Петровна",
+    "birthday": "1983-07-11",
+    "phone_number": "+79991000018",
+    "email": "teacher18@maga.local"
+  },
+  {
+    "firstname": "Дмитрий",
+    "lastname": "Фёдоров",
+    "surname": "Андреевич",
+    "birthday": "1978-08-25",
+    "phone_number": "+79991000019",
+    "email": "teacher19@maga.local"
+  },
+  {
+    "firstname": "Наталья",
+    "lastname": "Орлова",
+    "surname": "Алексеевна",
+    "birthday": "1990-01-12",
+    "phone_number": "+79991000020",
+    "email": "teacher20@maga.local"
+  },
+  {
+    "firstname": "Дмитрий",
+    "lastname": "Зайцев",
+    "surname": "Петрович",
+    "birthday": "1988-08-30",
+    "phone_number": "+79991000021",
+    "email": "teacher21@maga.local"
+  },
+  {
+    "firstname": "Виктория",
+    "lastname": "Сидорова",
+    "surname": "Алексеевна",
+    "birthday": "1978-08-31",
+    "phone_number": "+79991000022",
+    "email": "teacher22@maga.local"
+  },
+  {
+    "firstname": "Никита",
+    "lastname": "Васильев",
+    "surname": "Дмитриевич",
+    "birthday": "1995-10-03",
+    "phone_number": "+79991000023",
+    "email": "teacher23@maga.local"
+  },
+  {
+    "firstname": "Виктория",
+    "lastname": "Зайцева",
+    "surname": "Алексеевна",
+    "birthday": "1990-05-10",
+    "phone_number": "+79991000024",
+    "email": "teacher24@maga.local"
+  }
+]

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schedule System UI — Поиск</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="topbar-row">
+        <div>
+          <div class="brand-title">🔎 Поиск и связи</div>
+          <div class="brand-subtitle">
+            Страница для внутреннего поиска по сущностям, просмотра состава групп и заявок.
+          </div>
+        </div>
+
+        <nav class="topnav">
+          <a href="index.html" data-nav>Главная</a>
+          <a href="search.html" data-nav>Поиск</a>
+          <a href="schedule-generation.html" data-nav>Генерация расписания</a>
+        </nav>
+
+        <div class="auth-panel" style="display:flex; align-items:center; gap:12px; margin-left:16px;">
+          <div id="auth-user-box" style="text-align:right;"></div>
+          <button id="auth-login-btn" class="post-btn" type="button">Войти</button>
+          <button id="auth-logout-btn" class="ghost-btn" type="button" style="display:none;">Выйти</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero-grid">
+      <div class="panel">
+        <div class="panel-title">Назначение страницы</div>
+        <div class="panel-subtitle">
+          Менеджеры и администраторы могут искать сущности и просматривать заявки.  
+          Преподаватели и ассистенты могут быстро смотреть студентов выбранной группы.
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">Manager/Admin</div>
+            <div class="metric-value">Полный поиск</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Teacher/Assistant</div>
+            <div class="metric-value">Группа</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">API</div>
+            <div class="metric-value" id="api-url">/api</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Публичного поиска нет</div>
+        <div class="panel-subtitle">
+          Каталог программ и доступные слоты находятся на главной странице. Здесь только рабочий внутренний интерфейс.
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card" data-role-note="public,parent">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Доступ ограничен</div>
+          <div class="section-note">
+            Эта страница предназначена для сотрудников. Публичные данные доступны на главной странице.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-grid page-grid--search">
+      <main class="search-shell">
+        <section class="section-card" data-roles="manager,admin">
+          <div class="section-head">
+            <div>
+              <div class="section-title">Глобальный поиск</div>
+              <div class="section-note">Поиск по внутренним сущностям и быстрый просмотр карточек.</div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Что ищем</label>
+              <select id="global-search-entity">
+                <option value="courses">Курсы</option>
+                <option value="course-categories">Направления</option>
+                <option value="informatics-blocks">Блоки информатики</option>
+                <option value="students">Студенты</option>
+                <option value="teachers">Преподаватели</option>
+                <option value="assistants">Ассистенты</option>
+                <option value="classrooms">Аудитории</option>
+                <option value="schedule-slots">Слоты расписания</option>
+                <option value="assistant-substitutions">Подмены ассистентов</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Строка поиска</label>
+              <div class="search-input-wrap">
+                <input type="text" id="global-search-input" autocomplete="off" placeholder="Начни вводить..." />
+                <div class="search-suggestions" id="global-search-suggestions" style="display:none;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="toolbar" style="margin-top:10px;">
+            <div class="small-hint" id="global-search-hint"></div>
+            <div class="small-hint" id="search-explorer-status"></div>
+          </div>
+
+          <div class="generator-actions" style="margin-top:14px;">
+            <button type="button" class="get-btn" data-search-preset="courses">Искать курсы</button>
+            <button type="button" class="get-btn" data-search-preset="course-categories">Искать направления</button>
+            <button type="button" class="get-btn" data-search-preset="students">Искать студентов</button>
+            <button type="button" class="get-btn" data-search-preset="teachers">Искать преподавателей</button>
+            <button type="button" class="get-btn" data-search-preset="classrooms">Искать аудитории</button>
+            <button type="button" class="get-btn" data-search-preset="informatics-blocks">Искать блоки</button>
+            <button type="button" class="post-btn" id="show-registration-requests-btn">Показать заявки</button>
+          </div>
+        </section>
+
+        <section class="section-card" data-roles="teacher,assistant,manager,admin">
+          <div class="section-head">
+            <div>
+              <div class="section-title">Студенты выбранной группы</div>
+              <div class="section-note" id="group-students-current">
+                Введи group_id вручную или выбери группу в административном поиске.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>ID группы</label>
+              <input type="number" id="group-students-group-id" placeholder="Например: 5" />
+            </div>
+
+            <div class="form-group">
+              <label>Поиск внутри группы</label>
+              <input type="text" id="group-students-query" placeholder="Например: Иванов, лицей, 7А" />
+            </div>
+          </div>
+
+          <div class="generator-actions">
+            <button type="button" class="get-btn" id="group-students-use-selected">Взять выбранную группу</button>
+            <button type="button" class="post-btn" id="group-students-search-btn">Найти студентов группы</button>
+          </div>
+
+          <div class="group-students-results" id="group-students-results" style="margin-top:14px;">
+            <div class="empty-box">
+              Здесь появятся студенты выбранной группы.
+            </div>
+          </div>
+        </section>
+
+        <section class="section-card" data-roles="manager,admin">
+          <div class="section-head">
+            <div>
+              <div class="section-title">Заявки на курсы</div>
+              <div class="section-note">Статусы, распределение и быстрые переходы по связанным сущностям.</div>
+            </div>
+          </div>
+          <div id="registration-requests-section">
+            <div class="empty-box">
+              Нажми «Показать заявки», чтобы увидеть board по статусам.
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <aside class="detail-panel sidebar-panel" data-roles="manager,admin">
+        <div class="section-card" style="box-shadow:none; border:none; margin-bottom:0;">
+          <div class="section-head">
+            <div>
+              <div class="section-title">Детали выбранной сущности</div>
+              <div class="section-note">Карточка объекта и переходы по связанным данным.</div>
+            </div>
+          </div>
+          <div id="search-explorer-details">
+            <div class="empty-box">
+              Выбери сущность через поиск сверху.
+            </div>
+          </div>
+        </div>
+
+        <section id="response-section" class="response-panel hidden" style="margin:18px;">
+          <div class="response-info">
+            <span id="response-status"></span>
+            <span id="response-endpoint"></span>
+            <span id="response-time"></span>
+          </div>
+          <div id="json-display" class="json-display"></div>
+        </section>
+      </aside>
+    </div>
+
+    <footer class="footer">
+      Schedule System UI · Внутренний поиск и просмотр заявок
+    </footer>
+  </div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/access.js"></script>
+  <script src="assets/js/searchExplorer.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.authInit) window.authInit();
+    });
+  </script>
+</body>
+</html>

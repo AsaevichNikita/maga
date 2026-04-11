@@ -1,6 +1,7 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, g, jsonify, request
 from sqlalchemy.orm import joinedload
 
+from src.app.keycloak_auth import roles_required, try_keycloak_authentication
 from src.app.services.smart_search import build_query_variants, rank
 
 from src.app.models import (
@@ -29,6 +30,10 @@ REGISTRATION_STATUS_RU = {
     "rejected": "Отклонено",
     "completed": "Завершено",
 }
+
+
+PUBLIC_SEARCH_ENTITIES = {"courses", "course-categories", "informatics-blocks"}
+MANAGER_DETAIL_ENTITIES = {"students", "teachers", "assistants", "course-groups", "classrooms", "schedule-slots", "assistant-substitutions"}
 
 
 def _full_name(obj):
@@ -146,10 +151,7 @@ def _label_registration_request(r: CourseRegistration) -> str:
 
 
 def _serialize_search_item(item, label_fn):
-    return {
-        "id": item.id,
-        "label": label_fn(item)
-    }
+    return {"id": item.id, "label": label_fn(item)}
 
 
 def _category_summary(x: CourseCategory | None):
@@ -263,12 +265,7 @@ def _parent_summary(p: Parent | None):
 def _classroom_summary(c: Classroom | None):
     if not c:
         return None
-    return {
-        "id": c.id,
-        "name": c.name,
-        "capacity": c.capacity,
-        "label": _label_classroom(c),
-    }
+    return {"id": c.id, "name": c.name, "capacity": c.capacity, "label": _label_classroom(c)}
 
 
 def _block_summary(b: InformaticsBlock | None):
@@ -517,10 +514,7 @@ def _group_detail_query():
         .options(joinedload(CourseGroup.informatics_block).joinedload(InformaticsBlock.course))
         .options(joinedload(CourseGroup.assistants))
         .options(joinedload(CourseGroup.schedule_slot).joinedload(ScheduleSlot.classroom))
-        .options(
-            joinedload(CourseGroup.registrations)
-            .joinedload(CourseRegistration.student)
-        )
+        .options(joinedload(CourseGroup.registrations).joinedload(CourseRegistration.student))
         .options(joinedload(CourseGroup.registrations).joinedload(CourseRegistration.preferred_slot).joinedload(ScheduleSlot.classroom))
     )
 
@@ -582,21 +576,9 @@ def _registration_requests_query():
 
 
 def _student_detail_payload(s: Student):
-    parents = [
-        _parent_summary(link.parent)
-        for link in (s.parent_registrations or [])
-        if link.parent
-    ]
-
-    registrations = [
-        _registration_summary(reg)
-        for reg in sorted(s.registrations or [], key=lambda x: x.id)
-    ]
-
-    preferences = [
-        _preference_summary(pref)
-        for pref in sorted(s.preferences or [], key=lambda x: x.id)
-    ]
+    parents = [_parent_summary(link.parent) for link in (s.parent_registrations or []) if link.parent]
+    registrations = [_registration_summary(reg) for reg in sorted(s.registrations or [], key=lambda x: x.id)]
+    preferences = [_preference_summary(pref) for pref in sorted(s.preferences or [], key=lambda x: x.id)]
 
     return {
         "id": s.id,
@@ -621,18 +603,9 @@ def _student_detail_payload(s: Student):
 
 
 def _teacher_detail_payload(t: Teacher):
-    allowed_courses = [
-        _course_summary(course)
-        for course in sorted(t.allowed_courses or [], key=lambda x: x.id)
-    ]
-
-    lead_groups = [
-        {
-            **_group_summary(group),
-            "schedule_slot": _slot_summary(group.schedule_slot)
-        }
-        for group in sorted(t.lead_groups or [], key=lambda x: x.id)
-    ]
+    allowed_courses = [_course_summary(course) for course in sorted(t.allowed_courses or [], key=lambda x: x.id)]
+    lead_groups = [{**_group_summary(group), "schedule_slot": _slot_summary(group.schedule_slot)}
+                   for group in sorted(t.lead_groups or [], key=lambda x: x.id)]
 
     return {
         "id": t.id,
@@ -651,13 +624,8 @@ def _teacher_detail_payload(t: Teacher):
 
 
 def _assistant_detail_payload(a: Assistant):
-    groups = [
-        {
-            **_group_summary(group),
-            "schedule_slot": _slot_summary(group.schedule_slot)
-        }
-        for group in sorted(a.groups or [], key=lambda x: x.id)
-    ]
+    groups = [{**_group_summary(group), "schedule_slot": _slot_summary(group.schedule_slot)}
+              for group in sorted(a.groups or [], key=lambda x: x.id)]
 
     return {
         "id": a.id,
@@ -675,13 +643,8 @@ def _assistant_detail_payload(a: Assistant):
 
 
 def _course_detail_payload(c: Course):
-    groups = [
-        {
-            **_group_summary(group),
-            "schedule_slot": _slot_summary(group.schedule_slot)
-        }
-        for group in sorted(c.groups or [], key=lambda x: x.id)
-    ]
+    groups = [{**_group_summary(group), "schedule_slot": _slot_summary(group.schedule_slot)}
+              for group in sorted(c.groups or [], key=lambda x: x.id)]
 
     return {
         "id": c.id,
@@ -695,27 +658,20 @@ def _course_detail_payload(c: Course):
         "price": float(c.price) if c.price is not None else None,
         "is_active": c.is_active,
         "created_at": _fmt_datetime(getattr(c, "created_at", None)),
-        "allowed_teachers": [
-            _teacher_summary(t) for t in sorted(c.allowed_teachers or [], key=lambda x: x.id)
-        ],
+        "allowed_teachers": [_teacher_summary(t) for t in sorted(c.allowed_teachers or [], key=lambda x: x.id)],
         "groups": groups,
-        "informatics_blocks": [
-            _block_summary(b) for b in sorted(c.informatics_blocks or [], key=lambda x: x.id)
-        ],
+        "informatics_blocks": [_block_summary(b) for b in sorted(c.informatics_blocks or [], key=lambda x: x.id)],
         "groups_count": len(c.groups or []),
         "teachers_count": len(c.allowed_teachers or []),
     }
 
 
 def _category_detail_payload(cat: CourseCategory):
-    courses = [
-        {
-            **_course_summary(c),
-            "teachers": [_teacher_summary(t) for t in sorted(c.allowed_teachers or [], key=lambda x: x.id)],
-            "groups_count": len(c.groups or []),
-        }
-        for c in sorted(cat.courses or [], key=lambda x: x.id)
-    ]
+    courses = [{
+        **_course_summary(c),
+        "teachers": [_teacher_summary(t) for t in sorted(c.allowed_teachers or [], key=lambda x: x.id)],
+        "groups_count": len(c.groups or []),
+    } for c in sorted(cat.courses or [], key=lambda x: x.id)]
 
     return {
         "id": cat.id,
@@ -770,39 +726,20 @@ def _group_detail_payload(g: CourseGroup):
 
 
 def _classroom_detail_payload(c: Classroom):
-    slots = sorted(
-        c.schedule_slots or [],
-        key=lambda x: (
-            x.day_of_week or 0,
-            _fmt_time(x.start_time) or "",
-            x.id
-        )
-    )
-
+    slots = sorted(c.schedule_slots or [], key=lambda x: (x.day_of_week or 0, _fmt_time(x.start_time) or "", x.id))
     return {
         "id": c.id,
         "label": _label_classroom(c),
         "name": c.name,
         "capacity": c.capacity,
-        "schedule_slots": [
-            {
-                **_slot_summary(slot),
-                "group": _group_summary(slot.group),
-            }
-            for slot in slots
-        ],
+        "schedule_slots": [{**_slot_summary(slot), "group": _group_summary(slot.group)} for slot in slots],
         "schedule_slots_count": len(slots),
     }
 
 
 def _block_detail_payload(b: InformaticsBlock):
-    groups = [
-        {
-            **_group_summary(group),
-            "schedule_slot": _slot_summary(group.schedule_slot)
-        }
-        for group in sorted(b.groups or [], key=lambda x: x.id)
-    ]
+    groups = [{**_group_summary(group), "schedule_slot": _slot_summary(group.schedule_slot)}
+              for group in sorted(b.groups or [], key=lambda x: x.id)]
 
     return {
         "id": b.id,
@@ -826,13 +763,12 @@ def _slot_detail_payload(s: ScheduleSlot):
         "end_time": _fmt_time(s.end_time),
         "group": _group_summary(s.group),
         "course": _course_summary(s.group.course) if getattr(s, "group", None) and getattr(s.group, "course", None) else None,
-        "category": (
-            _category_summary(s.group.course.category)
-            if getattr(s, "group", None) and getattr(s.group, "course", None) and getattr(s.group.course, "category", None)
-            else None
-        ),
-        "lead_teacher": _teacher_summary(s.group.lead_teacher) if getattr(s, "group", None) and getattr(s.group, "lead_teacher", None) else None,
-        "informatics_block": _block_summary(s.group.informatics_block) if getattr(s, "group", None) and getattr(s.group, "informatics_block", None) else None,
+        "category": _category_summary(s.group.course.category)
+        if getattr(s, "group", None) and getattr(s.group, "course", None) and getattr(s.group.course, "category", None) else None,
+        "lead_teacher": _teacher_summary(s.group.lead_teacher)
+        if getattr(s, "group", None) and getattr(s.group, "lead_teacher", None) else None,
+        "informatics_block": _block_summary(s.group.informatics_block)
+        if getattr(s, "group", None) and getattr(s.group, "informatics_block", None) else None,
         "classroom": _classroom_summary(s.classroom),
     }
 
@@ -845,62 +781,35 @@ def _substitution_detail_payload(x: AssistantSubstitution):
         "note": x.note,
         "created_at": _fmt_datetime(getattr(x, "created_at", None)),
         "group": _group_summary(x.group),
-        "schedule_slot": _slot_summary(x.group.schedule_slot) if getattr(x, "group", None) and getattr(x.group, "schedule_slot", None) else None,
+        "schedule_slot": _slot_summary(x.group.schedule_slot)
+        if getattr(x, "group", None) and getattr(x.group, "schedule_slot", None) else None,
         "substitute": _assistant_summary(x.substitute),
         "replaced": _assistant_summary(x.replaced),
     }
 
 
 DETAIL_MAP = {
-    "students": {
-        "query_builder": _student_detail_query,
-        "payload_builder": _student_detail_payload,
-    },
-    "teachers": {
-        "query_builder": _teacher_detail_query,
-        "payload_builder": _teacher_detail_payload,
-    },
-    "assistants": {
-        "query_builder": _assistant_detail_query,
-        "payload_builder": _assistant_detail_payload,
-    },
-    "courses": {
-        "query_builder": _course_detail_query,
-        "payload_builder": _course_detail_payload,
-    },
-    "course-categories": {
-        "query_builder": _category_detail_query,
-        "payload_builder": _category_detail_payload,
-    },
-    "course-groups": {
-        "query_builder": _group_detail_query,
-        "payload_builder": _group_detail_payload,
-    },
-    "classrooms": {
-        "query_builder": _classroom_detail_query,
-        "payload_builder": _classroom_detail_payload,
-    },
-    "informatics-blocks": {
-        "query_builder": _block_detail_query,
-        "payload_builder": _block_detail_payload,
-    },
-    "schedule-slots": {
-        "query_builder": _slot_detail_query,
-        "payload_builder": _slot_detail_payload,
-    },
-    "assistant-substitutions": {
-        "query_builder": _substitution_detail_query,
-        "payload_builder": _substitution_detail_payload,
-    },
+    "students": {"query_builder": _student_detail_query, "payload_builder": _student_detail_payload},
+    "teachers": {"query_builder": _teacher_detail_query, "payload_builder": _teacher_detail_payload},
+    "assistants": {"query_builder": _assistant_detail_query, "payload_builder": _assistant_detail_payload},
+    "courses": {"query_builder": _course_detail_query, "payload_builder": _course_detail_payload},
+    "course-categories": {"query_builder": _category_detail_query, "payload_builder": _category_detail_payload},
+    "course-groups": {"query_builder": _group_detail_query, "payload_builder": _group_detail_payload},
+    "classrooms": {"query_builder": _classroom_detail_query, "payload_builder": _classroom_detail_payload},
+    "informatics-blocks": {"query_builder": _block_detail_query, "payload_builder": _block_detail_payload},
+    "schedule-slots": {"query_builder": _slot_detail_query, "payload_builder": _slot_detail_payload},
+    "assistant-substitutions": {"query_builder": _substitution_detail_query, "payload_builder": _substitution_detail_payload},
 }
 
 
 @search_bp.route("/_entities", methods=["GET"])
+@roles_required("manager", "admin")
 def entities():
     return jsonify(sorted(list(ENTITY.keys())))
 
 
 @search_bp.route("/group-students", methods=["GET"], strict_slashes=False)
+@roles_required("manager", "admin")
 def search_group_students():
     group_id = request.args.get("group_id", type=int)
     q_raw = (request.args.get("q") or "").strip()
@@ -936,6 +845,7 @@ def search_group_students():
 
 
 @search_bp.route("/registration-requests", methods=["GET"], strict_slashes=False)
+@roles_required("manager", "admin")
 def registration_requests():
     q_raw = (request.args.get("q") or "").strip()
     course_id = request.args.get("course_id", type=int)
@@ -959,21 +869,13 @@ def registration_requests():
         variants = build_query_variants(q_raw)
         items = rank(items, variants, _label_registration_request)
 
-    grouped = {
-        "pending": [],
-        "approved": [],
-        "rejected": [],
-        "completed": [],
-    }
+    grouped = {"pending": [], "approved": [], "rejected": [], "completed": []}
 
     for item in items:
         if item.status in grouped and len(grouped[item.status]) < per_status_limit:
             grouped[item.status].append(_registration_summary(item))
 
-    counts = {
-        status: len([x for x in items if x.status == status])
-        for status in grouped.keys()
-    }
+    counts = {status: len([x for x in items if x.status == status]) for status in grouped.keys()}
 
     return jsonify({
         "total": len(items),
@@ -981,6 +883,26 @@ def registration_requests():
         "statuses_ru": REGISTRATION_STATUS_RU,
         "grouped": grouped,
     })
+
+
+def _require_manager_or_admin_for_search():
+    try:
+        payload = try_keycloak_authentication()
+    except Exception as exc:
+        return jsonify({"error": "Invalid token", "details": str(exc)}), 401
+
+    if not payload:
+        return jsonify({"error": "Missing bearer token"}), 401
+
+    user_roles = set(getattr(g, "keycloak_roles", []) or [])
+    if not user_roles.intersection({"manager", "admin"}):
+        return jsonify({
+            "error": "Forbidden",
+            "required_roles": ["manager", "admin"],
+            "user_roles": list(user_roles),
+        }), 403
+
+    return None
 
 
 @search_bp.route("/details/<entity>/<int:item_id>", methods=["GET"], strict_slashes=False)
@@ -991,6 +913,11 @@ def details(entity: str, item_id: int):
             "error": f"Unknown detail entity '{entity}'",
             "entities": sorted(list(DETAIL_MAP.keys()))
         }), 404
+
+    if entity in MANAGER_DETAIL_ENTITIES:
+        auth_error = _require_manager_or_admin_for_search()
+        if auth_error:
+            return auth_error
 
     item = cfg["query_builder"]().get(item_id)
     if not item:
@@ -1007,6 +934,11 @@ def search(entity: str):
             "error": f"Unknown entity '{entity}'",
             "entities": sorted(list(ENTITY.keys()))
         }), 404
+
+    if entity not in PUBLIC_SEARCH_ENTITIES:
+        auth_error = _require_manager_or_admin_for_search()
+        if auth_error:
+            return auth_error
 
     q_raw = (request.args.get("q") or "").strip()
     limit = request.args.get("limit", type=int) or 10

@@ -4,12 +4,11 @@ from datetime import datetime
 import json
 
 from src.app import db
+from src.app.keycloak_auth import roles_required
 from src.app.models import AssistantSubstitution, CourseGroup, Assistant
 
 
-assistant_substitutions_bp = Blueprint(
-    "assistant_substitutions", __name__, url_prefix="/assistant-substitutions"
-)
+assistant_substitutions_bp = Blueprint("assistant_substitutions", __name__)
 
 
 def json_response(data, status=200):
@@ -32,25 +31,29 @@ def sub_to_dict(s: AssistantSubstitution):
     }
 
 
-@assistant_substitutions_bp.route("/", methods=["GET", "POST"], strict_slashes=False)
-def subs_list_create():
-    if request.method == "GET":
-        group_id = request.args.get("group_id", type=int)
-        date_str = request.args.get("date")
+@assistant_substitutions_bp.route("/", methods=["GET"], strict_slashes=False)
+@roles_required("manager", "admin")
+def subs_list():
+    group_id = request.args.get("group_id", type=int)
+    date_str = request.args.get("date")
 
-        q = AssistantSubstitution.query
-        if group_id:
-            q = q.filter(AssistantSubstitution.group_id == group_id)
-        if date_str:
-            try:
-                d = datetime.strptime(date_str, "%Y-%m-%d").date()
-                q = q.filter(AssistantSubstitution.date == d)
-            except ValueError:
-                return json_response({"error": "date must be YYYY-MM-DD"}, status=400)
+    q = AssistantSubstitution.query
+    if group_id:
+        q = q.filter(AssistantSubstitution.group_id == group_id)
+    if date_str:
+        try:
+            d = datetime.strptime(date_str, "%Y-%m-%d").date()
+            q = q.filter(AssistantSubstitution.date == d)
+        except ValueError:
+            return json_response({"error": "date must be YYYY-MM-DD"}, status=400)
 
-        items = q.order_by(AssistantSubstitution.id.asc()).all()
-        return json_response([sub_to_dict(x) for x in items])
+    items = q.order_by(AssistantSubstitution.id.asc()).all()
+    return json_response([sub_to_dict(x) for x in items])
 
+
+@assistant_substitutions_bp.route("/", methods=["POST"], strict_slashes=False)
+@roles_required("manager", "admin")
+def subs_create():
     data = request.json or {}
     group_id = data.get("group_id")
     date_str = data.get("date")
@@ -92,29 +95,44 @@ def subs_list_create():
     return json_response(sub_to_dict(s), status=201)
 
 
-@assistant_substitutions_bp.route("/<int:sub_id>", methods=["GET", "PUT", "DELETE"], strict_slashes=False)
-def sub_detail(sub_id: int):
+@assistant_substitutions_bp.route("/<int:sub_id>", methods=["GET"], strict_slashes=False)
+@roles_required("manager", "admin")
+def sub_get(sub_id: int):
     s = AssistantSubstitution.query.get(sub_id)
     if not s:
         return json_response({"error": "AssistantSubstitution not found"}, status=404)
 
-    if request.method == "GET":
-        return json_response(sub_to_dict(s))
+    return json_response(sub_to_dict(s))
 
-    if request.method == "PUT":
-        data = request.json or {}
 
-        if "note" in data:
-            s.note = data["note"]
+@assistant_substitutions_bp.route("/<int:sub_id>", methods=["PUT"], strict_slashes=False)
+@roles_required("manager", "admin")
+def sub_update(sub_id: int):
+    s = AssistantSubstitution.query.get(sub_id)
+    if not s:
+        return json_response({"error": "AssistantSubstitution not found"}, status=404)
 
-        if "replaced_assistant_id" in data:
-            rid = data["replaced_assistant_id"]
-            if rid is not None and not Assistant.query.get(rid):
-                return json_response({"error": "replaced_assistant_id not found"}, status=400)
-            s.replaced_assistant_id = rid
+    data = request.json or {}
 
-        db.session.commit()
-        return json_response(sub_to_dict(s))
+    if "note" in data:
+        s.note = data["note"]
+
+    if "replaced_assistant_id" in data:
+        rid = data["replaced_assistant_id"]
+        if rid is not None and not Assistant.query.get(rid):
+            return json_response({"error": "replaced_assistant_id not found"}, status=400)
+        s.replaced_assistant_id = rid
+
+    db.session.commit()
+    return json_response(sub_to_dict(s))
+
+
+@assistant_substitutions_bp.route("/<int:sub_id>", methods=["DELETE"], strict_slashes=False)
+@roles_required("admin")
+def sub_delete(sub_id: int):
+    s = AssistantSubstitution.query.get(sub_id)
+    if not s:
+        return json_response({"error": "AssistantSubstitution not found"}, status=404)
 
     db.session.delete(s)
     db.session.commit()

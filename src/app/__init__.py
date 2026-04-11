@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from flasgger import Swagger
 from prometheus_flask_exporter import PrometheusMetrics
 
+
 db = SQLAlchemy()
 jwt = JWTManager()
 migrate = Migrate()
@@ -29,7 +30,6 @@ def create_app(config_object=None):
     # важно: чтобы SQLAlchemy "увидел" модели
     from src.app import models  # noqa: F401
 
-    # imports blueprints
     from .routes.main import main_bp
     from .routes.schedule import schedule_bp
     from .routes.schedule_generation import schedule_generation_bp
@@ -44,23 +44,35 @@ def create_app(config_object=None):
     from .routes.assistant_substitutions import assistant_substitutions_bp
     from .routes.informatics_blocks import informatics_blocks_bp
     from .routes.search import search_bp
+    from .routes.teacher_offering_slots import teacher_offering_slots_bp
+    from .routes.auth import auth_bp
 
     API_PREFIX = "/api"
 
     app.register_blueprint(main_bp, url_prefix=API_PREFIX)
+
     app.register_blueprint(schedule_bp, url_prefix=f"{API_PREFIX}/schedule")
-    app.register_blueprint(schedule_generation_bp, url_prefix=f"{API_PREFIX}/schedule-generation")
     app.register_blueprint(registration_bp, url_prefix=f"{API_PREFIX}/registration")
 
     app.register_blueprint(students_bp, url_prefix=f"{API_PREFIX}/students")
     app.register_blueprint(courses_bp, url_prefix=f"{API_PREFIX}/courses")
     app.register_blueprint(teachers_bp, url_prefix=f"{API_PREFIX}/teachers")
+    app.register_blueprint(assistants_bp, url_prefix=f"{API_PREFIX}/assistants")
 
     app.register_blueprint(course_categories_bp, url_prefix=f"{API_PREFIX}/course-categories")
     app.register_blueprint(course_groups_bp, url_prefix=f"{API_PREFIX}/course-groups")
     app.register_blueprint(classrooms_bp, url_prefix=f"{API_PREFIX}/classrooms")
-    app.register_blueprint(assistants_bp, url_prefix=f"{API_PREFIX}/assistants")
-    app.register_blueprint(assistant_substitutions_bp, url_prefix=f"{API_PREFIX}/assistant-substitutions")
+    app.register_blueprint(
+        assistant_substitutions_bp,
+        url_prefix=f"{API_PREFIX}/assistant-substitutions"
+    )
+    app.register_blueprint(
+        teacher_offering_slots_bp,
+        url_prefix=f"{API_PREFIX}/teacher-offering-slots"
+    )
+
+    app.register_blueprint(auth_bp, url_prefix=f"{API_PREFIX}/auth")
+    app.register_blueprint(schedule_generation_bp, url_prefix=f"{API_PREFIX}/schedule-generation")
     app.register_blueprint(informatics_blocks_bp, url_prefix=f"{API_PREFIX}/informatics-blocks")
     app.register_blueprint(search_bp, url_prefix=f"{API_PREFIX}/search")
 

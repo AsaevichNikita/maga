@@ -3,10 +3,11 @@ from sqlalchemy.exc import IntegrityError
 import json
 
 from src.app import db
+from src.app.keycloak_auth import roles_required
 from src.app.models import CourseCategory
 
 
-course_categories_bp = Blueprint("course_categories", __name__, url_prefix="/course-categories")
+course_categories_bp = Blueprint("course_categories", __name__)
 
 
 def json_response(data, status=200):
@@ -31,12 +32,15 @@ def category_to_dict(c: CourseCategory):
     }
 
 
-@course_categories_bp.route("/", methods=["GET", "POST"], strict_slashes=False)
-def categories_list_create():
-    if request.method == "GET":
-        items = CourseCategory.query.order_by(CourseCategory.id.asc()).all()
-        return json_response([category_to_dict(x) for x in items])
+@course_categories_bp.route("/", methods=["GET"], strict_slashes=False)
+def categories_list():
+    items = CourseCategory.query.order_by(CourseCategory.id.asc()).all()
+    return json_response([category_to_dict(x) for x in items])
 
+
+@course_categories_bp.route("/", methods=["POST"], strict_slashes=False)
+@roles_required("manager", "admin")
+def categories_create():
     data = request.json or {}
     name = data.get("name")
     if not name:
@@ -61,26 +65,42 @@ def categories_list_create():
     return json_response(category_to_dict(c), status=201)
 
 
-@course_categories_bp.route("/<int:category_id>", methods=["GET", "PUT", "DELETE"], strict_slashes=False)
-def category_detail(category_id: int):
+@course_categories_bp.route("/<int:category_id>", methods=["GET"], strict_slashes=False)
+def category_get(category_id: int):
     c = CourseCategory.query.get(category_id)
     if not c:
         return json_response({"error": "CourseCategory not found"}, status=404)
 
-    if request.method == "GET":
-        return json_response(category_to_dict(c))
+    return json_response(category_to_dict(c))
 
-    if request.method == "PUT":
-        data = request.json or {}
-        for k in ["name", "description", "min_grade", "max_grade", "min_age", "max_age", "education_level"]:
-            if k in data:
-                setattr(c, k, data[k])
-        try:
-            db.session.commit()
-        except IntegrityError as e:
-            db.session.rollback()
-            return json_response({"error": "IntegrityError", "details": str(e.orig)}, status=400)
-        return json_response(category_to_dict(c))
+
+@course_categories_bp.route("/<int:category_id>", methods=["PUT"], strict_slashes=False)
+@roles_required("manager", "admin")
+def category_update(category_id: int):
+    c = CourseCategory.query.get(category_id)
+    if not c:
+        return json_response({"error": "CourseCategory not found"}, status=404)
+
+    data = request.json or {}
+    for k in ["name", "description", "min_grade", "max_grade", "min_age", "max_age", "education_level"]:
+        if k in data:
+            setattr(c, k, data[k])
+
+    try:
+        db.session.commit()
+    except IntegrityError as e:
+        db.session.rollback()
+        return json_response({"error": "IntegrityError", "details": str(e.orig)}, status=400)
+
+    return json_response(category_to_dict(c))
+
+
+@course_categories_bp.route("/<int:category_id>", methods=["DELETE"], strict_slashes=False)
+@roles_required("admin")
+def category_delete(category_id: int):
+    c = CourseCategory.query.get(category_id)
+    if not c:
+        return json_response({"error": "CourseCategory not found"}, status=404)
 
     db.session.delete(c)
     db.session.commit()

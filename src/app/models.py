@@ -95,6 +95,7 @@ class Parent(db.Model):
     __tablename__ = 'parents'
     __table_args__ = {'extend_existing': True}
 
+    keycloak_user_id = db.Column(String(64), unique=True, index=True)
     id = db.Column(Integer, primary_key=True)
     firstname = db.Column(String(100), nullable=False)
     lastname = db.Column(String(100), nullable=False)
@@ -113,6 +114,7 @@ class Teacher(db.Model):
     __tablename__ = 'teachers'
     __table_args__ = {'extend_existing': True}
 
+    keycloak_user_id = db.Column(String(64), unique=True, index=True)
     id = db.Column(Integer, primary_key=True)
     firstname = db.Column(String(100), nullable=False)
     lastname = db.Column(String(100), nullable=False)
@@ -132,6 +134,7 @@ class Assistant(db.Model):
     __tablename__ = 'assistants'
     __table_args__ = {'extend_existing': True}
 
+    keycloak_user_id = db.Column(String(64), unique=True, index=True)
     id = db.Column(Integer, primary_key=True)
     firstname = db.Column(String(100), nullable=False)
     lastname = db.Column(String(100), nullable=False)

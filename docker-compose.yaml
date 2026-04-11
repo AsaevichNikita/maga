@@ -1,6 +1,18 @@
-version: '3.8'
+# docker compose up -d
+# docker compose exec backend flask db upgrade
+# docker compose --profile manual run --rm seed
 
 services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+    container_name: schedule_frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
   db:
     image: postgres:17
     container_name: schedule_db
@@ -13,86 +25,180 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d schedule_system"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
 
-  test_db:
+  keycloak-db:
     image: postgres:17
-    container_name: schedule_test_db
+    container_name: keycloak_db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: schedule_system_test
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloakpassword
     ports:
-      - "5433:5432"
+      - "5434:5432"
     volumes:
-      - postgres_test_data:/var/lib/postgresql/data
+      - keycloak_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keycloak -d keycloak"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    restart: unless-stopped
+    command: start-dev --import-realm
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+
+      KC_DB: postgres
+      KC_DB_URL_HOST: keycloak-db
+      KC_DB_URL_PORT: 5432
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloakpassword
+
+      KC_HTTP_PORT: 8080
+      KC_HEALTH_ENABLED: "true"
+      KC_METRICS_ENABLED: "true"
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./keycloak/import:/opt/keycloak/data/import
+    depends_on:
+      keycloak-db:
+        condition: service_healthy
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: schedule_backend
+    restart: unless-stopped
+    environment:
+      KEYCLOAK_PUBLIC_URL: http://localhost:8081
+      KEYCLOAK_INTERNAL_URL: http://keycloak:8080
+      KEYCLOAK_REALM: maga-school
+      KEYCLOAK_CLIENT_ID: maga-backend
+      KEYCLOAK_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET}
+      KEYCLOAK_AUDIENCE: account
+      SECRET_KEY: dev-secret-key
+      JWT_SECRET_KEY: dev-jwt-secret-key
+      FLASK_APP: run.py
+      FLASK_DEBUG: 0
+      DATABASE_URL: postgresql://admin:password@db:5432/schedule_system
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  seed:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: schedule_seed
+    restart: "no"
+    profiles:
+      - manual
+    environment:
+      KEYCLOAK_PUBLIC_URL: http://localhost:8081
+      KEYCLOAK_INTERNAL_URL: http://keycloak:8080
+      KEYCLOAK_REALM: maga-school
+      KEYCLOAK_CLIENT_ID: maga-backend
+      KEYCLOAK_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET}
+      KEYCLOAK_AUDIENCE: account
+      SECRET_KEY: dev-secret-key
+      JWT_SECRET_KEY: dev-jwt-secret-key
+      FLASK_APP: run.py
+      FLASK_DEBUG: 0
+      DATABASE_URL: postgresql://admin:password@db:5432/schedule_system
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["sh", "-c", "python /app/seed/generate_seed_data.py && python /app/seed/seed_demo_data.py"]
+
+  loki:
+    image: grafana/loki:2.9.8
+    container_name: loki
+    restart: unless-stopped
+    command: -config.file=/etc/loki/config.yml
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./monitoring/loki/config.yml:/etc/loki/config.yml:ro
+      - loki_data:/loki
+
+  promtail:
+    image: grafana/promtail:3.6
+    container_name: promtail
+    restart: unless-stopped
+    environment:
+      DOCKER_API_VERSION: "1.52"
+    volumes:
+      - ./monitoring/promtail/config.yml:/etc/promtail/config.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
 
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:v2.54.1
     container_name: prometheus
     restart: unless-stopped
-    volumes:
-      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - prometheus_data:/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-
-  grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
     volumes:
-      - grafana_data:/var/lib/grafana
-    environment:
-      GF_SECURITY_ADMIN_USER: admin
-      GF_SECURITY_ADMIN_PASSWORD: admin
-    depends_on:
-      - prometheus
-
-  postgres-exporter:
-    image: prometheuscommunity/postgres-exporter:latest
-    container_name: postgres-exporter
-    restart: unless-stopped
-    environment:
-      DATA_SOURCE_NAME: "postgresql://admin:password@db:5432/schedule_system?sslmode=disable"
-    ports:
-      - "9187:9187"
-    depends_on:
-      - db
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prom_data:/prometheus
 
   cadvisor:
-    image: gcr.io/cadvisor/cadvisor:latest
+    image: ghcr.io/google/cadvisor:0.56.2
     container_name: cadvisor
     restart: unless-stopped
     privileged: true
-    devices:
-      - /dev/kmsg
+    ports:
+      - "8082:8080"
+    command:
+      - --docker_only=true
+      - --store_container_labels=true
+      - --docker=unix:///var/run/docker.sock
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
       - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-    ports:
-      - "8080:8080"
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /var/lib/docker:/var/lib/docker:ro
 
-  node-exporter:
-    image: prom/node-exporter:latest
-    container_name: node-exporter
+  grafana:
+    image: grafana/grafana:11.1.5
+    container_name: grafana
     restart: unless-stopped
-    pid: host
-    command:
-      - --path.rootfs=/host
-    volumes:
-      - /:/host:ro,rslave
     ports:
-      - "9100:9100"
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+    depends_on:
+      - loki
+      - prometheus
+
 
 volumes:
   postgres_data:
-  postgres_test_data:
-  prometheus_data:
+  keycloak_postgres_data:
+  loki_data:
   grafana_data:
+  prom_data:

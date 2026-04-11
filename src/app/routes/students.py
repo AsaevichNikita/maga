@@ -1,42 +1,17 @@
 from flask import Blueprint, request, jsonify
-from src.app.models import Student
-from src.app import db
 from datetime import datetime
 
-students_bp = Blueprint('students', __name__, url_prefix='/students')
+from src.app import db
+from src.app.keycloak_auth import roles_required
+from src.app.models import Student
 
-# ------------------------
-# GET /students/ - список всех студентов
-# ------------------------
+
+students_bp = Blueprint('students', __name__)
+
+
 @students_bp.route('/', methods=['GET'])
+@roles_required('manager', 'admin')
 def get_students():
-    """
-    Получить список всех студентов
-    ---
-    responses:
-      200:
-        description: Список студентов
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  firstname:
-                    type: string
-                  lastname:
-                    type: string
-                  birthday:
-                    type: string
-                    format: date
-                  group_name:
-                    type: string
-                  education_type:
-                    type: string
-    """
     students = Student.query.all()
     return jsonify([{
         'id': s.id,
@@ -47,47 +22,14 @@ def get_students():
         'education_type': s.education_type
     } for s in students])
 
-# ------------------------
-# GET /students/<id> - конкретный студент
-# ------------------------
+
 @students_bp.route('/<int:student_id>', methods=['GET'])
+@roles_required('manager', 'admin')
 def get_student(student_id):
-    """
-    Получить конкретного студента по ID
-    ---
-    parameters:
-      - name: student_id
-        in: path
-        type: integer
-        required: true
-        description: ID студента
-    responses:
-      200:
-        description: Данные студента
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: integer
-                firstname:
-                  type: string
-                lastname:
-                  type: string
-                birthday:
-                  type: string
-                  format: date
-                group_name:
-                  type: string
-                education_type:
-                  type: string
-      404:
-        description: Студент не найден
-    """
     s = Student.query.get(student_id)
     if not s:
         return jsonify({'error': 'Student not found'}), 404
+
     return jsonify({
         'id': s.id,
         'firstname': s.firstname,
@@ -97,73 +39,37 @@ def get_student(student_id):
         'education_type': s.education_type
     })
 
-# ------------------------
-# POST /students/ - создать студента
-# ------------------------
+
 @students_bp.route('/', methods=['POST'])
+@roles_required('manager', 'admin')
 def create_student():
-    """
-    Создать нового студента
-    ---
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-              - firstname
-              - lastname
-              - birthday
-              - address
-              - educational_institution
-              - group_name
-              - education_type
-            properties:
-              firstname:
-                type: string
-              lastname:
-                type: string
-              surname:
-                type: string
-              phone_number:
-                type: string
-              email:
-                type: string
-              birthday:
-                type: string
-                format: date
-              address:
-                type: string
-              educational_institution:
-                type: string
-              group_name:
-                type: string
-              education_type:
-                type: string
-              enrolled_this_year:
-                type: boolean
-    responses:
-      201:
-        description: Студент успешно создан
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: integer
-      400:
-        description: Ошибка данных
-    """
-    data = request.json
+    data = request.json or {}
+
+    required_fields = [
+        'firstname',
+        'lastname',
+        'birthday',
+        'address',
+        'educational_institution',
+        'group_name',
+        'education_type',
+    ]
+    missing = [field for field in required_fields if not data.get(field)]
+    if missing:
+        return jsonify({'error': f"Missing required fields: {', '.join(missing)}"}), 400
+
+    try:
+        birthday = datetime.strptime(data['birthday'], '%Y-%m-%d').date()
+    except ValueError:
+        return jsonify({'error': 'birthday must be in YYYY-MM-DD format'}), 400
+
     s = Student(
         firstname=data['firstname'],
         lastname=data['lastname'],
         surname=data.get('surname'),
         phone_number=data.get('phone_number'),
         email=data.get('email'),
-        birthday=datetime.strptime(data['birthday'], '%Y-%m-%d').date(),
+        birthday=birthday,
         address=data['address'],
         educational_institution=data['educational_institution'],
         group_name=data['group_name'],
@@ -174,93 +80,41 @@ def create_student():
     db.session.commit()
     return jsonify({'id': s.id}), 201
 
-# ------------------------
-# PUT /students/<id> - обновить студента
-# ------------------------
+
 @students_bp.route('/<int:student_id>', methods=['PUT'])
+@roles_required('manager', 'admin')
 def update_student(student_id):
-    """
-    Обновить данные студента
-    ---
-    parameters:
-      - name: student_id
-        in: path
-        type: integer
-        required: true
-        description: ID студента
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              firstname:
-                type: string
-              lastname:
-                type: string
-              surname:
-                type: string
-              phone_number:
-                type: string
-              email:
-                type: string
-              birthday:
-                type: string
-                format: date
-              address:
-                type: string
-              educational_institution:
-                type: string
-              group_name:
-                type: string
-              education_type:
-                type: string
-              enrolled_this_year:
-                type: boolean
-    responses:
-      200:
-        description: Студент успешно обновлён
-      404:
-        description: Студент не найден
-    """
     s = Student.query.get(student_id)
     if not s:
         return jsonify({'error': 'Student not found'}), 404
-    data = request.json
-    for key in ['firstname','lastname','surname','phone_number','email','birthday','address','educational_institution','group_name','education_type','enrolled_this_year']:
+
+    data = request.json or {}
+
+    for key in [
+        'firstname', 'lastname', 'surname', 'phone_number', 'email',
+        'birthday', 'address', 'educational_institution', 'group_name',
+        'education_type', 'enrolled_this_year'
+    ]:
         if key in data:
             if key == 'birthday':
-                setattr(s, key, datetime.strptime(data[key], '%Y-%m-%d').date())
+                try:
+                    setattr(s, key, datetime.strptime(data[key], '%Y-%m-%d').date())
+                except ValueError:
+                    return jsonify({'error': 'birthday must be in YYYY-MM-DD format'}), 400
             else:
                 setattr(s, key, data[key])
+
     db.session.commit()
     return jsonify({'message': 'Updated successfully'})
 
-# ------------------------
-# DELETE /students/<id> - удалить студента
-# ------------------------
+
 @students_bp.route('/<int:student_id>', methods=['DELETE'])
+@roles_required('admin')
 def delete_student(student_id):
-    """
-    Удалить студента
-    ---
-    parameters:
-      - name: student_id
-        in: path
-        type: integer
-        required: true
-        description: ID студента
-    responses:
-      200:
-        description: Студент успешно удалён
-      404:
-        description: Студент не найден
-    """
     s = Student.query.get(student_id)
     if not s:
         return jsonify({'error': 'Student not found'}), 404
+
     db.session.delete(s)
     db.session.commit()
     return jsonify({'message': 'Deleted successfully'})
-

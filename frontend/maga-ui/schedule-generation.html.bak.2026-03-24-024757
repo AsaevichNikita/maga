@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schedule System UI — Генерация расписания</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="topbar-row">
+        <div>
+          <div class="brand-title">🧠 Генерация расписания</div>
+          <div class="brand-subtitle">
+            Отдельная рабочая зона для preview, анализа bucket’ов, генерации расписания
+            и просмотра итоговых групп с кликабельными связями на курс, преподавателя, аудиторию и студентов.
+          </div>
+        </div>
+        <nav class="topnav">
+          <a href="index.html" data-nav>Базовые операции</a>
+          <a href="search.html" data-nav>Поиск и связи</a>
+          <a href="schedule-generation.html" data-nav>Генерация расписания</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero-grid">
+      <div class="panel">
+        <div class="panel-title">Что здесь можно делать</div>
+        <div class="panel-subtitle">
+          Считать preview без записи в базу, смотреть bucket’ы приоритизации, запускать
+          реальную генерацию и анализировать итоговый план по карточкам.
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">Режим</div>
+            <div class="metric-value">Planner</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Bucket debug</div>
+            <div class="metric-value">Да</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">API</div>
+            <div class="metric-value" id="api-url">/api</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Типовой сценарий</div>
+        <div class="panel-subtitle">
+          1) Запустить preview → 2) посмотреть маленькие группы и нераспределённых → 3) открыть bucket’ы →
+          4) убедиться в результате → 5) только потом нажать generate.
+        </div>
+      </div>
+    </section>
+
+    <div class="page-grid page-grid--generation">
+      <main class="generator-shell">
+        <section class="section-card">
+          <div class="section-head">
+            <div>
+              <div class="section-title">Параметры генерации</div>
+              <div class="section-note">Укажи учебный год и минимальный размер группы.</div>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <div class="form-group">
+              <label>Учебный год</label>
+              <input type="text" id="sg-academic-year" placeholder="Например: 2025-2026" />
+            </div>
+
+            <div class="form-group">
+              <label>Минимальный размер группы</label>
+              <input type="number" id="sg-min-group-size" min="1" step="1" value="4" />
+            </div>
+
+            <div class="form-group" style="min-width:280px;">
+              <label>Статус</label>
+              <div id="sg-status" class="small-hint">Готов к расчёту</div>
+            </div>
+          </div>
+
+          <div class="generator-actions" style="margin-top:16px;">
+            <button id="sg-preview-btn" class="get-btn" type="button">Построить preview</button>
+            <button id="sg-buckets-btn" class="secondary-btn" type="button">Показать bucket’ы</button>
+            <button id="sg-generate-btn" class="post-btn" type="button">Сгенерировать и записать в БД</button>
+            <button id="sg-clear-btn" class="ghost-btn" type="button">Очистить экран</button>
+          </div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-head">
+            <div>
+              <div class="section-title">Сводка</div>
+              <div class="section-note">Общее количество заявок, распределённых и нераспределённых.</div>
+            </div>
+          </div>
+          <div id="sg-summary"></div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-head">
+            <div>
+              <div class="section-title">Предупреждения</div>
+              <div class="section-note">Маленькие группы и другие важные моменты распределения.</div>
+            </div>
+          </div>
+          <div id="sg-warnings"></div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-head">
+            <div>
+              <div class="section-title">Статистика по курсам</div>
+              <div class="section-note">Сколько детей распределено и сколько осталось вручную.</div>
+            </div>
+          </div>
+          <div id="sg-course-stats"></div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-head">
+            <div>
+              <div class="section-title">Итоговые группы</div>
+              <div class="section-note">Кликабельные карточки групп. Нажми на карточку, чтобы открыть детали справа.</div>
+            </div>
+          </div>
+          <div id="sg-groups"></div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-head">
+            <div>
+              <div class="section-title">Нераспределённые заявки</div>
+              <div class="section-note">Эти заявки остаются pending для ручной работы сотрудников.</div>
+            </div>
+          </div>
+          <div id="sg-unassigned"></div>
+        </section>
+
+        <section class="section-card">
+          <div class="section-head">
+            <div>
+              <div class="section-title">Bucket’ы и приоритизация</div>
+              <div class="section-note">Спрос, rigid-дети и очередь обработки временных окон.</div>
+            </div>
+          </div>
+          <div id="sg-buckets"></div>
+        </section>
+      </main>
+
+      <aside class="detail-panel sidebar-panel">
+        <div class="section-card" style="box-shadow:none; border:none; margin-bottom:0;">
+          <div class="section-head">
+            <div>
+              <div class="section-title">Детали</div>
+              <div class="section-note">Карточка preview-группы, bucket’а или сущности из базы.</div>
+            </div>
+          </div>
+          <div id="sg-detail"></div>
+        </div>
+
+        <section id="response-section" class="response-panel hidden" style="margin:18px;">
+          <div class="response-info">
+            <span id="response-status"></span>
+            <span id="response-endpoint"></span>
+            <span id="response-time"></span>
+          </div>
+          <div id="json-display" class="json-display"></div>
+        </section>
+      </aside>
+    </div>
+
+    <footer class="footer">
+      Schedule System UI · Генерация расписания и визуальный анализ результата
+    </footer>
+  </div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/scheduleGenerationPage.js"></script>
+</body>
+</html>
