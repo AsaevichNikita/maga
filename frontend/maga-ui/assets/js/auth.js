@@ -7,8 +7,13 @@
     authUser: 'auth_user',
     pkceVerifier: 'pkce_verifier',
     authState: 'auth_state',
-    postLoginPath: 'post_login_path'
+    postLoginPath: 'post_login_path',
+    accessTokenExpiresAt: 'access_token_expires_at',
+    refreshTokenExpiresAt: 'refresh_token_expires_at'
   };
+
+  let refreshPromise = null;
+  let refreshTimer = null;
 
   function b64UrlEncode(arrayBuffer) {
     const bytes = new Uint8Array(arrayBuffer);
@@ -50,6 +55,10 @@
     return localStorage.getItem(STORAGE.accessToken) || localStorage.getItem(STORAGE.accessTokenLegacy);
   }
 
+  function getStoredRefreshToken() {
+    return localStorage.getItem(STORAGE.refreshToken);
+  }
+
   function getStoredUser() {
     try {
       return JSON.parse(localStorage.getItem(STORAGE.authUser) || 'null');
@@ -64,12 +73,24 @@
   }
 
   function saveTokens(tokenData) {
+    const now = Math.floor(Date.now() / 1000);
+
     if (tokenData.access_token) {
       localStorage.setItem(STORAGE.accessToken, tokenData.access_token);
       localStorage.setItem(STORAGE.accessTokenLegacy, tokenData.access_token);
     }
-    if (tokenData.refresh_token) localStorage.setItem(STORAGE.refreshToken, tokenData.refresh_token);
-    if (tokenData.id_token) localStorage.setItem(STORAGE.idToken, tokenData.id_token);
+    if (tokenData.refresh_token) {
+      localStorage.setItem(STORAGE.refreshToken, tokenData.refresh_token);
+    }
+    if (tokenData.id_token) {
+      localStorage.setItem(STORAGE.idToken, tokenData.id_token);
+    }
+    if (typeof tokenData.expires_in === 'number') {
+      localStorage.setItem(STORAGE.accessTokenExpiresAt, String(now + tokenData.expires_in));
+    }
+    if (typeof tokenData.refresh_expires_in === 'number') {
+      localStorage.setItem(STORAGE.refreshTokenExpiresAt, String(now + tokenData.refresh_expires_in));
+    }
   }
 
   function saveUser(user) {
@@ -86,7 +107,26 @@
     localStorage.removeItem(STORAGE.pkceVerifier);
     localStorage.removeItem(STORAGE.authState);
     localStorage.removeItem(STORAGE.postLoginPath);
+    localStorage.removeItem(STORAGE.accessTokenExpiresAt);
+    localStorage.removeItem(STORAGE.refreshTokenExpiresAt);
+
+    if (refreshTimer) {
+      clearTimeout(refreshTimer);
+      refreshTimer = null;
+    }
+
     syncAuthGlobals();
+  }
+
+  function getAccessTokenExpiresAt() {
+    return Number(localStorage.getItem(STORAGE.accessTokenExpiresAt) || '0');
+  }
+
+  function isTokenExpiringSoon(bufferSeconds = 60) {
+    const expiresAt = getAccessTokenExpiresAt();
+    if (!expiresAt) return true;
+    const now = Math.floor(Date.now() / 1000);
+    return now >= (expiresAt - bufferSeconds);
   }
 
   function renderAuthState() {
@@ -128,6 +168,28 @@
     }
 
     return response.json();
+  }
+
+  function scheduleTokenRefresh() {
+    if (refreshTimer) {
+      clearTimeout(refreshTimer);
+      refreshTimer = null;
+    }
+
+    const expiresAt = getAccessTokenExpiresAt();
+    if (!expiresAt) return;
+
+    const refreshAtMs = (expiresAt - 60) * 1000;
+    const delay = Math.max(refreshAtMs - Date.now(), 5000);
+
+    refreshTimer = setTimeout(async () => {
+      try {
+        await refreshAccessToken();
+      } catch (error) {
+        console.error('scheduled refresh failed:', error);
+        await logout(false);
+      }
+    }, delay);
   }
 
   async function startLogin() {
@@ -182,6 +244,7 @@
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        grant_type: 'authorization_code',
         code,
         redirect_uri: cfg.redirect_uri,
         code_verifier: codeVerifier
@@ -220,11 +283,76 @@
 
     window.history.replaceState({}, document.title, restorePath || url.pathname + url.hash);
 
+    scheduleTokenRefresh();
     renderAuthState();
     return true;
   }
 
-  async function logout() {
+  async function refreshAccessToken() {
+    if (refreshPromise) {
+      return refreshPromise;
+    }
+
+    const refreshToken = getStoredRefreshToken();
+    if (!refreshToken) {
+      throw new Error('No refresh token');
+    }
+
+    refreshPromise = (async () => {
+      const response = await fetch('/api/auth/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          grant_type: 'refresh_token',
+          refresh_token: refreshToken
+        })
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok || !data.access_token) {
+        clearTokens();
+        renderAuthState();
+        throw new Error(data.error || 'Failed to refresh token');
+      }
+
+      saveTokens(data);
+
+      const jwt = parseJwt(data.access_token) || {};
+      const roles = (jwt.realm_access && jwt.realm_access.roles) || [];
+
+      saveUser({
+        preferred_username: jwt.preferred_username,
+        email: jwt.email,
+        sub: jwt.sub,
+        roles
+      });
+
+      scheduleTokenRefresh();
+      renderAuthState();
+
+      return data.access_token;
+    })();
+
+    try {
+      return await refreshPromise;
+    } finally {
+      refreshPromise = null;
+    }
+  }
+
+  async function ensureValidAccessToken() {
+    const token = getStoredToken();
+    if (!token) return null;
+
+    if (!isTokenExpiringSoon()) {
+      return token;
+    }
+
+    return refreshAccessToken();
+  }
+
+  async function logout(callBackend = true) {
     const idToken = localStorage.getItem(STORAGE.idToken);
     const postLogoutRedirectUri = `${window.location.origin}/index.html`;
 
@@ -235,6 +363,11 @@
       if (window.applyRoleVisibility) window.applyRoleVisibility();
     } catch (e) {
       console.error('applyRoleVisibility error after logout:', e);
+    }
+
+    if (!callBackend) {
+      window.location.href = postLogoutRedirectUri;
+      return;
     }
 
     try {
@@ -285,6 +418,7 @@
     }
 
     try {
+      scheduleTokenRefresh();
       renderAuthState();
     } catch (e) {
       console.error('renderAuthState error:', e);
@@ -299,6 +433,8 @@
 
   window.getAccessToken = getStoredToken;
   window.getCurrentAuthUser = getStoredUser;
+  window.ensureValidAccessToken = ensureValidAccessToken;
+  window.refreshAccessToken = refreshAccessToken;
   window.authInit = initAuth;
   window.authLogout = logout;
 })();

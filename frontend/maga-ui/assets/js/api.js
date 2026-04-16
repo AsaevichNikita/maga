@@ -1,12 +1,15 @@
 (function () {
-  function getToken() {
+  async function getToken() {
+    if (typeof window.ensureValidAccessToken === 'function') {
+      return window.ensureValidAccessToken();
+    }
     if (typeof window.getAccessToken === 'function') {
       return window.getAccessToken();
     }
     return localStorage.getItem('access_token') || localStorage.getItem('token');
   }
 
-  async function makeRequest(method, endpoint, data = null) {
+  async function makeRequest(method, endpoint, data = null, retryOn401 = true) {
     const startTime = Date.now();
     const safeEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
     const url = safeEndpoint.startsWith('http')
@@ -15,7 +18,7 @@
 
     const headers = { 'Content-Type': 'application/json' };
 
-    const token = getToken();
+    const token = await getToken();
     if (token) headers.Authorization = `Bearer ${token}`;
 
     const options = { method, headers };
@@ -24,9 +27,24 @@
     }
 
     try {
-      const response = await fetch(url, options);
-      const responseTime = Date.now() - startTime;
+      let response = await fetch(url, options);
 
+      if (response.status === 401 && retryOn401 && typeof window.refreshAccessToken === 'function') {
+        try {
+          const newToken = await window.refreshAccessToken();
+          if (newToken) {
+            options.headers.Authorization = `Bearer ${newToken}`;
+            response = await fetch(url, options);
+          }
+        } catch (e) {
+          console.error('refresh after 401 failed:', e);
+          if (typeof window.authLogout === 'function') {
+            await window.authLogout(false);
+          }
+        }
+      }
+
+      const responseTime = Date.now() - startTime;
       const rawText = await response.text();
 
       let responseData = rawText;

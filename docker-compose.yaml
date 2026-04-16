@@ -68,6 +68,10 @@ services:
       KC_HTTP_PORT: 8080
       KC_HEALTH_ENABLED: "true"
       KC_METRICS_ENABLED: "true"
+
+      KC_HOSTNAME: http://localhost:8081
+      KC_HOSTNAME_STRICT: "false"
+      KC_PROXY_HEADERS: xforwarded
     ports:
       - "8081:8080"
     volumes:

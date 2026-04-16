@@ -24,15 +24,9 @@ def auth_config():
 
 
 @auth_bp.post("/token")
-def exchange_code():
+def token():
     payload = request.get_json(silent=True) or {}
-
-    code = payload.get("code")
-    redirect_uri = payload.get("redirect_uri")
-    code_verifier = payload.get("code_verifier")
-
-    if not code or not redirect_uri:
-        return jsonify({"error": "code and redirect_uri are required"}), 400
+    grant_type = payload.get("grant_type", "authorization_code")
 
     token_url = (
         f"{Config.KEYCLOAK_INTERNAL_URL}/realms/"
@@ -40,16 +34,47 @@ def exchange_code():
     )
 
     data = {
-        "grant_type": "authorization_code",
         "client_id": "maga-frontend",
-        "code": code,
-        "redirect_uri": redirect_uri,
     }
 
-    if code_verifier:
-        data["code_verifier"] = code_verifier
+    if grant_type == "authorization_code":
+        code = payload.get("code")
+        redirect_uri = payload.get("redirect_uri")
+        code_verifier = payload.get("code_verifier")
 
-    response = requests.post(token_url, data=data, timeout=20)
+        if not code or not redirect_uri:
+            return jsonify({"error": "code and redirect_uri are required"}), 400
+
+        data.update({
+            "grant_type": "authorization_code",
+            "code": code,
+            "redirect_uri": redirect_uri,
+        })
+
+        if code_verifier:
+            data["code_verifier"] = code_verifier
+
+    elif grant_type == "refresh_token":
+        refresh_token = payload.get("refresh_token")
+
+        if not refresh_token:
+            return jsonify({"error": "refresh_token is required"}), 400
+
+        data.update({
+            "grant_type": "refresh_token",
+            "refresh_token": refresh_token,
+        })
+
+    else:
+        return jsonify({"error": "unsupported_grant_type"}), 400
+
+    try:
+        response = requests.post(token_url, data=data, timeout=20)
+    except requests.RequestException as exc:
+        return jsonify({
+            "error": "token_request_failed",
+            "details": str(exc),
+        }), 502
 
     try:
         body = response.json()
