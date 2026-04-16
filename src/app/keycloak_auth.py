@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import time
 from functools import wraps
 
@@ -61,13 +63,12 @@ def decode_keycloak_token(token: str) -> dict:
     if audiences:
         decode_kwargs["audience"] = audiences
 
-    payload = jwt.decode(token, signing_key.key, **decode_kwargs)
-    return payload
+    return jwt.decode(token, signing_key.key, **decode_kwargs)
 
 
 def get_roles_from_payload(payload: dict) -> list[str]:
-    realm_access = payload.get("realm_access", {})
-    return realm_access.get("roles", [])
+    realm_access = payload.get("realm_access", {}) or {}
+    return list(realm_access.get("roles", []) or [])
 
 
 def populate_keycloak_context(payload: dict) -> dict:
@@ -87,7 +88,11 @@ def try_keycloak_authentication():
     if not token:
         return None
 
-    payload = decode_keycloak_token(token)
+    try:
+        payload = decode_keycloak_token(token)
+    except Exception:
+        current_app.logger.warning("Failed optional Keycloak authentication", exc_info=True)
+        return None
     return populate_keycloak_context(payload)
 
 
@@ -100,8 +105,9 @@ def keycloak_required(fn):
 
         try:
             payload = decode_keycloak_token(token)
-        except Exception as exc:
-            return jsonify({"error": "Invalid token", "details": str(exc)}), 401
+        except Exception:
+            current_app.logger.warning("Failed Keycloak authentication", exc_info=True)
+            return jsonify({"error": "Invalid token"}), 401
 
         populate_keycloak_context(payload)
         return fn(*args, **kwargs)
@@ -120,8 +126,8 @@ def roles_required(*required_roles):
             if not user_roles.intersection(needed):
                 return jsonify({
                     "error": "Forbidden",
-                    "required_roles": list(needed),
-                    "user_roles": list(user_roles),
+                    "required_roles": sorted(needed),
+                    "user_roles": sorted(user_roles),
                 }), 403
 
             return fn(*args, **kwargs)
