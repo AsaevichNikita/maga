@@ -1,8 +1,43 @@
 (function () {
+  function isAuthenticated() {
+    const token = typeof window.getAccessToken === 'function'
+      ? window.getAccessToken()
+      : (localStorage.getItem('access_token') || localStorage.getItem('token'));
+
+    const user = typeof window.getCurrentAuthUser === 'function'
+      ? window.getCurrentAuthUser()
+      : null;
+
+    return Boolean(token && user);
+  }
+
+  function requireAuthForEnrollment() {
+    if (isAuthenticated()) {
+      return true;
+    }
+
+    const shouldLogin = window.confirm(
+      'Чтобы подать заявку на курс, сначала нужно авторизоваться.\n\nПерейти к входу сейчас?'
+    );
+
+    if (shouldLogin) {
+      if (typeof window.startLogin === 'function') {
+        window.startLogin();
+      } else {
+        alert('Не удалось автоматически открыть авторизацию. Нажмите кнопку "Войти" в правом верхнем углу.');
+      }
+    }
+
+    return false;
+  }
+
   window.showEnrollForm = function () {
     window.showForm(`
       <h2>Создать заявку на курс</h2>
-      <p class="small-hint">Публичная регистрация теперь всегда создаётся со статусом <strong>pending</strong>. Поле status с фронта больше не используется.</p>
+      <p class="small-hint">
+        Публичная регистрация теперь всегда создаётся со статусом <strong>pending</strong>.
+        Поле status с фронта больше не используется.
+      </p>
       <form onsubmit="event.preventDefault(); enrollStudent();">
         <div class="form-row">
           <div class="form-group">
@@ -54,8 +89,18 @@
   };
 
   window.enrollStudent = function () {
+    if (!requireAuthForEnrollment()) {
+      return;
+    }
+
+    const studentValue = document.getElementById('enroll-student')?.value;
+    if (!studentValue) {
+      alert('Укажи ID студента.');
+      return;
+    }
+
     const data = {
-      student_id: parseInt(document.getElementById('enroll-student').value, 10),
+      student_id: parseInt(studentValue, 10),
       comment: document.getElementById('enroll-comment').value || undefined
     };
 
@@ -81,7 +126,7 @@
     const courseId = prompt('ID курса (оставьте пустым, чтобы пропустить):');
     const classroom = prompt('Аудитория (оставьте пустым, чтобы пропустить):');
     const day = prompt('День недели 1-7 (оставьте пустым, чтобы пропустить):');
-    const year = prompt('Учебный год (например 2025/2026) (оставьте пустым, чтобы пропустить):');
+    const year = prompt('Учебный год (например 2026-2027) (оставьте пустым, чтобы пропустить):');
 
     let url = '/registration/filter_slots?';
     const params = [];

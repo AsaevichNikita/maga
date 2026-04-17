@@ -1,0 +1,119 @@
+{
+  "realm" : "maga-school",
+  "users" : [ {
+    "id" : "ad6886c4-14d1-43ec-847b-882386eccfbd",
+    "username" : "admin1",
+    "firstName" : "ad",
+    "lastName" : "ad",
+    "email" : "admin1@gmail.com",
+    "emailVerified" : false,
+    "enabled" : true,
+    "createdTimestamp" : 1775760509840,
+    "totp" : false,
+    "credentials" : [ {
+      "id" : "026473ec-d7c8-4163-b876-0f27f9ff4365",
+      "type" : "password",
+      "userLabel" : "My password",
+      "createdDate" : 1775760538727,
+      "secretData" : "{\"value\":\"CLnBVzUnphbP+zTcvzFtYkBPK2+XFH9vl1Ql1chWqdw=\",\"salt\":\"IK0h9MrxBV/3X5the3nOZA==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":5,\"algorithm\":\"argon2\",\"additionalParameters\":{\"hashLength\":[\"32\"],\"memory\":[\"7168\"],\"type\":[\"id\"],\"version\":[\"1.3\"],\"parallelism\":[\"1\"]}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "admin", "default-roles-maga-school" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "5c221775-5605-4a82-964f-425bc5431b90",
+    "username" : "assistant1",
+    "firstName" : "as",
+    "lastName" : "as",
+    "email" : "assistant1@gmail.com",
+    "emailVerified" : false,
+    "enabled" : true,
+    "createdTimestamp" : 1775760716624,
+    "totp" : false,
+    "credentials" : [ {
+      "id" : "69171aa8-ef98-49ba-aa3d-bfa687893149",
+      "type" : "password",
+      "userLabel" : "My password",
+      "createdDate" : 1775760727884,
+      "secretData" : "{\"value\":\"PjP6LZ23W4Q5Sk2w/q12QcyO9ePpoKc5B98Go3RZd0o=\",\"salt\":\"gpQobFrQbc1Wa2jT0DIHZw==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":5,\"algorithm\":\"argon2\",\"additionalParameters\":{\"hashLength\":[\"32\"],\"memory\":[\"7168\"],\"type\":[\"id\"],\"version\":[\"1.3\"],\"parallelism\":[\"1\"]}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "assistant", "default-roles-maga-school" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "49c5b29c-e6c6-488f-a6c3-a05041310877",
+    "username" : "manager1",
+    "firstName" : "ma",
+    "lastName" : "ma",
+    "email" : "manager1@gmail.com",
+    "emailVerified" : false,
+    "enabled" : true,
+    "createdTimestamp" : 1775760606869,
+    "totp" : false,
+    "credentials" : [ {
+      "id" : "8455a3ec-c527-42f0-83b3-2926f9fdd1e2",
+      "type" : "password",
+      "userLabel" : "My password",
+      "createdDate" : 1775760623516,
+      "secretData" : "{\"value\":\"bysDXkRJGWbNkqZIf/yajpSUzeZoK9NebvaPtSfQuxs=\",\"salt\":\"kv7wBNcCRWAeszkNp/4BYg==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":5,\"algorithm\":\"argon2\",\"additionalParameters\":{\"hashLength\":[\"32\"],\"memory\":[\"7168\"],\"type\":[\"id\"],\"version\":[\"1.3\"],\"parallelism\":[\"1\"]}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "manager", "default-roles-maga-school" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "9dbe0680-028d-49b7-a107-21b3bd021dc4",
+    "username" : "parent1",
+    "firstName" : "pa",
+    "lastName" : "pa",
+    "email" : "parent1@gmail.com",
+    "emailVerified" : false,
+    "enabled" : true,
+    "createdTimestamp" : 1775760680042,
+    "totp" : false,
+    "credentials" : [ {
+      "id" : "8601526f-aabc-43d4-bf58-ec714ca866f2",
+      "type" : "password",
+      "userLabel" : "My password",
+      "createdDate" : 1775760692214,
+      "secretData" : "{\"value\":\"z/WTtvRrnlF8J2bor0Jd4+ODjO+3tfrmfFmdjdT0Gz0=\",\"salt\":\"+rLfVjgVJEzCdNsM/GqRBg==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":5,\"algorithm\":\"argon2\",\"additionalParameters\":{\"hashLength\":[\"32\"],\"memory\":[\"7168\"],\"type\":[\"id\"],\"version\":[\"1.3\"],\"parallelism\":[\"1\"]}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "parent", "default-roles-maga-school" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "51ed64c0-d355-4389-bbfa-14fbc6db0f23",
+    "username" : "teacher1",
+    "firstName" : "te",
+    "lastName" : "te",
+    "email" : "teacher1@gmail.com",
+    "emailVerified" : false,
+    "enabled" : true,
+    "createdTimestamp" : 1775760639906,
+    "totp" : false,
+    "credentials" : [ {
+      "id" : "ff9d400b-f920-4efa-adb5-a518204e9262",
+      "type" : "password",
+      "userLabel" : "My password",
+      "createdDate" : 1775760658226,
+      "secretData" : "{\"value\":\"BQDFexq38MowN/HVOXtIwTkeGDWbUFbREUW1PQ4aZsQ=\",\"salt\":\"QVUmd8UA8+RP4lVdEOb3MA==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":5,\"algorithm\":\"argon2\",\"additionalParameters\":{\"hashLength\":[\"32\"],\"memory\":[\"7168\"],\"type\":[\"id\"],\"version\":[\"1.3\"],\"parallelism\":[\"1\"]}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "teacher", "default-roles-maga-school" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
+}

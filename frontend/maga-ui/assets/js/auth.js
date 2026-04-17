@@ -224,6 +224,39 @@
     }
   }
 
+  async function startRegister() {
+    try {
+      const cfg = await loadBackendAuthConfig();
+
+      const verifier = randomString(96);
+      const challenge = b64UrlEncode(await sha256(verifier));
+      const state = randomString(24);
+
+      localStorage.setItem(STORAGE.pkceVerifier, verifier);
+      localStorage.setItem(STORAGE.authState, state);
+      localStorage.setItem(
+        STORAGE.postLoginPath,
+        window.location.pathname + window.location.search + window.location.hash
+      );
+
+      const params = new URLSearchParams({
+        client_id: cfg.client_id,
+        redirect_uri: cfg.redirect_uri,
+        response_type: 'code',
+        scope: 'openid profile email',
+        code_challenge: challenge,
+        code_challenge_method: 'S256',
+        state,
+        prompt: 'create'
+      });
+
+      window.location.href = `${cfg.authorize_url}?${params.toString()}`;
+    } catch (error) {
+      console.error('startRegister error:', error);
+      alert(`Ошибка запуска регистрации: ${error.message}`);
+    }
+  }
+
   async function finishLoginIfNeeded() {
     const url = new URL(window.location.href);
     const code = url.searchParams.get('code');
@@ -395,6 +428,13 @@
   function bindAuthButtons() {
     const loginBtn = document.getElementById('auth-login-btn');
     const logoutBtn = document.getElementById('auth-logout-btn');
+    const registerBtn = document.getElementById('auth-register-btn');
+
+
+    if (registerBtn && !registerBtn.dataset.authBound) {
+      registerBtn.addEventListener('click', startRegister);
+      registerBtn.dataset.authBound = '1';
+    }
 
     if (loginBtn && !loginBtn.dataset.authBound) {
       loginBtn.addEventListener('click', startLogin);
@@ -437,4 +477,6 @@
   window.refreshAccessToken = refreshAccessToken;
   window.authInit = initAuth;
   window.authLogout = logout;
+  window.startLogin = startLogin;
+  window.startRegister = startRegister;
 })();
