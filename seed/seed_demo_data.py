@@ -200,16 +200,23 @@ def get_or_create_teacher_offering_slot(item):
     start_year = int(start_year)
     end_year = int(end_year)
 
+
     obj = TeacherOfferingSlot.query.filter_by(
-        teacher_id=teacher.id,
-        course_id=course.id,
-        academic_year_start=start_year,
-        academic_year_end=end_year,
-        day_of_week=item["day_of_week"],
-        start_time=parse_time(item["start_time"]),
-        end_time=parse_time(item["end_time"]),
+    teacher_id=teacher.id,
+    course_id=course.id,
+    academic_year_start=start_year,
+    academic_year_end=end_year,
+    day_of_week=item["day_of_week"],
+    start_time=parse_time(item["start_time"]),
+    end_time=parse_time(item["end_time"]),
     ).first()
+
     if obj:
+        obj.classroom_id = classroom.id
+        obj.is_active = item.get("is_active", True)
+        obj.max_groups = 1
+        obj.priority = item.get("priority", 100)
+        db.session.flush()
         return obj
 
     obj = TeacherOfferingSlot(
@@ -222,7 +229,7 @@ def get_or_create_teacher_offering_slot(item):
         end_time=parse_time(item["end_time"]),
         classroom_id=classroom.id,
         is_active=item.get("is_active", True),
-        max_groups=item.get("max_groups", 1),
+        max_groups=1,
         priority=item.get("priority", 100),
     )
     db.session.add(obj)

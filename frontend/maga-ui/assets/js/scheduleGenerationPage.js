@@ -1,4 +1,3 @@
-
 (function () {
   const DAY_NAMES = {
     1: 'Понедельник',
@@ -22,9 +21,19 @@
   let lastPreviewResult = null;
   let lastBucketResult = null;
 
-  function esc(v) { return window.escapeHtml ? window.escapeHtml(v) : String(v ?? ''); }
-  function val(v) { return window.formatValue ? window.formatValue(v) : (v ?? '—'); }
-  function dayName(day) { return DAY_NAMES[day] || `День ${day}`; }
+  function esc(v) {
+    return window.escapeHtml ? window.escapeHtml(v) : String(v ?? '');
+  }
+
+  function val(v) {
+    return window.formatValue ? window.formatValue(v) : (v ?? '—');
+  }
+
+  function dayName(day) {
+    return DAY_NAMES[day] || `День ${day}`;
+  }
+
+
 
   function getControls() {
     return {
@@ -45,16 +54,20 @@
   function setStatus(text, kind = 'muted') {
     const el = getControls().status;
     if (!el) return;
+
     const className =
       kind === 'error' ? 'status-chip status-bad' :
       kind === 'success' ? 'status-chip status-ok' :
       '';
+
     el.innerHTML = className ? `<span class="${className}">${esc(text)}</span>` : esc(text);
   }
 
   function showEmpty(id, text) {
     const node = document.getElementById(id);
-    if (node) node.innerHTML = `<div class="empty-box">${esc(text)}</div>`;
+    if (node) {
+      node.innerHTML = `<div class="empty-box">${esc(text)}</div>`;
+    }
   }
 
   function renderSummary(summary) {
@@ -91,10 +104,12 @@
   function renderWarnings(warnings) {
     const box = getControls().warnings;
     if (!box) return;
+
     if (!warnings || !warnings.length) {
       box.innerHTML = `<div class="empty-box">Предупреждений нет.</div>`;
       return;
     }
+
     box.innerHTML = warnings.map((warning) => `
       <div class="warning-card">
         <div class="group-card-title">${esc(warning.course_name || warning.type || 'Предупреждение')}</div>
@@ -111,10 +126,12 @@
   function renderCourseStats(stats) {
     const box = getControls().courseStats;
     if (!box) return;
+
     if (!stats || !stats.length) {
       box.innerHTML = `<div class="empty-box">Статистика по курсам пока не построена.</div>`;
       return;
     }
+
     box.innerHTML = `
       <div class="course-stat-grid">
         ${stats.map((row) => `
@@ -133,7 +150,10 @@
       return `<div class="empty-box">Назначений пока нет.</div>`;
     }
 
-    const registrations = lastPreviewResult.assigned_registrations.filter((row) => preview.registration_ids.includes(row.registration_id));
+    const registrations = lastPreviewResult.assigned_registrations.filter((row) =>
+      preview.registration_ids.includes(row.registration_id)
+    );
+
     if (!registrations.length) {
       return `<div class="empty-box">Назначения для этой карточки не найдены.</div>`;
     }
@@ -205,12 +225,14 @@
         ${buildAssignmentRows(preview)}
       </div>
     `;
+
     bindEntityLinks(box);
   }
 
   function renderGroupCards(groups) {
     const box = getControls().groups;
     if (!box) return;
+
     if (!groups || !groups.length) {
       box.innerHTML = `<div class="empty-box">Группы пока не рассчитаны.</div>`;
       return;
@@ -253,16 +275,19 @@
         if (preview) openSyntheticGroupDetail(preview);
       });
     });
+
     bindEntityLinks(box);
   }
 
   function renderUnassigned(rows) {
     const box = getControls().unassigned;
     if (!box) return;
+
     if (!rows || !rows.length) {
       box.innerHTML = `<div class="empty-box">Все дети распределены.</div>`;
       return;
     }
+
     box.innerHTML = `
       <div class="unassigned-grid">
         ${rows.map((row) => `
@@ -279,12 +304,14 @@
         `).join('')}
       </div>
     `;
+
     bindEntityLinks(box);
   }
 
   function openBucketDetail(bucket) {
     const box = getControls().detail;
     if (!box) return;
+
     box.innerHTML = `
       <div class="detail-kicker">Bucket</div>
       <div class="detail-title">${esc(bucket.course_name || `Course #${bucket.course_id}`)}</div>
@@ -347,12 +374,14 @@
         }
       </div>
     `;
+
     bindEntityLinks(box);
   }
 
   function renderBuckets(rows) {
     const box = getControls().buckets;
     if (!box) return;
+
     if (!rows || !rows.length) {
       box.innerHTML = `<div class="empty-box">Bucket’ы пока не загружены.</div>`;
       return;
@@ -401,6 +430,7 @@
   function makePrimaryDetail() {
     const box = getControls().detail;
     if (!box) return;
+
     box.innerHTML = `
       <div class="detail-kicker">Рабочая область</div>
       <div class="detail-title">Генерация расписания</div>
@@ -434,8 +464,6 @@
     }
 
     if (typeof value === 'object') {
-      const normalizedPath = path.join('.');
-
       if (value.id && typeof value.id !== 'object') {
         const last = path[path.length - 1];
         const field = typeof last === 'string' ? last : null;
@@ -466,7 +494,7 @@
   function renderObjectDetails(data) {
     const links = collectLinks(data);
     const fields = Object.entries(data || {})
-      .filter(([key, value]) => typeof value !== 'object' || value === null)
+      .filter(([_, value]) => typeof value !== 'object' || value === null)
       .slice(0, 12);
 
     return `
@@ -507,7 +535,7 @@
     if (!meta || !box) return;
 
     box.innerHTML = `<div class="loading-box">Загрузка ${esc(meta.title.toLowerCase())}...</div>`;
-    const result = await window.apiGet(meta.endpoint(id).replace(window.API_BASE, '')); // safe even if already relative
+    const result = await window.apiGet(meta.endpoint(id).replace(window.API_BASE, ''));
     if (!result.ok) {
       box.innerHTML = `<div class="empty-box">Не удалось загрузить сущность. HTTP ${esc(result.status)}</div>`;
       return;
@@ -519,6 +547,7 @@
       <div class="detail-id">ID: ${esc(id)}</div>
       ${renderObjectDetails(result.data)}
     `;
+
     bindEntityLinks(box);
   }
 
@@ -537,7 +566,7 @@
   async function previewSchedule() {
     const { year, minSize } = getControls();
     if (!year?.value) {
-      setStatus('Укажи academic_year', 'error');
+      setStatus('Учебный год не определён', 'error');
       return;
     }
 
@@ -559,7 +588,7 @@
   async function generateSchedule() {
     const { year, minSize } = getControls();
     if (!year?.value) {
-      setStatus('Укажи academic_year', 'error');
+      setStatus('Учебный год не определён', 'error');
       return;
     }
 
@@ -583,7 +612,7 @@
   async function loadBuckets() {
     const { year } = getControls();
     if (!year?.value) {
-      setStatus('Укажи academic_year', 'error');
+      setStatus('Учебный год не определён', 'error');
       return;
     }
 
@@ -614,16 +643,42 @@
     setStatus('Результаты очищены');
   }
 
-  function initDefaults() {
-    const year = document.getElementById('sg-academic-year');
-    if (year && !year.value) year.value = '2025-2026';
+
+  async function initDefaults() {
+    await loadAcademicYear();
+
     const minSize = document.getElementById('sg-min-group-size');
-    if (minSize && !minSize.value) minSize.value = '4';
+    if (minSize && !minSize.value) {
+      minSize.value = '4';
+    }
+
     clearResults();
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
-    initDefaults();
+  async function loadAcademicYear() {
+    const yearInput = document.getElementById('sg-academic-year');
+    if (!yearInput) return;
+
+    try {
+      const result = await window.apiGet('/auth/academic-year');
+      if (result.ok && result.data?.academic_year) {
+        yearInput.value = result.data.academic_year;
+      } else {
+        yearInput.value = '';
+      }
+    } catch (e) {
+      yearInput.value = '';
+    }
+
+    yearInput.readOnly = true;
+    yearInput.setAttribute('readonly', 'readonly');
+    yearInput.title = '';
+    yearInput.style.backgroundColor = '#f3f4f6';
+    yearInput.style.cursor = 'default';
+  }
+
+  document.addEventListener('DOMContentLoaded', async function () {
+    await initDefaults();
 
     document.getElementById('sg-preview-btn')?.addEventListener('click', previewSchedule);
     document.getElementById('sg-generate-btn')?.addEventListener('click', generateSchedule);

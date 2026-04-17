@@ -2,49 +2,49 @@
   {
     "name": "Программирование",
     "description": "Курсы по программированию",
-    "min_grade": 5,
-    "max_grade": 10
+    "min_grade": 1,
+    "max_grade": 11
   },
   {
     "name": "Математика",
     "description": "Курсы по математике",
-    "min_grade": 3,
+    "min_grade": 5,
     "max_grade": 10
   },
   {
     "name": "Робототехника",
     "description": "Курсы по робототехнике",
     "min_grade": 1,
-    "max_grade": 11
+    "max_grade": 9
   },
   {
     "name": "Дизайн",
     "description": "Курсы по дизайну",
     "min_grade": 5,
-    "max_grade": 11
+    "max_grade": 10
   },
   {
     "name": "Английский язык",
     "description": "Курсы по английскому языку",
     "min_grade": 3,
-    "max_grade": 11
+    "max_grade": 9
   },
   {
     "name": "Шахматы",
     "description": "Курсы по шахматам",
-    "min_grade": 1,
+    "min_grade": 3,
     "max_grade": 11
   },
   {
     "name": "Физика",
     "description": "Курсы по физике",
-    "min_grade": 5,
-    "max_grade": 11
+    "min_grade": 1,
+    "max_grade": 9
   },
   {
     "name": "Подготовка к олимпиадам",
     "description": "Олимпиадные курсы",
-    "min_grade": 3,
+    "min_grade": 7,
     "max_grade": 9
   }
 ]

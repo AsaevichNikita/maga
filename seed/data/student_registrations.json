@@ -1,1602 +1,1682 @@
 [
   {
     "student_email": "student1@maga.local",
-    "parent_email": "parent256@maga.local"
+    "parent_email": "parent146@maga.local"
   },
   {
     "student_email": "student2@maga.local",
-    "parent_email": "parent103@maga.local"
-  },
-  {
-    "student_email": "student3@maga.local",
-    "parent_email": "parent121@maga.local"
-  },
-  {
-    "student_email": "student4@maga.local",
-    "parent_email": "parent124@maga.local"
-  },
-  {
-    "student_email": "student5@maga.local",
-    "parent_email": "parent136@maga.local"
-  },
-  {
-    "student_email": "student6@maga.local",
-    "parent_email": "parent106@maga.local"
-  },
-  {
-    "student_email": "student7@maga.local",
-    "parent_email": "parent118@maga.local"
-  },
-  {
-    "student_email": "student8@maga.local",
-    "parent_email": "parent104@maga.local"
-  },
-  {
-    "student_email": "student9@maga.local",
-    "parent_email": "parent128@maga.local"
-  },
-  {
-    "student_email": "student10@maga.local",
-    "parent_email": "parent183@maga.local"
-  },
-  {
-    "student_email": "student11@maga.local",
-    "parent_email": "parent80@maga.local"
-  },
-  {
-    "student_email": "student12@maga.local",
-    "parent_email": "parent55@maga.local"
-  },
-  {
-    "student_email": "student13@maga.local",
-    "parent_email": "parent62@maga.local"
-  },
-  {
-    "student_email": "student14@maga.local",
-    "parent_email": "parent41@maga.local"
-  },
-  {
-    "student_email": "student15@maga.local",
-    "parent_email": "parent253@maga.local"
-  },
-  {
-    "student_email": "student16@maga.local",
-    "parent_email": "parent4@maga.local"
-  },
-  {
-    "student_email": "student17@maga.local",
-    "parent_email": "parent278@maga.local"
-  },
-  {
-    "student_email": "student18@maga.local",
-    "parent_email": "parent22@maga.local"
-  },
-  {
-    "student_email": "student19@maga.local",
-    "parent_email": "parent247@maga.local"
-  },
-  {
-    "student_email": "student20@maga.local",
-    "parent_email": "parent191@maga.local"
-  },
-  {
-    "student_email": "student21@maga.local",
-    "parent_email": "parent162@maga.local"
-  },
-  {
-    "student_email": "student22@maga.local",
-    "parent_email": "parent253@maga.local"
-  },
-  {
-    "student_email": "student23@maga.local",
-    "parent_email": "parent295@maga.local"
-  },
-  {
-    "student_email": "student24@maga.local",
-    "parent_email": "parent141@maga.local"
-  },
-  {
-    "student_email": "student25@maga.local",
-    "parent_email": "parent252@maga.local"
-  },
-  {
-    "student_email": "student26@maga.local",
-    "parent_email": "parent94@maga.local"
-  },
-  {
-    "student_email": "student27@maga.local",
-    "parent_email": "parent262@maga.local"
-  },
-  {
-    "student_email": "student28@maga.local",
-    "parent_email": "parent144@maga.local"
-  },
-  {
-    "student_email": "student29@maga.local",
-    "parent_email": "parent204@maga.local"
-  },
-  {
-    "student_email": "student30@maga.local",
-    "parent_email": "parent114@maga.local"
-  },
-  {
-    "student_email": "student31@maga.local",
-    "parent_email": "parent296@maga.local"
-  },
-  {
-    "student_email": "student32@maga.local",
-    "parent_email": "parent66@maga.local"
-  },
-  {
-    "student_email": "student33@maga.local",
-    "parent_email": "parent28@maga.local"
-  },
-  {
-    "student_email": "student34@maga.local",
-    "parent_email": "parent270@maga.local"
-  },
-  {
-    "student_email": "student35@maga.local",
-    "parent_email": "parent217@maga.local"
-  },
-  {
-    "student_email": "student36@maga.local",
-    "parent_email": "parent245@maga.local"
-  },
-  {
-    "student_email": "student37@maga.local",
-    "parent_email": "parent277@maga.local"
-  },
-  {
-    "student_email": "student38@maga.local",
-    "parent_email": "parent17@maga.local"
-  },
-  {
-    "student_email": "student39@maga.local",
-    "parent_email": "parent258@maga.local"
-  },
-  {
-    "student_email": "student40@maga.local",
-    "parent_email": "parent178@maga.local"
-  },
-  {
-    "student_email": "student41@maga.local",
-    "parent_email": "parent202@maga.local"
-  },
-  {
-    "student_email": "student42@maga.local",
-    "parent_email": "parent90@maga.local"
-  },
-  {
-    "student_email": "student43@maga.local",
-    "parent_email": "parent235@maga.local"
-  },
-  {
-    "student_email": "student44@maga.local",
-    "parent_email": "parent62@maga.local"
-  },
-  {
-    "student_email": "student45@maga.local",
-    "parent_email": "parent266@maga.local"
-  },
-  {
-    "student_email": "student46@maga.local",
-    "parent_email": "parent236@maga.local"
-  },
-  {
-    "student_email": "student47@maga.local",
-    "parent_email": "parent162@maga.local"
-  },
-  {
-    "student_email": "student48@maga.local",
-    "parent_email": "parent5@maga.local"
-  },
-  {
-    "student_email": "student49@maga.local",
-    "parent_email": "parent7@maga.local"
-  },
-  {
-    "student_email": "student50@maga.local",
-    "parent_email": "parent108@maga.local"
-  },
-  {
-    "student_email": "student51@maga.local",
-    "parent_email": "parent195@maga.local"
-  },
-  {
-    "student_email": "student52@maga.local",
-    "parent_email": "parent298@maga.local"
-  },
-  {
-    "student_email": "student53@maga.local",
-    "parent_email": "parent52@maga.local"
-  },
-  {
-    "student_email": "student54@maga.local",
-    "parent_email": "parent167@maga.local"
-  },
-  {
-    "student_email": "student55@maga.local",
-    "parent_email": "parent186@maga.local"
-  },
-  {
-    "student_email": "student56@maga.local",
-    "parent_email": "parent133@maga.local"
-  },
-  {
-    "student_email": "student57@maga.local",
-    "parent_email": "parent96@maga.local"
-  },
-  {
-    "student_email": "student58@maga.local",
-    "parent_email": "parent281@maga.local"
-  },
-  {
-    "student_email": "student59@maga.local",
-    "parent_email": "parent135@maga.local"
-  },
-  {
-    "student_email": "student60@maga.local",
-    "parent_email": "parent122@maga.local"
-  },
-  {
-    "student_email": "student61@maga.local",
-    "parent_email": "parent138@maga.local"
-  },
-  {
-    "student_email": "student62@maga.local",
-    "parent_email": "parent242@maga.local"
-  },
-  {
-    "student_email": "student63@maga.local",
-    "parent_email": "parent176@maga.local"
-  },
-  {
-    "student_email": "student64@maga.local",
-    "parent_email": "parent188@maga.local"
-  },
-  {
-    "student_email": "student65@maga.local",
-    "parent_email": "parent95@maga.local"
-  },
-  {
-    "student_email": "student66@maga.local",
-    "parent_email": "parent256@maga.local"
-  },
-  {
-    "student_email": "student67@maga.local",
-    "parent_email": "parent218@maga.local"
-  },
-  {
-    "student_email": "student68@maga.local",
-    "parent_email": "parent108@maga.local"
-  },
-  {
-    "student_email": "student69@maga.local",
-    "parent_email": "parent215@maga.local"
-  },
-  {
-    "student_email": "student70@maga.local",
-    "parent_email": "parent191@maga.local"
-  },
-  {
-    "student_email": "student71@maga.local",
-    "parent_email": "parent187@maga.local"
-  },
-  {
-    "student_email": "student72@maga.local",
-    "parent_email": "parent206@maga.local"
-  },
-  {
-    "student_email": "student73@maga.local",
-    "parent_email": "parent144@maga.local"
-  },
-  {
-    "student_email": "student74@maga.local",
-    "parent_email": "parent231@maga.local"
-  },
-  {
-    "student_email": "student75@maga.local",
-    "parent_email": "parent93@maga.local"
-  },
-  {
-    "student_email": "student76@maga.local",
-    "parent_email": "parent293@maga.local"
-  },
-  {
-    "student_email": "student77@maga.local",
-    "parent_email": "parent68@maga.local"
-  },
-  {
-    "student_email": "student78@maga.local",
-    "parent_email": "parent295@maga.local"
-  },
-  {
-    "student_email": "student79@maga.local",
-    "parent_email": "parent118@maga.local"
-  },
-  {
-    "student_email": "student80@maga.local",
-    "parent_email": "parent52@maga.local"
-  },
-  {
-    "student_email": "student81@maga.local",
-    "parent_email": "parent139@maga.local"
-  },
-  {
-    "student_email": "student82@maga.local",
-    "parent_email": "parent121@maga.local"
-  },
-  {
-    "student_email": "student83@maga.local",
-    "parent_email": "parent285@maga.local"
-  },
-  {
-    "student_email": "student84@maga.local",
-    "parent_email": "parent222@maga.local"
-  },
-  {
-    "student_email": "student85@maga.local",
-    "parent_email": "parent196@maga.local"
-  },
-  {
-    "student_email": "student86@maga.local",
-    "parent_email": "parent101@maga.local"
-  },
-  {
-    "student_email": "student87@maga.local",
-    "parent_email": "parent75@maga.local"
-  },
-  {
-    "student_email": "student88@maga.local",
-    "parent_email": "parent77@maga.local"
-  },
-  {
-    "student_email": "student89@maga.local",
-    "parent_email": "parent243@maga.local"
-  },
-  {
-    "student_email": "student90@maga.local",
-    "parent_email": "parent5@maga.local"
-  },
-  {
-    "student_email": "student91@maga.local",
-    "parent_email": "parent91@maga.local"
-  },
-  {
-    "student_email": "student92@maga.local",
-    "parent_email": "parent216@maga.local"
-  },
-  {
-    "student_email": "student93@maga.local",
-    "parent_email": "parent256@maga.local"
-  },
-  {
-    "student_email": "student94@maga.local",
-    "parent_email": "parent69@maga.local"
-  },
-  {
-    "student_email": "student95@maga.local",
-    "parent_email": "parent265@maga.local"
-  },
-  {
-    "student_email": "student96@maga.local",
-    "parent_email": "parent274@maga.local"
-  },
-  {
-    "student_email": "student97@maga.local",
-    "parent_email": "parent162@maga.local"
-  },
-  {
-    "student_email": "student98@maga.local",
-    "parent_email": "parent250@maga.local"
-  },
-  {
-    "student_email": "student99@maga.local",
-    "parent_email": "parent154@maga.local"
-  },
-  {
-    "student_email": "student100@maga.local",
-    "parent_email": "parent129@maga.local"
-  },
-  {
-    "student_email": "student101@maga.local",
-    "parent_email": "parent288@maga.local"
-  },
-  {
-    "student_email": "student102@maga.local",
-    "parent_email": "parent291@maga.local"
-  },
-  {
-    "student_email": "student103@maga.local",
-    "parent_email": "parent25@maga.local"
-  },
-  {
-    "student_email": "student104@maga.local",
-    "parent_email": "parent204@maga.local"
-  },
-  {
-    "student_email": "student105@maga.local",
-    "parent_email": "parent51@maga.local"
-  },
-  {
-    "student_email": "student106@maga.local",
-    "parent_email": "parent84@maga.local"
-  },
-  {
-    "student_email": "student107@maga.local",
-    "parent_email": "parent31@maga.local"
-  },
-  {
-    "student_email": "student108@maga.local",
-    "parent_email": "parent111@maga.local"
-  },
-  {
-    "student_email": "student109@maga.local",
-    "parent_email": "parent131@maga.local"
-  },
-  {
-    "student_email": "student110@maga.local",
-    "parent_email": "parent244@maga.local"
-  },
-  {
-    "student_email": "student111@maga.local",
-    "parent_email": "parent50@maga.local"
-  },
-  {
-    "student_email": "student112@maga.local",
-    "parent_email": "parent231@maga.local"
-  },
-  {
-    "student_email": "student113@maga.local",
-    "parent_email": "parent172@maga.local"
-  },
-  {
-    "student_email": "student114@maga.local",
-    "parent_email": "parent134@maga.local"
-  },
-  {
-    "student_email": "student115@maga.local",
-    "parent_email": "parent185@maga.local"
-  },
-  {
-    "student_email": "student116@maga.local",
-    "parent_email": "parent185@maga.local"
-  },
-  {
-    "student_email": "student117@maga.local",
-    "parent_email": "parent287@maga.local"
-  },
-  {
-    "student_email": "student118@maga.local",
-    "parent_email": "parent286@maga.local"
-  },
-  {
-    "student_email": "student119@maga.local",
-    "parent_email": "parent132@maga.local"
-  },
-  {
-    "student_email": "student120@maga.local",
-    "parent_email": "parent177@maga.local"
-  },
-  {
-    "student_email": "student121@maga.local",
-    "parent_email": "parent11@maga.local"
-  },
-  {
-    "student_email": "student122@maga.local",
-    "parent_email": "parent211@maga.local"
-  },
-  {
-    "student_email": "student123@maga.local",
-    "parent_email": "parent63@maga.local"
-  },
-  {
-    "student_email": "student124@maga.local",
-    "parent_email": "parent180@maga.local"
-  },
-  {
-    "student_email": "student125@maga.local",
-    "parent_email": "parent102@maga.local"
-  },
-  {
-    "student_email": "student126@maga.local",
-    "parent_email": "parent296@maga.local"
-  },
-  {
-    "student_email": "student127@maga.local",
-    "parent_email": "parent295@maga.local"
-  },
-  {
-    "student_email": "student128@maga.local",
-    "parent_email": "parent276@maga.local"
-  },
-  {
-    "student_email": "student129@maga.local",
-    "parent_email": "parent90@maga.local"
-  },
-  {
-    "student_email": "student130@maga.local",
-    "parent_email": "parent146@maga.local"
-  },
-  {
-    "student_email": "student131@maga.local",
-    "parent_email": "parent182@maga.local"
-  },
-  {
-    "student_email": "student132@maga.local",
-    "parent_email": "parent167@maga.local"
-  },
-  {
-    "student_email": "student133@maga.local",
-    "parent_email": "parent262@maga.local"
-  },
-  {
-    "student_email": "student134@maga.local",
-    "parent_email": "parent250@maga.local"
-  },
-  {
-    "student_email": "student135@maga.local",
-    "parent_email": "parent229@maga.local"
-  },
-  {
-    "student_email": "student136@maga.local",
-    "parent_email": "parent41@maga.local"
-  },
-  {
-    "student_email": "student137@maga.local",
-    "parent_email": "parent196@maga.local"
-  },
-  {
-    "student_email": "student138@maga.local",
-    "parent_email": "parent147@maga.local"
-  },
-  {
-    "student_email": "student139@maga.local",
-    "parent_email": "parent238@maga.local"
-  },
-  {
-    "student_email": "student140@maga.local",
-    "parent_email": "parent75@maga.local"
-  },
-  {
-    "student_email": "student141@maga.local",
-    "parent_email": "parent86@maga.local"
-  },
-  {
-    "student_email": "student142@maga.local",
-    "parent_email": "parent173@maga.local"
-  },
-  {
-    "student_email": "student143@maga.local",
-    "parent_email": "parent216@maga.local"
-  },
-  {
-    "student_email": "student144@maga.local",
-    "parent_email": "parent293@maga.local"
-  },
-  {
-    "student_email": "student145@maga.local",
-    "parent_email": "parent208@maga.local"
-  },
-  {
-    "student_email": "student146@maga.local",
-    "parent_email": "parent37@maga.local"
-  },
-  {
-    "student_email": "student147@maga.local",
-    "parent_email": "parent41@maga.local"
-  },
-  {
-    "student_email": "student148@maga.local",
-    "parent_email": "parent83@maga.local"
-  },
-  {
-    "student_email": "student149@maga.local",
-    "parent_email": "parent176@maga.local"
-  },
-  {
-    "student_email": "student150@maga.local",
-    "parent_email": "parent117@maga.local"
-  },
-  {
-    "student_email": "student151@maga.local",
-    "parent_email": "parent161@maga.local"
-  },
-  {
-    "student_email": "student152@maga.local",
-    "parent_email": "parent163@maga.local"
-  },
-  {
-    "student_email": "student153@maga.local",
-    "parent_email": "parent150@maga.local"
-  },
-  {
-    "student_email": "student154@maga.local",
-    "parent_email": "parent137@maga.local"
-  },
-  {
-    "student_email": "student155@maga.local",
-    "parent_email": "parent203@maga.local"
-  },
-  {
-    "student_email": "student156@maga.local",
-    "parent_email": "parent139@maga.local"
-  },
-  {
-    "student_email": "student157@maga.local",
-    "parent_email": "parent228@maga.local"
-  },
-  {
-    "student_email": "student158@maga.local",
-    "parent_email": "parent186@maga.local"
-  },
-  {
-    "student_email": "student159@maga.local",
-    "parent_email": "parent267@maga.local"
-  },
-  {
-    "student_email": "student160@maga.local",
-    "parent_email": "parent231@maga.local"
-  },
-  {
-    "student_email": "student161@maga.local",
-    "parent_email": "parent212@maga.local"
-  },
-  {
-    "student_email": "student162@maga.local",
-    "parent_email": "parent86@maga.local"
-  },
-  {
-    "student_email": "student163@maga.local",
-    "parent_email": "parent95@maga.local"
-  },
-  {
-    "student_email": "student164@maga.local",
-    "parent_email": "parent12@maga.local"
-  },
-  {
-    "student_email": "student165@maga.local",
-    "parent_email": "parent65@maga.local"
-  },
-  {
-    "student_email": "student166@maga.local",
-    "parent_email": "parent121@maga.local"
-  },
-  {
-    "student_email": "student167@maga.local",
-    "parent_email": "parent129@maga.local"
-  },
-  {
-    "student_email": "student168@maga.local",
-    "parent_email": "parent41@maga.local"
-  },
-  {
-    "student_email": "student169@maga.local",
-    "parent_email": "parent108@maga.local"
-  },
-  {
-    "student_email": "student170@maga.local",
-    "parent_email": "parent86@maga.local"
-  },
-  {
-    "student_email": "student171@maga.local",
-    "parent_email": "parent204@maga.local"
-  },
-  {
-    "student_email": "student172@maga.local",
-    "parent_email": "parent53@maga.local"
-  },
-  {
-    "student_email": "student173@maga.local",
-    "parent_email": "parent49@maga.local"
-  },
-  {
-    "student_email": "student174@maga.local",
-    "parent_email": "parent33@maga.local"
-  },
-  {
-    "student_email": "student175@maga.local",
-    "parent_email": "parent243@maga.local"
-  },
-  {
-    "student_email": "student176@maga.local",
-    "parent_email": "parent281@maga.local"
-  },
-  {
-    "student_email": "student177@maga.local",
-    "parent_email": "parent28@maga.local"
-  },
-  {
-    "student_email": "student178@maga.local",
-    "parent_email": "parent14@maga.local"
-  },
-  {
-    "student_email": "student179@maga.local",
-    "parent_email": "parent204@maga.local"
-  },
-  {
-    "student_email": "student180@maga.local",
-    "parent_email": "parent269@maga.local"
-  },
-  {
-    "student_email": "student181@maga.local",
-    "parent_email": "parent43@maga.local"
-  },
-  {
-    "student_email": "student182@maga.local",
-    "parent_email": "parent54@maga.local"
-  },
-  {
-    "student_email": "student183@maga.local",
-    "parent_email": "parent135@maga.local"
-  },
-  {
-    "student_email": "student184@maga.local",
-    "parent_email": "parent80@maga.local"
-  },
-  {
-    "student_email": "student185@maga.local",
-    "parent_email": "parent44@maga.local"
-  },
-  {
-    "student_email": "student186@maga.local",
-    "parent_email": "parent200@maga.local"
-  },
-  {
-    "student_email": "student187@maga.local",
-    "parent_email": "parent159@maga.local"
-  },
-  {
-    "student_email": "student188@maga.local",
-    "parent_email": "parent118@maga.local"
-  },
-  {
-    "student_email": "student189@maga.local",
-    "parent_email": "parent127@maga.local"
-  },
-  {
-    "student_email": "student190@maga.local",
-    "parent_email": "parent146@maga.local"
-  },
-  {
-    "student_email": "student191@maga.local",
-    "parent_email": "parent227@maga.local"
-  },
-  {
-    "student_email": "student192@maga.local",
-    "parent_email": "parent65@maga.local"
-  },
-  {
-    "student_email": "student193@maga.local",
-    "parent_email": "parent68@maga.local"
-  },
-  {
-    "student_email": "student194@maga.local",
-    "parent_email": "parent270@maga.local"
-  },
-  {
-    "student_email": "student195@maga.local",
-    "parent_email": "parent88@maga.local"
-  },
-  {
-    "student_email": "student196@maga.local",
-    "parent_email": "parent15@maga.local"
-  },
-  {
-    "student_email": "student197@maga.local",
-    "parent_email": "parent18@maga.local"
-  },
-  {
-    "student_email": "student198@maga.local",
-    "parent_email": "parent183@maga.local"
-  },
-  {
-    "student_email": "student199@maga.local",
-    "parent_email": "parent167@maga.local"
-  },
-  {
-    "student_email": "student200@maga.local",
-    "parent_email": "parent244@maga.local"
-  },
-  {
-    "student_email": "student201@maga.local",
-    "parent_email": "parent240@maga.local"
-  },
-  {
-    "student_email": "student202@maga.local",
-    "parent_email": "parent277@maga.local"
-  },
-  {
-    "student_email": "student203@maga.local",
-    "parent_email": "parent140@maga.local"
-  },
-  {
-    "student_email": "student204@maga.local",
-    "parent_email": "parent281@maga.local"
-  },
-  {
-    "student_email": "student205@maga.local",
-    "parent_email": "parent228@maga.local"
-  },
-  {
-    "student_email": "student206@maga.local",
-    "parent_email": "parent70@maga.local"
-  },
-  {
-    "student_email": "student207@maga.local",
-    "parent_email": "parent277@maga.local"
-  },
-  {
-    "student_email": "student208@maga.local",
-    "parent_email": "parent91@maga.local"
-  },
-  {
-    "student_email": "student209@maga.local",
-    "parent_email": "parent234@maga.local"
-  },
-  {
-    "student_email": "student210@maga.local",
-    "parent_email": "parent289@maga.local"
-  },
-  {
-    "student_email": "student211@maga.local",
-    "parent_email": "parent223@maga.local"
-  },
-  {
-    "student_email": "student212@maga.local",
-    "parent_email": "parent269@maga.local"
-  },
-  {
-    "student_email": "student213@maga.local",
-    "parent_email": "parent274@maga.local"
-  },
-  {
-    "student_email": "student214@maga.local",
-    "parent_email": "parent159@maga.local"
-  },
-  {
-    "student_email": "student215@maga.local",
-    "parent_email": "parent178@maga.local"
-  },
-  {
-    "student_email": "student216@maga.local",
-    "parent_email": "parent247@maga.local"
-  },
-  {
-    "student_email": "student217@maga.local",
-    "parent_email": "parent277@maga.local"
-  },
-  {
-    "student_email": "student218@maga.local",
-    "parent_email": "parent117@maga.local"
-  },
-  {
-    "student_email": "student219@maga.local",
-    "parent_email": "parent46@maga.local"
-  },
-  {
-    "student_email": "student220@maga.local",
-    "parent_email": "parent227@maga.local"
-  },
-  {
-    "student_email": "student221@maga.local",
-    "parent_email": "parent158@maga.local"
-  },
-  {
-    "student_email": "student222@maga.local",
-    "parent_email": "parent188@maga.local"
-  },
-  {
-    "student_email": "student223@maga.local",
-    "parent_email": "parent212@maga.local"
-  },
-  {
-    "student_email": "student224@maga.local",
-    "parent_email": "parent134@maga.local"
-  },
-  {
-    "student_email": "student225@maga.local",
-    "parent_email": "parent80@maga.local"
-  },
-  {
-    "student_email": "student226@maga.local",
-    "parent_email": "parent156@maga.local"
-  },
-  {
-    "student_email": "student227@maga.local",
-    "parent_email": "parent6@maga.local"
-  },
-  {
-    "student_email": "student228@maga.local",
-    "parent_email": "parent1@maga.local"
-  },
-  {
-    "student_email": "student229@maga.local",
-    "parent_email": "parent268@maga.local"
-  },
-  {
-    "student_email": "student230@maga.local",
-    "parent_email": "parent70@maga.local"
-  },
-  {
-    "student_email": "student231@maga.local",
-    "parent_email": "parent177@maga.local"
-  },
-  {
-    "student_email": "student232@maga.local",
-    "parent_email": "parent147@maga.local"
-  },
-  {
-    "student_email": "student233@maga.local",
-    "parent_email": "parent241@maga.local"
-  },
-  {
-    "student_email": "student234@maga.local",
-    "parent_email": "parent274@maga.local"
-  },
-  {
-    "student_email": "student235@maga.local",
-    "parent_email": "parent5@maga.local"
-  },
-  {
-    "student_email": "student236@maga.local",
-    "parent_email": "parent252@maga.local"
-  },
-  {
-    "student_email": "student237@maga.local",
-    "parent_email": "parent245@maga.local"
-  },
-  {
-    "student_email": "student238@maga.local",
-    "parent_email": "parent154@maga.local"
-  },
-  {
-    "student_email": "student239@maga.local",
-    "parent_email": "parent5@maga.local"
-  },
-  {
-    "student_email": "student240@maga.local",
-    "parent_email": "parent221@maga.local"
-  },
-  {
-    "student_email": "student241@maga.local",
-    "parent_email": "parent150@maga.local"
-  },
-  {
-    "student_email": "student242@maga.local",
-    "parent_email": "parent119@maga.local"
-  },
-  {
-    "student_email": "student243@maga.local",
-    "parent_email": "parent4@maga.local"
-  },
-  {
-    "student_email": "student244@maga.local",
-    "parent_email": "parent281@maga.local"
-  },
-  {
-    "student_email": "student245@maga.local",
-    "parent_email": "parent192@maga.local"
-  },
-  {
-    "student_email": "student246@maga.local",
-    "parent_email": "parent97@maga.local"
-  },
-  {
-    "student_email": "student247@maga.local",
-    "parent_email": "parent211@maga.local"
-  },
-  {
-    "student_email": "student248@maga.local",
-    "parent_email": "parent288@maga.local"
-  },
-  {
-    "student_email": "student249@maga.local",
-    "parent_email": "parent224@maga.local"
-  },
-  {
-    "student_email": "student250@maga.local",
-    "parent_email": "parent203@maga.local"
-  },
-  {
-    "student_email": "student251@maga.local",
-    "parent_email": "parent128@maga.local"
-  },
-  {
-    "student_email": "student252@maga.local",
-    "parent_email": "parent84@maga.local"
-  },
-  {
-    "student_email": "student253@maga.local",
-    "parent_email": "parent200@maga.local"
-  },
-  {
-    "student_email": "student254@maga.local",
-    "parent_email": "parent194@maga.local"
-  },
-  {
-    "student_email": "student255@maga.local",
-    "parent_email": "parent113@maga.local"
-  },
-  {
-    "student_email": "student256@maga.local",
-    "parent_email": "parent135@maga.local"
-  },
-  {
-    "student_email": "student257@maga.local",
-    "parent_email": "parent41@maga.local"
-  },
-  {
-    "student_email": "student258@maga.local",
-    "parent_email": "parent217@maga.local"
-  },
-  {
-    "student_email": "student259@maga.local",
-    "parent_email": "parent123@maga.local"
-  },
-  {
-    "student_email": "student260@maga.local",
-    "parent_email": "parent265@maga.local"
-  },
-  {
-    "student_email": "student261@maga.local",
-    "parent_email": "parent140@maga.local"
-  },
-  {
-    "student_email": "student262@maga.local",
-    "parent_email": "parent146@maga.local"
-  },
-  {
-    "student_email": "student263@maga.local",
     "parent_email": "parent273@maga.local"
   },
   {
-    "student_email": "student264@maga.local",
+    "student_email": "student3@maga.local",
     "parent_email": "parent138@maga.local"
   },
   {
-    "student_email": "student265@maga.local",
+    "student_email": "student4@maga.local",
     "parent_email": "parent212@maga.local"
   },
   {
-    "student_email": "student266@maga.local",
+    "student_email": "student5@maga.local",
     "parent_email": "parent97@maga.local"
   },
   {
-    "student_email": "student267@maga.local",
+    "student_email": "student6@maga.local",
     "parent_email": "parent36@maga.local"
   },
   {
-    "student_email": "student268@maga.local",
+    "student_email": "student7@maga.local",
     "parent_email": "parent94@maga.local"
   },
   {
-    "student_email": "student269@maga.local",
+    "student_email": "student8@maga.local",
     "parent_email": "parent70@maga.local"
   },
   {
-    "student_email": "student270@maga.local",
+    "student_email": "student9@maga.local",
     "parent_email": "parent149@maga.local"
   },
   {
-    "student_email": "student271@maga.local",
+    "student_email": "student10@maga.local",
     "parent_email": "parent57@maga.local"
   },
   {
-    "student_email": "student272@maga.local",
+    "student_email": "student11@maga.local",
     "parent_email": "parent234@maga.local"
   },
   {
-    "student_email": "student273@maga.local",
+    "student_email": "student12@maga.local",
+    "parent_email": "parent317@maga.local"
+  },
+  {
+    "student_email": "student13@maga.local",
     "parent_email": "parent232@maga.local"
   },
   {
-    "student_email": "student274@maga.local",
+    "student_email": "student14@maga.local",
     "parent_email": "parent140@maga.local"
   },
   {
-    "student_email": "student275@maga.local",
+    "student_email": "student15@maga.local",
+    "parent_email": "parent319@maga.local"
+  },
+  {
+    "student_email": "student16@maga.local",
     "parent_email": "parent252@maga.local"
   },
   {
-    "student_email": "student276@maga.local",
+    "student_email": "student17@maga.local",
     "parent_email": "parent97@maga.local"
   },
   {
-    "student_email": "student277@maga.local",
+    "student_email": "student18@maga.local",
     "parent_email": "parent165@maga.local"
   },
   {
-    "student_email": "student278@maga.local",
+    "student_email": "student19@maga.local",
     "parent_email": "parent10@maga.local"
   },
   {
-    "student_email": "student279@maga.local",
+    "student_email": "student20@maga.local",
     "parent_email": "parent78@maga.local"
   },
   {
-    "student_email": "student280@maga.local",
+    "student_email": "student21@maga.local",
     "parent_email": "parent26@maga.local"
   },
   {
-    "student_email": "student281@maga.local",
+    "student_email": "student22@maga.local",
     "parent_email": "parent274@maga.local"
   },
   {
-    "student_email": "student282@maga.local",
+    "student_email": "student23@maga.local",
     "parent_email": "parent12@maga.local"
   },
   {
-    "student_email": "student283@maga.local",
+    "student_email": "student24@maga.local",
     "parent_email": "parent96@maga.local"
   },
   {
-    "student_email": "student284@maga.local",
+    "student_email": "student25@maga.local",
     "parent_email": "parent53@maga.local"
   },
   {
-    "student_email": "student285@maga.local",
+    "student_email": "student26@maga.local",
     "parent_email": "parent145@maga.local"
   },
   {
-    "student_email": "student286@maga.local",
+    "student_email": "student27@maga.local",
     "parent_email": "parent138@maga.local"
   },
   {
-    "student_email": "student287@maga.local",
+    "student_email": "student28@maga.local",
     "parent_email": "parent65@maga.local"
   },
   {
-    "student_email": "student288@maga.local",
+    "student_email": "student29@maga.local",
     "parent_email": "parent225@maga.local"
   },
   {
-    "student_email": "student289@maga.local",
+    "student_email": "student30@maga.local",
     "parent_email": "parent5@maga.local"
   },
   {
-    "student_email": "student290@maga.local",
+    "student_email": "student31@maga.local",
     "parent_email": "parent120@maga.local"
   },
   {
-    "student_email": "student291@maga.local",
+    "student_email": "student32@maga.local",
     "parent_email": "parent47@maga.local"
   },
   {
-    "student_email": "student292@maga.local",
+    "student_email": "student33@maga.local",
     "parent_email": "parent78@maga.local"
   },
   {
-    "student_email": "student293@maga.local",
+    "student_email": "student34@maga.local",
     "parent_email": "parent8@maga.local"
   },
   {
-    "student_email": "student294@maga.local",
+    "student_email": "student35@maga.local",
     "parent_email": "parent253@maga.local"
   },
   {
-    "student_email": "student295@maga.local",
+    "student_email": "student36@maga.local",
     "parent_email": "parent112@maga.local"
   },
   {
-    "student_email": "student296@maga.local",
+    "student_email": "student37@maga.local",
     "parent_email": "parent176@maga.local"
   },
   {
-    "student_email": "student297@maga.local",
+    "student_email": "student38@maga.local",
     "parent_email": "parent216@maga.local"
   },
   {
-    "student_email": "student298@maga.local",
+    "student_email": "student39@maga.local",
     "parent_email": "parent160@maga.local"
   },
   {
-    "student_email": "student299@maga.local",
+    "student_email": "student40@maga.local",
     "parent_email": "parent256@maga.local"
   },
   {
-    "student_email": "student300@maga.local",
+    "student_email": "student41@maga.local",
     "parent_email": "parent191@maga.local"
   },
   {
-    "student_email": "student301@maga.local",
+    "student_email": "student42@maga.local",
     "parent_email": "parent238@maga.local"
   },
   {
-    "student_email": "student302@maga.local",
+    "student_email": "student43@maga.local",
     "parent_email": "parent17@maga.local"
   },
   {
-    "student_email": "student303@maga.local",
+    "student_email": "student44@maga.local",
     "parent_email": "parent170@maga.local"
   },
   {
-    "student_email": "student304@maga.local",
+    "student_email": "student45@maga.local",
     "parent_email": "parent42@maga.local"
   },
   {
-    "student_email": "student305@maga.local",
+    "student_email": "student46@maga.local",
     "parent_email": "parent75@maga.local"
   },
   {
-    "student_email": "student306@maga.local",
+    "student_email": "student47@maga.local",
     "parent_email": "parent29@maga.local"
   },
   {
-    "student_email": "student307@maga.local",
+    "student_email": "student48@maga.local",
     "parent_email": "parent137@maga.local"
   },
   {
-    "student_email": "student308@maga.local",
+    "student_email": "student49@maga.local",
     "parent_email": "parent201@maga.local"
   },
   {
-    "student_email": "student309@maga.local",
+    "student_email": "student50@maga.local",
     "parent_email": "parent37@maga.local"
   },
   {
-    "student_email": "student310@maga.local",
+    "student_email": "student51@maga.local",
     "parent_email": "parent279@maga.local"
   },
   {
-    "student_email": "student311@maga.local",
+    "student_email": "student52@maga.local",
     "parent_email": "parent241@maga.local"
   },
   {
-    "student_email": "student312@maga.local",
+    "student_email": "student53@maga.local",
     "parent_email": "parent93@maga.local"
   },
   {
-    "student_email": "student313@maga.local",
+    "student_email": "student54@maga.local",
     "parent_email": "parent99@maga.local"
   },
   {
-    "student_email": "student314@maga.local",
+    "student_email": "student55@maga.local",
     "parent_email": "parent129@maga.local"
   },
   {
-    "student_email": "student315@maga.local",
+    "student_email": "student56@maga.local",
     "parent_email": "parent196@maga.local"
   },
   {
-    "student_email": "student316@maga.local",
+    "student_email": "student57@maga.local",
     "parent_email": "parent7@maga.local"
   },
   {
-    "student_email": "student317@maga.local",
+    "student_email": "student58@maga.local",
     "parent_email": "parent63@maga.local"
   },
   {
-    "student_email": "student318@maga.local",
+    "student_email": "student59@maga.local",
     "parent_email": "parent128@maga.local"
   },
   {
-    "student_email": "student319@maga.local",
+    "student_email": "student60@maga.local",
     "parent_email": "parent198@maga.local"
   },
   {
-    "student_email": "student320@maga.local",
+    "student_email": "student61@maga.local",
     "parent_email": "parent227@maga.local"
   },
   {
-    "student_email": "student321@maga.local",
+    "student_email": "student62@maga.local",
     "parent_email": "parent127@maga.local"
   },
   {
-    "student_email": "student322@maga.local",
+    "student_email": "student63@maga.local",
     "parent_email": "parent18@maga.local"
   },
   {
-    "student_email": "student323@maga.local",
+    "student_email": "student64@maga.local",
     "parent_email": "parent102@maga.local"
   },
   {
-    "student_email": "student324@maga.local",
+    "student_email": "student65@maga.local",
     "parent_email": "parent236@maga.local"
   },
   {
-    "student_email": "student325@maga.local",
+    "student_email": "student66@maga.local",
     "parent_email": "parent49@maga.local"
   },
   {
-    "student_email": "student326@maga.local",
+    "student_email": "student67@maga.local",
     "parent_email": "parent267@maga.local"
   },
   {
-    "student_email": "student327@maga.local",
+    "student_email": "student68@maga.local",
     "parent_email": "parent107@maga.local"
   },
   {
-    "student_email": "student328@maga.local",
+    "student_email": "student69@maga.local",
     "parent_email": "parent243@maga.local"
   },
   {
-    "student_email": "student329@maga.local",
+    "student_email": "student70@maga.local",
     "parent_email": "parent200@maga.local"
   },
   {
-    "student_email": "student330@maga.local",
+    "student_email": "student71@maga.local",
     "parent_email": "parent160@maga.local"
   },
   {
-    "student_email": "student331@maga.local",
+    "student_email": "student72@maga.local",
     "parent_email": "parent166@maga.local"
   },
   {
-    "student_email": "student332@maga.local",
+    "student_email": "student73@maga.local",
     "parent_email": "parent82@maga.local"
   },
   {
-    "student_email": "student333@maga.local",
+    "student_email": "student74@maga.local",
     "parent_email": "parent22@maga.local"
   },
   {
-    "student_email": "student334@maga.local",
+    "student_email": "student75@maga.local",
     "parent_email": "parent282@maga.local"
   },
   {
-    "student_email": "student335@maga.local",
+    "student_email": "student76@maga.local",
     "parent_email": "parent267@maga.local"
   },
   {
-    "student_email": "student336@maga.local",
+    "student_email": "student77@maga.local",
     "parent_email": "parent63@maga.local"
   },
   {
-    "student_email": "student337@maga.local",
+    "student_email": "student78@maga.local",
     "parent_email": "parent130@maga.local"
   },
   {
-    "student_email": "student338@maga.local",
+    "student_email": "student79@maga.local",
     "parent_email": "parent247@maga.local"
   },
   {
-    "student_email": "student339@maga.local",
+    "student_email": "student80@maga.local",
     "parent_email": "parent153@maga.local"
   },
   {
-    "student_email": "student340@maga.local",
+    "student_email": "student81@maga.local",
     "parent_email": "parent102@maga.local"
   },
   {
-    "student_email": "student341@maga.local",
+    "student_email": "student82@maga.local",
     "parent_email": "parent185@maga.local"
   },
   {
-    "student_email": "student342@maga.local",
+    "student_email": "student83@maga.local",
     "parent_email": "parent27@maga.local"
   },
   {
-    "student_email": "student343@maga.local",
+    "student_email": "student84@maga.local",
     "parent_email": "parent112@maga.local"
   },
   {
-    "student_email": "student344@maga.local",
+    "student_email": "student85@maga.local",
     "parent_email": "parent58@maga.local"
   },
   {
-    "student_email": "student345@maga.local",
+    "student_email": "student86@maga.local",
     "parent_email": "parent121@maga.local"
   },
   {
-    "student_email": "student346@maga.local",
+    "student_email": "student87@maga.local",
     "parent_email": "parent223@maga.local"
   },
   {
-    "student_email": "student347@maga.local",
+    "student_email": "student88@maga.local",
     "parent_email": "parent167@maga.local"
   },
   {
-    "student_email": "student348@maga.local",
+    "student_email": "student89@maga.local",
     "parent_email": "parent8@maga.local"
   },
   {
-    "student_email": "student349@maga.local",
+    "student_email": "student90@maga.local",
     "parent_email": "parent86@maga.local"
   },
   {
-    "student_email": "student350@maga.local",
+    "student_email": "student91@maga.local",
     "parent_email": "parent142@maga.local"
   },
   {
-    "student_email": "student351@maga.local",
+    "student_email": "student92@maga.local",
     "parent_email": "parent300@maga.local"
   },
   {
-    "student_email": "student352@maga.local",
+    "student_email": "student93@maga.local",
     "parent_email": "parent62@maga.local"
   },
   {
-    "student_email": "student353@maga.local",
+    "student_email": "student94@maga.local",
     "parent_email": "parent203@maga.local"
   },
   {
-    "student_email": "student354@maga.local",
+    "student_email": "student95@maga.local",
     "parent_email": "parent125@maga.local"
   },
   {
-    "student_email": "student355@maga.local",
+    "student_email": "student96@maga.local",
     "parent_email": "parent5@maga.local"
   },
   {
-    "student_email": "student356@maga.local",
+    "student_email": "student97@maga.local",
     "parent_email": "parent22@maga.local"
   },
   {
-    "student_email": "student357@maga.local",
+    "student_email": "student98@maga.local",
     "parent_email": "parent298@maga.local"
   },
   {
-    "student_email": "student358@maga.local",
+    "student_email": "student99@maga.local",
     "parent_email": "parent244@maga.local"
   },
   {
-    "student_email": "student359@maga.local",
+    "student_email": "student100@maga.local",
+    "parent_email": "parent306@maga.local"
+  },
+  {
+    "student_email": "student101@maga.local",
     "parent_email": "parent80@maga.local"
   },
   {
-    "student_email": "student360@maga.local",
+    "student_email": "student102@maga.local",
     "parent_email": "parent191@maga.local"
   },
   {
-    "student_email": "student361@maga.local",
+    "student_email": "student103@maga.local",
     "parent_email": "parent46@maga.local"
   },
   {
-    "student_email": "student362@maga.local",
+    "student_email": "student104@maga.local",
     "parent_email": "parent128@maga.local"
   },
   {
-    "student_email": "student363@maga.local",
+    "student_email": "student105@maga.local",
     "parent_email": "parent81@maga.local"
   },
   {
-    "student_email": "student364@maga.local",
+    "student_email": "student106@maga.local",
     "parent_email": "parent256@maga.local"
   },
   {
-    "student_email": "student365@maga.local",
+    "student_email": "student107@maga.local",
     "parent_email": "parent47@maga.local"
   },
   {
-    "student_email": "student366@maga.local",
+    "student_email": "student108@maga.local",
+    "parent_email": "parent317@maga.local"
+  },
+  {
+    "student_email": "student109@maga.local",
     "parent_email": "parent174@maga.local"
   },
   {
-    "student_email": "student367@maga.local",
+    "student_email": "student110@maga.local",
     "parent_email": "parent31@maga.local"
   },
   {
-    "student_email": "student368@maga.local",
+    "student_email": "student111@maga.local",
     "parent_email": "parent31@maga.local"
   },
   {
-    "student_email": "student369@maga.local",
+    "student_email": "student112@maga.local",
     "parent_email": "parent183@maga.local"
   },
   {
-    "student_email": "student370@maga.local",
+    "student_email": "student113@maga.local",
     "parent_email": "parent79@maga.local"
   },
   {
-    "student_email": "student371@maga.local",
+    "student_email": "student114@maga.local",
     "parent_email": "parent275@maga.local"
   },
   {
-    "student_email": "student372@maga.local",
+    "student_email": "student115@maga.local",
     "parent_email": "parent55@maga.local"
   },
   {
-    "student_email": "student373@maga.local",
+    "student_email": "student116@maga.local",
     "parent_email": "parent65@maga.local"
   },
   {
-    "student_email": "student374@maga.local",
+    "student_email": "student117@maga.local",
     "parent_email": "parent250@maga.local"
   },
   {
-    "student_email": "student375@maga.local",
+    "student_email": "student118@maga.local",
     "parent_email": "parent120@maga.local"
   },
   {
-    "student_email": "student376@maga.local",
+    "student_email": "student119@maga.local",
     "parent_email": "parent163@maga.local"
   },
   {
-    "student_email": "student377@maga.local",
+    "student_email": "student120@maga.local",
     "parent_email": "parent286@maga.local"
   },
   {
-    "student_email": "student378@maga.local",
+    "student_email": "student121@maga.local",
     "parent_email": "parent178@maga.local"
   },
   {
-    "student_email": "student379@maga.local",
+    "student_email": "student122@maga.local",
     "parent_email": "parent225@maga.local"
   },
   {
-    "student_email": "student380@maga.local",
+    "student_email": "student123@maga.local",
     "parent_email": "parent99@maga.local"
   },
   {
-    "student_email": "student381@maga.local",
+    "student_email": "student124@maga.local",
     "parent_email": "parent11@maga.local"
   },
   {
-    "student_email": "student382@maga.local",
+    "student_email": "student125@maga.local",
     "parent_email": "parent194@maga.local"
   },
   {
-    "student_email": "student383@maga.local",
+    "student_email": "student126@maga.local",
     "parent_email": "parent184@maga.local"
   },
   {
-    "student_email": "student384@maga.local",
+    "student_email": "student127@maga.local",
     "parent_email": "parent69@maga.local"
   },
   {
-    "student_email": "student385@maga.local",
+    "student_email": "student128@maga.local",
     "parent_email": "parent129@maga.local"
   },
   {
-    "student_email": "student386@maga.local",
+    "student_email": "student129@maga.local",
     "parent_email": "parent21@maga.local"
   },
   {
-    "student_email": "student387@maga.local",
+    "student_email": "student130@maga.local",
     "parent_email": "parent249@maga.local"
   },
   {
-    "student_email": "student388@maga.local",
+    "student_email": "student131@maga.local",
     "parent_email": "parent225@maga.local"
   },
   {
-    "student_email": "student389@maga.local",
+    "student_email": "student132@maga.local",
     "parent_email": "parent287@maga.local"
   },
   {
-    "student_email": "student390@maga.local",
+    "student_email": "student133@maga.local",
     "parent_email": "parent151@maga.local"
   },
   {
-    "student_email": "student391@maga.local",
+    "student_email": "student134@maga.local",
     "parent_email": "parent278@maga.local"
   },
   {
-    "student_email": "student392@maga.local",
+    "student_email": "student135@maga.local",
     "parent_email": "parent251@maga.local"
   },
   {
-    "student_email": "student393@maga.local",
+    "student_email": "student136@maga.local",
     "parent_email": "parent98@maga.local"
   },
   {
-    "student_email": "student394@maga.local",
+    "student_email": "student137@maga.local",
     "parent_email": "parent291@maga.local"
   },
   {
-    "student_email": "student395@maga.local",
+    "student_email": "student138@maga.local",
     "parent_email": "parent96@maga.local"
   },
   {
-    "student_email": "student396@maga.local",
+    "student_email": "student139@maga.local",
     "parent_email": "parent279@maga.local"
   },
   {
-    "student_email": "student397@maga.local",
+    "student_email": "student140@maga.local",
     "parent_email": "parent179@maga.local"
   },
   {
-    "student_email": "student398@maga.local",
+    "student_email": "student141@maga.local",
     "parent_email": "parent166@maga.local"
   },
   {
-    "student_email": "student399@maga.local",
+    "student_email": "student142@maga.local",
     "parent_email": "parent240@maga.local"
   },
   {
-    "student_email": "student400@maga.local",
+    "student_email": "student143@maga.local",
     "parent_email": "parent141@maga.local"
+  },
+  {
+    "student_email": "student144@maga.local",
+    "parent_email": "parent307@maga.local"
+  },
+  {
+    "student_email": "student145@maga.local",
+    "parent_email": "parent284@maga.local"
+  },
+  {
+    "student_email": "student146@maga.local",
+    "parent_email": "parent83@maga.local"
+  },
+  {
+    "student_email": "student147@maga.local",
+    "parent_email": "parent36@maga.local"
+  },
+  {
+    "student_email": "student148@maga.local",
+    "parent_email": "parent272@maga.local"
+  },
+  {
+    "student_email": "student149@maga.local",
+    "parent_email": "parent80@maga.local"
+  },
+  {
+    "student_email": "student150@maga.local",
+    "parent_email": "parent231@maga.local"
+  },
+  {
+    "student_email": "student151@maga.local",
+    "parent_email": "parent152@maga.local"
+  },
+  {
+    "student_email": "student152@maga.local",
+    "parent_email": "parent135@maga.local"
+  },
+  {
+    "student_email": "student153@maga.local",
+    "parent_email": "parent278@maga.local"
+  },
+  {
+    "student_email": "student154@maga.local",
+    "parent_email": "parent188@maga.local"
+  },
+  {
+    "student_email": "student155@maga.local",
+    "parent_email": "parent233@maga.local"
+  },
+  {
+    "student_email": "student156@maga.local",
+    "parent_email": "parent1@maga.local"
+  },
+  {
+    "student_email": "student157@maga.local",
+    "parent_email": "parent260@maga.local"
+  },
+  {
+    "student_email": "student158@maga.local",
+    "parent_email": "parent195@maga.local"
+  },
+  {
+    "student_email": "student159@maga.local",
+    "parent_email": "parent95@maga.local"
+  },
+  {
+    "student_email": "student160@maga.local",
+    "parent_email": "parent10@maga.local"
+  },
+  {
+    "student_email": "student161@maga.local",
+    "parent_email": "parent318@maga.local"
+  },
+  {
+    "student_email": "student162@maga.local",
+    "parent_email": "parent187@maga.local"
+  },
+  {
+    "student_email": "student163@maga.local",
+    "parent_email": "parent318@maga.local"
+  },
+  {
+    "student_email": "student164@maga.local",
+    "parent_email": "parent123@maga.local"
+  },
+  {
+    "student_email": "student165@maga.local",
+    "parent_email": "parent165@maga.local"
+  },
+  {
+    "student_email": "student166@maga.local",
+    "parent_email": "parent33@maga.local"
+  },
+  {
+    "student_email": "student167@maga.local",
+    "parent_email": "parent276@maga.local"
+  },
+  {
+    "student_email": "student168@maga.local",
+    "parent_email": "parent199@maga.local"
+  },
+  {
+    "student_email": "student169@maga.local",
+    "parent_email": "parent98@maga.local"
+  },
+  {
+    "student_email": "student170@maga.local",
+    "parent_email": "parent269@maga.local"
+  },
+  {
+    "student_email": "student171@maga.local",
+    "parent_email": "parent255@maga.local"
+  },
+  {
+    "student_email": "student172@maga.local",
+    "parent_email": "parent283@maga.local"
+  },
+  {
+    "student_email": "student173@maga.local",
+    "parent_email": "parent79@maga.local"
+  },
+  {
+    "student_email": "student174@maga.local",
+    "parent_email": "parent314@maga.local"
+  },
+  {
+    "student_email": "student175@maga.local",
+    "parent_email": "parent145@maga.local"
+  },
+  {
+    "student_email": "student176@maga.local",
+    "parent_email": "parent166@maga.local"
+  },
+  {
+    "student_email": "student177@maga.local",
+    "parent_email": "parent210@maga.local"
+  },
+  {
+    "student_email": "student178@maga.local",
+    "parent_email": "parent165@maga.local"
+  },
+  {
+    "student_email": "student179@maga.local",
+    "parent_email": "parent57@maga.local"
+  },
+  {
+    "student_email": "student180@maga.local",
+    "parent_email": "parent50@maga.local"
+  },
+  {
+    "student_email": "student181@maga.local",
+    "parent_email": "parent268@maga.local"
+  },
+  {
+    "student_email": "student182@maga.local",
+    "parent_email": "parent35@maga.local"
+  },
+  {
+    "student_email": "student183@maga.local",
+    "parent_email": "parent23@maga.local"
+  },
+  {
+    "student_email": "student184@maga.local",
+    "parent_email": "parent67@maga.local"
+  },
+  {
+    "student_email": "student185@maga.local",
+    "parent_email": "parent92@maga.local"
+  },
+  {
+    "student_email": "student186@maga.local",
+    "parent_email": "parent17@maga.local"
+  },
+  {
+    "student_email": "student187@maga.local",
+    "parent_email": "parent104@maga.local"
+  },
+  {
+    "student_email": "student188@maga.local",
+    "parent_email": "parent55@maga.local"
+  },
+  {
+    "student_email": "student189@maga.local",
+    "parent_email": "parent249@maga.local"
+  },
+  {
+    "student_email": "student190@maga.local",
+    "parent_email": "parent99@maga.local"
+  },
+  {
+    "student_email": "student191@maga.local",
+    "parent_email": "parent51@maga.local"
+  },
+  {
+    "student_email": "student192@maga.local",
+    "parent_email": "parent17@maga.local"
+  },
+  {
+    "student_email": "student193@maga.local",
+    "parent_email": "parent293@maga.local"
+  },
+  {
+    "student_email": "student194@maga.local",
+    "parent_email": "parent199@maga.local"
+  },
+  {
+    "student_email": "student195@maga.local",
+    "parent_email": "parent251@maga.local"
+  },
+  {
+    "student_email": "student196@maga.local",
+    "parent_email": "parent270@maga.local"
+  },
+  {
+    "student_email": "student197@maga.local",
+    "parent_email": "parent320@maga.local"
+  },
+  {
+    "student_email": "student198@maga.local",
+    "parent_email": "parent303@maga.local"
+  },
+  {
+    "student_email": "student199@maga.local",
+    "parent_email": "parent132@maga.local"
+  },
+  {
+    "student_email": "student200@maga.local",
+    "parent_email": "parent26@maga.local"
+  },
+  {
+    "student_email": "student201@maga.local",
+    "parent_email": "parent188@maga.local"
+  },
+  {
+    "student_email": "student202@maga.local",
+    "parent_email": "parent114@maga.local"
+  },
+  {
+    "student_email": "student203@maga.local",
+    "parent_email": "parent311@maga.local"
+  },
+  {
+    "student_email": "student204@maga.local",
+    "parent_email": "parent37@maga.local"
+  },
+  {
+    "student_email": "student205@maga.local",
+    "parent_email": "parent7@maga.local"
+  },
+  {
+    "student_email": "student206@maga.local",
+    "parent_email": "parent107@maga.local"
+  },
+  {
+    "student_email": "student207@maga.local",
+    "parent_email": "parent252@maga.local"
+  },
+  {
+    "student_email": "student208@maga.local",
+    "parent_email": "parent41@maga.local"
+  },
+  {
+    "student_email": "student209@maga.local",
+    "parent_email": "parent240@maga.local"
+  },
+  {
+    "student_email": "student210@maga.local",
+    "parent_email": "parent32@maga.local"
+  },
+  {
+    "student_email": "student211@maga.local",
+    "parent_email": "parent185@maga.local"
+  },
+  {
+    "student_email": "student212@maga.local",
+    "parent_email": "parent286@maga.local"
+  },
+  {
+    "student_email": "student213@maga.local",
+    "parent_email": "parent213@maga.local"
+  },
+  {
+    "student_email": "student214@maga.local",
+    "parent_email": "parent189@maga.local"
+  },
+  {
+    "student_email": "student215@maga.local",
+    "parent_email": "parent30@maga.local"
+  },
+  {
+    "student_email": "student216@maga.local",
+    "parent_email": "parent316@maga.local"
+  },
+  {
+    "student_email": "student217@maga.local",
+    "parent_email": "parent137@maga.local"
+  },
+  {
+    "student_email": "student218@maga.local",
+    "parent_email": "parent271@maga.local"
+  },
+  {
+    "student_email": "student219@maga.local",
+    "parent_email": "parent21@maga.local"
+  },
+  {
+    "student_email": "student220@maga.local",
+    "parent_email": "parent37@maga.local"
+  },
+  {
+    "student_email": "student221@maga.local",
+    "parent_email": "parent156@maga.local"
+  },
+  {
+    "student_email": "student222@maga.local",
+    "parent_email": "parent40@maga.local"
+  },
+  {
+    "student_email": "student223@maga.local",
+    "parent_email": "parent111@maga.local"
+  },
+  {
+    "student_email": "student224@maga.local",
+    "parent_email": "parent266@maga.local"
+  },
+  {
+    "student_email": "student225@maga.local",
+    "parent_email": "parent50@maga.local"
+  },
+  {
+    "student_email": "student226@maga.local",
+    "parent_email": "parent52@maga.local"
+  },
+  {
+    "student_email": "student227@maga.local",
+    "parent_email": "parent119@maga.local"
+  },
+  {
+    "student_email": "student228@maga.local",
+    "parent_email": "parent273@maga.local"
+  },
+  {
+    "student_email": "student229@maga.local",
+    "parent_email": "parent198@maga.local"
+  },
+  {
+    "student_email": "student230@maga.local",
+    "parent_email": "parent98@maga.local"
+  },
+  {
+    "student_email": "student231@maga.local",
+    "parent_email": "parent99@maga.local"
+  },
+  {
+    "student_email": "student232@maga.local",
+    "parent_email": "parent270@maga.local"
+  },
+  {
+    "student_email": "student233@maga.local",
+    "parent_email": "parent128@maga.local"
+  },
+  {
+    "student_email": "student234@maga.local",
+    "parent_email": "parent292@maga.local"
+  },
+  {
+    "student_email": "student235@maga.local",
+    "parent_email": "parent92@maga.local"
+  },
+  {
+    "student_email": "student236@maga.local",
+    "parent_email": "parent286@maga.local"
+  },
+  {
+    "student_email": "student237@maga.local",
+    "parent_email": "parent286@maga.local"
+  },
+  {
+    "student_email": "student238@maga.local",
+    "parent_email": "parent213@maga.local"
+  },
+  {
+    "student_email": "student239@maga.local",
+    "parent_email": "parent55@maga.local"
+  },
+  {
+    "student_email": "student240@maga.local",
+    "parent_email": "parent296@maga.local"
+  },
+  {
+    "student_email": "student241@maga.local",
+    "parent_email": "parent184@maga.local"
+  },
+  {
+    "student_email": "student242@maga.local",
+    "parent_email": "parent235@maga.local"
+  },
+  {
+    "student_email": "student243@maga.local",
+    "parent_email": "parent219@maga.local"
+  },
+  {
+    "student_email": "student244@maga.local",
+    "parent_email": "parent54@maga.local"
+  },
+  {
+    "student_email": "student245@maga.local",
+    "parent_email": "parent86@maga.local"
+  },
+  {
+    "student_email": "student246@maga.local",
+    "parent_email": "parent93@maga.local"
+  },
+  {
+    "student_email": "student247@maga.local",
+    "parent_email": "parent282@maga.local"
+  },
+  {
+    "student_email": "student248@maga.local",
+    "parent_email": "parent206@maga.local"
+  },
+  {
+    "student_email": "student249@maga.local",
+    "parent_email": "parent259@maga.local"
+  },
+  {
+    "student_email": "student250@maga.local",
+    "parent_email": "parent173@maga.local"
+  },
+  {
+    "student_email": "student251@maga.local",
+    "parent_email": "parent81@maga.local"
+  },
+  {
+    "student_email": "student252@maga.local",
+    "parent_email": "parent274@maga.local"
+  },
+  {
+    "student_email": "student253@maga.local",
+    "parent_email": "parent308@maga.local"
+  },
+  {
+    "student_email": "student254@maga.local",
+    "parent_email": "parent227@maga.local"
+  },
+  {
+    "student_email": "student255@maga.local",
+    "parent_email": "parent181@maga.local"
+  },
+  {
+    "student_email": "student256@maga.local",
+    "parent_email": "parent162@maga.local"
+  },
+  {
+    "student_email": "student257@maga.local",
+    "parent_email": "parent282@maga.local"
+  },
+  {
+    "student_email": "student258@maga.local",
+    "parent_email": "parent167@maga.local"
+  },
+  {
+    "student_email": "student259@maga.local",
+    "parent_email": "parent191@maga.local"
+  },
+  {
+    "student_email": "student260@maga.local",
+    "parent_email": "parent212@maga.local"
+  },
+  {
+    "student_email": "student261@maga.local",
+    "parent_email": "parent221@maga.local"
+  },
+  {
+    "student_email": "student262@maga.local",
+    "parent_email": "parent166@maga.local"
+  },
+  {
+    "student_email": "student263@maga.local",
+    "parent_email": "parent312@maga.local"
+  },
+  {
+    "student_email": "student264@maga.local",
+    "parent_email": "parent124@maga.local"
+  },
+  {
+    "student_email": "student265@maga.local",
+    "parent_email": "parent289@maga.local"
+  },
+  {
+    "student_email": "student266@maga.local",
+    "parent_email": "parent280@maga.local"
+  },
+  {
+    "student_email": "student267@maga.local",
+    "parent_email": "parent110@maga.local"
+  },
+  {
+    "student_email": "student268@maga.local",
+    "parent_email": "parent193@maga.local"
+  },
+  {
+    "student_email": "student269@maga.local",
+    "parent_email": "parent282@maga.local"
+  },
+  {
+    "student_email": "student270@maga.local",
+    "parent_email": "parent131@maga.local"
+  },
+  {
+    "student_email": "student271@maga.local",
+    "parent_email": "parent185@maga.local"
+  },
+  {
+    "student_email": "student272@maga.local",
+    "parent_email": "parent232@maga.local"
+  },
+  {
+    "student_email": "student273@maga.local",
+    "parent_email": "parent230@maga.local"
+  },
+  {
+    "student_email": "student274@maga.local",
+    "parent_email": "parent204@maga.local"
+  },
+  {
+    "student_email": "student275@maga.local",
+    "parent_email": "parent1@maga.local"
+  },
+  {
+    "student_email": "student276@maga.local",
+    "parent_email": "parent18@maga.local"
+  },
+  {
+    "student_email": "student277@maga.local",
+    "parent_email": "parent146@maga.local"
+  },
+  {
+    "student_email": "student278@maga.local",
+    "parent_email": "parent306@maga.local"
+  },
+  {
+    "student_email": "student279@maga.local",
+    "parent_email": "parent9@maga.local"
+  },
+  {
+    "student_email": "student280@maga.local",
+    "parent_email": "parent266@maga.local"
+  },
+  {
+    "student_email": "student281@maga.local",
+    "parent_email": "parent70@maga.local"
+  },
+  {
+    "student_email": "student282@maga.local",
+    "parent_email": "parent155@maga.local"
+  },
+  {
+    "student_email": "student283@maga.local",
+    "parent_email": "parent4@maga.local"
+  },
+  {
+    "student_email": "student284@maga.local",
+    "parent_email": "parent154@maga.local"
+  },
+  {
+    "student_email": "student285@maga.local",
+    "parent_email": "parent114@maga.local"
+  },
+  {
+    "student_email": "student286@maga.local",
+    "parent_email": "parent110@maga.local"
+  },
+  {
+    "student_email": "student287@maga.local",
+    "parent_email": "parent162@maga.local"
+  },
+  {
+    "student_email": "student288@maga.local",
+    "parent_email": "parent12@maga.local"
+  },
+  {
+    "student_email": "student289@maga.local",
+    "parent_email": "parent142@maga.local"
+  },
+  {
+    "student_email": "student290@maga.local",
+    "parent_email": "parent284@maga.local"
+  },
+  {
+    "student_email": "student291@maga.local",
+    "parent_email": "parent262@maga.local"
+  },
+  {
+    "student_email": "student292@maga.local",
+    "parent_email": "parent285@maga.local"
+  },
+  {
+    "student_email": "student293@maga.local",
+    "parent_email": "parent293@maga.local"
+  },
+  {
+    "student_email": "student294@maga.local",
+    "parent_email": "parent293@maga.local"
+  },
+  {
+    "student_email": "student295@maga.local",
+    "parent_email": "parent80@maga.local"
+  },
+  {
+    "student_email": "student296@maga.local",
+    "parent_email": "parent49@maga.local"
+  },
+  {
+    "student_email": "student297@maga.local",
+    "parent_email": "parent20@maga.local"
+  },
+  {
+    "student_email": "student298@maga.local",
+    "parent_email": "parent236@maga.local"
+  },
+  {
+    "student_email": "student299@maga.local",
+    "parent_email": "parent183@maga.local"
+  },
+  {
+    "student_email": "student300@maga.local",
+    "parent_email": "parent80@maga.local"
+  },
+  {
+    "student_email": "student301@maga.local",
+    "parent_email": "parent71@maga.local"
+  },
+  {
+    "student_email": "student302@maga.local",
+    "parent_email": "parent136@maga.local"
+  },
+  {
+    "student_email": "student303@maga.local",
+    "parent_email": "parent188@maga.local"
+  },
+  {
+    "student_email": "student304@maga.local",
+    "parent_email": "parent299@maga.local"
+  },
+  {
+    "student_email": "student305@maga.local",
+    "parent_email": "parent128@maga.local"
+  },
+  {
+    "student_email": "student306@maga.local",
+    "parent_email": "parent120@maga.local"
+  },
+  {
+    "student_email": "student307@maga.local",
+    "parent_email": "parent132@maga.local"
+  },
+  {
+    "student_email": "student308@maga.local",
+    "parent_email": "parent154@maga.local"
+  },
+  {
+    "student_email": "student309@maga.local",
+    "parent_email": "parent48@maga.local"
+  },
+  {
+    "student_email": "student310@maga.local",
+    "parent_email": "parent293@maga.local"
+  },
+  {
+    "student_email": "student311@maga.local",
+    "parent_email": "parent205@maga.local"
+  },
+  {
+    "student_email": "student312@maga.local",
+    "parent_email": "parent292@maga.local"
+  },
+  {
+    "student_email": "student313@maga.local",
+    "parent_email": "parent112@maga.local"
+  },
+  {
+    "student_email": "student314@maga.local",
+    "parent_email": "parent40@maga.local"
+  },
+  {
+    "student_email": "student315@maga.local",
+    "parent_email": "parent167@maga.local"
+  },
+  {
+    "student_email": "student316@maga.local",
+    "parent_email": "parent248@maga.local"
+  },
+  {
+    "student_email": "student317@maga.local",
+    "parent_email": "parent89@maga.local"
+  },
+  {
+    "student_email": "student318@maga.local",
+    "parent_email": "parent250@maga.local"
+  },
+  {
+    "student_email": "student319@maga.local",
+    "parent_email": "parent296@maga.local"
+  },
+  {
+    "student_email": "student320@maga.local",
+    "parent_email": "parent49@maga.local"
+  },
+  {
+    "student_email": "student321@maga.local",
+    "parent_email": "parent305@maga.local"
+  },
+  {
+    "student_email": "student322@maga.local",
+    "parent_email": "parent154@maga.local"
+  },
+  {
+    "student_email": "student323@maga.local",
+    "parent_email": "parent20@maga.local"
+  },
+  {
+    "student_email": "student324@maga.local",
+    "parent_email": "parent296@maga.local"
+  },
+  {
+    "student_email": "student325@maga.local",
+    "parent_email": "parent196@maga.local"
+  },
+  {
+    "student_email": "student326@maga.local",
+    "parent_email": "parent41@maga.local"
+  },
+  {
+    "student_email": "student327@maga.local",
+    "parent_email": "parent29@maga.local"
+  },
+  {
+    "student_email": "student328@maga.local",
+    "parent_email": "parent172@maga.local"
+  },
+  {
+    "student_email": "student329@maga.local",
+    "parent_email": "parent179@maga.local"
+  },
+  {
+    "student_email": "student330@maga.local",
+    "parent_email": "parent223@maga.local"
+  },
+  {
+    "student_email": "student331@maga.local",
+    "parent_email": "parent214@maga.local"
+  },
+  {
+    "student_email": "student332@maga.local",
+    "parent_email": "parent62@maga.local"
+  },
+  {
+    "student_email": "student333@maga.local",
+    "parent_email": "parent117@maga.local"
+  },
+  {
+    "student_email": "student334@maga.local",
+    "parent_email": "parent309@maga.local"
+  },
+  {
+    "student_email": "student335@maga.local",
+    "parent_email": "parent6@maga.local"
+  },
+  {
+    "student_email": "student336@maga.local",
+    "parent_email": "parent196@maga.local"
+  },
+  {
+    "student_email": "student337@maga.local",
+    "parent_email": "parent28@maga.local"
+  },
+  {
+    "student_email": "student338@maga.local",
+    "parent_email": "parent157@maga.local"
+  },
+  {
+    "student_email": "student339@maga.local",
+    "parent_email": "parent269@maga.local"
+  },
+  {
+    "student_email": "student340@maga.local",
+    "parent_email": "parent22@maga.local"
+  },
+  {
+    "student_email": "student341@maga.local",
+    "parent_email": "parent164@maga.local"
+  },
+  {
+    "student_email": "student342@maga.local",
+    "parent_email": "parent277@maga.local"
+  },
+  {
+    "student_email": "student343@maga.local",
+    "parent_email": "parent290@maga.local"
+  },
+  {
+    "student_email": "student344@maga.local",
+    "parent_email": "parent77@maga.local"
+  },
+  {
+    "student_email": "student345@maga.local",
+    "parent_email": "parent168@maga.local"
+  },
+  {
+    "student_email": "student346@maga.local",
+    "parent_email": "parent258@maga.local"
+  },
+  {
+    "student_email": "student347@maga.local",
+    "parent_email": "parent114@maga.local"
+  },
+  {
+    "student_email": "student348@maga.local",
+    "parent_email": "parent79@maga.local"
+  },
+  {
+    "student_email": "student349@maga.local",
+    "parent_email": "parent26@maga.local"
+  },
+  {
+    "student_email": "student350@maga.local",
+    "parent_email": "parent202@maga.local"
+  },
+  {
+    "student_email": "student351@maga.local",
+    "parent_email": "parent229@maga.local"
+  },
+  {
+    "student_email": "student352@maga.local",
+    "parent_email": "parent305@maga.local"
+  },
+  {
+    "student_email": "student353@maga.local",
+    "parent_email": "parent295@maga.local"
+  },
+  {
+    "student_email": "student354@maga.local",
+    "parent_email": "parent259@maga.local"
+  },
+  {
+    "student_email": "student355@maga.local",
+    "parent_email": "parent47@maga.local"
+  },
+  {
+    "student_email": "student356@maga.local",
+    "parent_email": "parent114@maga.local"
+  },
+  {
+    "student_email": "student357@maga.local",
+    "parent_email": "parent222@maga.local"
+  },
+  {
+    "student_email": "student358@maga.local",
+    "parent_email": "parent149@maga.local"
+  },
+  {
+    "student_email": "student359@maga.local",
+    "parent_email": "parent202@maga.local"
+  },
+  {
+    "student_email": "student360@maga.local",
+    "parent_email": "parent76@maga.local"
+  },
+  {
+    "student_email": "student361@maga.local",
+    "parent_email": "parent68@maga.local"
+  },
+  {
+    "student_email": "student362@maga.local",
+    "parent_email": "parent173@maga.local"
+  },
+  {
+    "student_email": "student363@maga.local",
+    "parent_email": "parent43@maga.local"
+  },
+  {
+    "student_email": "student364@maga.local",
+    "parent_email": "parent244@maga.local"
+  },
+  {
+    "student_email": "student365@maga.local",
+    "parent_email": "parent293@maga.local"
+  },
+  {
+    "student_email": "student366@maga.local",
+    "parent_email": "parent26@maga.local"
+  },
+  {
+    "student_email": "student367@maga.local",
+    "parent_email": "parent281@maga.local"
+  },
+  {
+    "student_email": "student368@maga.local",
+    "parent_email": "parent205@maga.local"
+  },
+  {
+    "student_email": "student369@maga.local",
+    "parent_email": "parent135@maga.local"
+  },
+  {
+    "student_email": "student370@maga.local",
+    "parent_email": "parent44@maga.local"
+  },
+  {
+    "student_email": "student371@maga.local",
+    "parent_email": "parent205@maga.local"
+  },
+  {
+    "student_email": "student372@maga.local",
+    "parent_email": "parent257@maga.local"
+  },
+  {
+    "student_email": "student373@maga.local",
+    "parent_email": "parent223@maga.local"
+  },
+  {
+    "student_email": "student374@maga.local",
+    "parent_email": "parent67@maga.local"
+  },
+  {
+    "student_email": "student375@maga.local",
+    "parent_email": "parent70@maga.local"
+  },
+  {
+    "student_email": "student376@maga.local",
+    "parent_email": "parent247@maga.local"
+  },
+  {
+    "student_email": "student377@maga.local",
+    "parent_email": "parent287@maga.local"
+  },
+  {
+    "student_email": "student378@maga.local",
+    "parent_email": "parent102@maga.local"
+  },
+  {
+    "student_email": "student379@maga.local",
+    "parent_email": "parent250@maga.local"
+  },
+  {
+    "student_email": "student380@maga.local",
+    "parent_email": "parent203@maga.local"
+  },
+  {
+    "student_email": "student381@maga.local",
+    "parent_email": "parent293@maga.local"
+  },
+  {
+    "student_email": "student382@maga.local",
+    "parent_email": "parent101@maga.local"
+  },
+  {
+    "student_email": "student383@maga.local",
+    "parent_email": "parent288@maga.local"
+  },
+  {
+    "student_email": "student384@maga.local",
+    "parent_email": "parent316@maga.local"
+  },
+  {
+    "student_email": "student385@maga.local",
+    "parent_email": "parent269@maga.local"
+  },
+  {
+    "student_email": "student386@maga.local",
+    "parent_email": "parent127@maga.local"
+  },
+  {
+    "student_email": "student387@maga.local",
+    "parent_email": "parent125@maga.local"
+  },
+  {
+    "student_email": "student388@maga.local",
+    "parent_email": "parent37@maga.local"
+  },
+  {
+    "student_email": "student389@maga.local",
+    "parent_email": "parent137@maga.local"
+  },
+  {
+    "student_email": "student390@maga.local",
+    "parent_email": "parent221@maga.local"
+  },
+  {
+    "student_email": "student391@maga.local",
+    "parent_email": "parent166@maga.local"
+  },
+  {
+    "student_email": "student392@maga.local",
+    "parent_email": "parent295@maga.local"
+  },
+  {
+    "student_email": "student393@maga.local",
+    "parent_email": "parent46@maga.local"
+  },
+  {
+    "student_email": "student394@maga.local",
+    "parent_email": "parent58@maga.local"
+  },
+  {
+    "student_email": "student395@maga.local",
+    "parent_email": "parent212@maga.local"
+  },
+  {
+    "student_email": "student396@maga.local",
+    "parent_email": "parent217@maga.local"
+  },
+  {
+    "student_email": "student397@maga.local",
+    "parent_email": "parent188@maga.local"
+  },
+  {
+    "student_email": "student398@maga.local",
+    "parent_email": "parent179@maga.local"
+  },
+  {
+    "student_email": "student399@maga.local",
+    "parent_email": "parent98@maga.local"
+  },
+  {
+    "student_email": "student400@maga.local",
+    "parent_email": "parent165@maga.local"
+  },
+  {
+    "student_email": "student401@maga.local",
+    "parent_email": "parent177@maga.local"
+  },
+  {
+    "student_email": "student402@maga.local",
+    "parent_email": "parent305@maga.local"
+  },
+  {
+    "student_email": "student403@maga.local",
+    "parent_email": "parent13@maga.local"
+  },
+  {
+    "student_email": "student404@maga.local",
+    "parent_email": "parent157@maga.local"
+  },
+  {
+    "student_email": "student405@maga.local",
+    "parent_email": "parent87@maga.local"
+  },
+  {
+    "student_email": "student406@maga.local",
+    "parent_email": "parent180@maga.local"
+  },
+  {
+    "student_email": "student407@maga.local",
+    "parent_email": "parent316@maga.local"
+  },
+  {
+    "student_email": "student408@maga.local",
+    "parent_email": "parent227@maga.local"
+  },
+  {
+    "student_email": "student409@maga.local",
+    "parent_email": "parent320@maga.local"
+  },
+  {
+    "student_email": "student410@maga.local",
+    "parent_email": "parent75@maga.local"
+  },
+  {
+    "student_email": "student411@maga.local",
+    "parent_email": "parent226@maga.local"
+  },
+  {
+    "student_email": "student412@maga.local",
+    "parent_email": "parent23@maga.local"
+  },
+  {
+    "student_email": "student413@maga.local",
+    "parent_email": "parent120@maga.local"
+  },
+  {
+    "student_email": "student414@maga.local",
+    "parent_email": "parent103@maga.local"
+  },
+  {
+    "student_email": "student415@maga.local",
+    "parent_email": "parent192@maga.local"
+  },
+  {
+    "student_email": "student416@maga.local",
+    "parent_email": "parent80@maga.local"
+  },
+  {
+    "student_email": "student417@maga.local",
+    "parent_email": "parent44@maga.local"
+  },
+  {
+    "student_email": "student418@maga.local",
+    "parent_email": "parent58@maga.local"
+  },
+  {
+    "student_email": "student419@maga.local",
+    "parent_email": "parent28@maga.local"
+  },
+  {
+    "student_email": "student420@maga.local",
+    "parent_email": "parent125@maga.local"
   }
 ]

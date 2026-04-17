@@ -1,7 +1,7 @@
 [
   {
     "name": "Кабинет 101",
-    "capacity": 10
+    "capacity": 12
   },
   {
     "name": "Кабинет 102",
@@ -9,7 +9,7 @@
   },
   {
     "name": "Кабинет 103",
-    "capacity": 18
+    "capacity": 10
   },
   {
     "name": "Кабинет 104",
@@ -17,7 +17,7 @@
   },
   {
     "name": "Кабинет 201",
-    "capacity": 18
+    "capacity": 14
   },
   {
     "name": "Кабинет 202",
@@ -25,34 +25,34 @@
   },
   {
     "name": "Кабинет 203",
-    "capacity": 15
+    "capacity": 18
   },
   {
     "name": "Компьютерный класс 1",
-    "capacity": 20
+    "capacity": 18
   },
   {
     "name": "Компьютерный класс 2",
-    "capacity": 10
+    "capacity": 12
   },
   {
     "name": "Лаборатория",
-    "capacity": 10
+    "capacity": 12
   },
   {
     "name": "Медиа-класс",
-    "capacity": 20
+    "capacity": 14
   },
   {
     "name": "Коворкинг",
-    "capacity": 15
+    "capacity": 12
   },
   {
     "name": "Аудитория А",
-    "capacity": 15
+    "capacity": 18
   },
   {
     "name": "Аудитория Б",
-    "capacity": 10
+    "capacity": 18
   }
 ]

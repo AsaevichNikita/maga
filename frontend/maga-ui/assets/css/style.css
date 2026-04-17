@@ -534,6 +534,7 @@ textarea { min-height: 110px; resize: vertical; }
   margin-top: 6px;
   font-size: 1.7rem;
   font-weight: 800;
+  color: #000;
 }
 
 .generator-actions {

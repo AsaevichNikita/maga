@@ -3,80 +3,54 @@
     "name": "Python для начинающих",
     "description": "Python для начинающих — расширенная программа",
     "category_name": "Программирование",
-    "max_students": 10,
+    "max_students": 12,
     "use_classroom_capacity": false,
     "duration_minutes": 90,
-    "price": 2500,
+    "price": 3000,
     "is_active": true,
     "allowed_teacher_emails": [
-      "teacher6@maga.local",
-      "teacher18@maga.local",
-      "teacher17@maga.local"
+      "teacher25@maga.local",
+      "teacher5@maga.local",
+      "teacher22@maga.local",
+      "teacher16@maga.local"
     ]
   },
   {
     "name": "Python Pro",
     "description": "Python Pro — расширенная программа",
     "category_name": "Программирование",
-    "max_students": 12,
-    "use_classroom_capacity": true,
-    "duration_minutes": 60,
-    "price": 2500,
+    "max_students": 14,
+    "use_classroom_capacity": false,
+    "duration_minutes": 90,
+    "price": 4000,
     "is_active": true,
     "allowed_teacher_emails": [
-      "teacher12@maga.local",
-      "teacher10@maga.local"
+      "teacher25@maga.local",
+      "teacher24@maga.local",
+      "teacher23@maga.local",
+      "teacher7@maga.local"
     ]
   },
   {
     "name": "Web-разработка",
     "description": "Web-разработка — расширенная программа",
     "category_name": "Программирование",
-    "max_students": 10,
+    "max_students": 14,
     "use_classroom_capacity": true,
     "duration_minutes": 60,
-    "price": 4000,
+    "price": 3000,
     "is_active": true,
     "allowed_teacher_emails": [
-      "teacher24@maga.local",
-      "teacher16@maga.local"
+      "teacher15@maga.local",
+      "teacher4@maga.local",
+      "teacher8@maga.local",
+      "teacher3@maga.local"
     ]
   },
   {
     "name": "Алгоритмы и структуры данных",
     "description": "Алгоритмы и структуры данных — расширенная программа",
     "category_name": "Программирование",
-    "max_students": 18,
-    "use_classroom_capacity": true,
-    "duration_minutes": 60,
-    "price": 3500,
-    "is_active": true,
-    "allowed_teacher_emails": [
-      "teacher6@maga.local",
-      "teacher9@maga.local",
-      "teacher17@maga.local",
-      "teacher20@maga.local"
-    ]
-  },
-  {
-    "name": "Олимпиадная математика",
-    "description": "Олимпиадная математика — расширенная программа",
-    "category_name": "Математика",
-    "max_students": 18,
-    "use_classroom_capacity": false,
-    "duration_minutes": 60,
-    "price": 3000,
-    "is_active": true,
-    "allowed_teacher_emails": [
-      "teacher22@maga.local",
-      "teacher21@maga.local",
-      "teacher12@maga.local"
-    ]
-  },
-  {
-    "name": "Логика и задачи",
-    "description": "Логика и задачи — расширенная программа",
-    "category_name": "Математика",
     "max_students": 10,
     "use_classroom_capacity": true,
     "duration_minutes": 60,
@@ -84,28 +58,14 @@
     "is_active": true,
     "allowed_teacher_emails": [
       "teacher3@maga.local",
-      "teacher11@maga.local"
+      "teacher23@maga.local"
     ]
   },
   {
-    "name": "Алгебра+",
-    "description": "Алгебра+ — расширенная программа",
+    "name": "Олимпиадная математика",
+    "description": "Олимпиадная математика — расширенная программа",
     "category_name": "Математика",
-    "max_students": 10,
-    "use_classroom_capacity": true,
-    "duration_minutes": 60,
-    "price": 2500,
-    "is_active": true,
-    "allowed_teacher_emails": [
-      "teacher23@maga.local",
-      "teacher21@maga.local"
-    ]
-  },
-  {
-    "name": "Геометрия без страха",
-    "description": "Геометрия без страха — расширенная программа",
-    "category_name": "Математика",
-    "max_students": 15,
+    "max_students": 14,
     "use_classroom_capacity": false,
     "duration_minutes": 60,
     "price": 3000,
@@ -117,19 +77,63 @@
     ]
   },
   {
-    "name": "Роботы LEGO",
-    "description": "Роботы LEGO — расширенная программа",
-    "category_name": "Робототехника",
-    "max_students": 12,
-    "use_classroom_capacity": true,
+    "name": "Логика и задачи",
+    "description": "Логика и задачи — расширенная программа",
+    "category_name": "Математика",
+    "max_students": 16,
+    "use_classroom_capacity": false,
     "duration_minutes": 60,
-    "price": 4000,
+    "price": 2500,
     "is_active": true,
     "allowed_teacher_emails": [
       "teacher19@maga.local",
       "teacher16@maga.local",
       "teacher8@maga.local",
+      "teacher26@maga.local"
+    ]
+  },
+  {
+    "name": "Алгебра+",
+    "description": "Алгебра+ — расширенная программа",
+    "category_name": "Математика",
+    "max_students": 14,
+    "use_classroom_capacity": false,
+    "duration_minutes": 90,
+    "price": 4000,
+    "is_active": true,
+    "allowed_teacher_emails": [
+      "teacher22@maga.local",
       "teacher14@maga.local"
+    ]
+  },
+  {
+    "name": "Геометрия без страха",
+    "description": "Геометрия без страха — расширенная программа",
+    "category_name": "Математика",
+    "max_students": 10,
+    "use_classroom_capacity": false,
+    "duration_minutes": 90,
+    "price": 2500,
+    "is_active": true,
+    "allowed_teacher_emails": [
+      "teacher2@maga.local",
+      "teacher22@maga.local",
+      "teacher21@maga.local",
+      "teacher4@maga.local"
+    ]
+  },
+  {
+    "name": "Роботы LEGO",
+    "description": "Роботы LEGO — расширенная программа",
+    "category_name": "Робототехника",
+    "max_students": 16,
+    "use_classroom_capacity": true,
+    "duration_minutes": 90,
+    "price": 3000,
+    "is_active": true,
+    "allowed_teacher_emails": [
+      "teacher7@maga.local",
+      "teacher18@maga.local"
     ]
   },
   {
@@ -137,14 +141,14 @@
     "description": "Основы Arduino — расширенная программа",
     "category_name": "Робототехника",
     "max_students": 10,
-    "use_classroom_capacity": true,
+    "use_classroom_capacity": false,
     "duration_minutes": 60,
-    "price": 4000,
+    "price": 2500,
     "is_active": true,
     "allowed_teacher_emails": [
-      "teacher14@maga.local",
       "teacher15@maga.local",
-      "teacher24@maga.local"
+      "teacher8@maga.local",
+      "teacher28@maga.local"
     ]
   },
   {
@@ -152,43 +156,45 @@
     "description": "Робототехника Start — расширенная программа",
     "category_name": "Робототехника",
     "max_students": 12,
-    "use_classroom_capacity": false,
-    "duration_minutes": 60,
+    "use_classroom_capacity": true,
+    "duration_minutes": 90,
     "price": 4000,
     "is_active": true,
     "allowed_teacher_emails": [
-      "teacher11@maga.local",
-      "teacher4@maga.local",
-      "teacher8@maga.local",
-      "teacher7@maga.local"
+      "teacher18@maga.local",
+      "teacher27@maga.local",
+      "teacher1@maga.local",
+      "teacher3@maga.local"
     ]
   },
   {
     "name": "Умные устройства",
     "description": "Умные устройства — расширенная программа",
     "category_name": "Робототехника",
-    "max_students": 12,
+    "max_students": 10,
     "use_classroom_capacity": true,
     "duration_minutes": 90,
     "price": 2500,
     "is_active": true,
     "allowed_teacher_emails": [
-      "teacher9@maga.local",
-      "teacher15@maga.local"
+      "teacher7@maga.local",
+      "teacher28@maga.local",
+      "teacher13@maga.local"
     ]
   },
   {
     "name": "Графический дизайн",
     "description": "Графический дизайн — расширенная программа",
     "category_name": "Дизайн",
-    "max_students": 10,
-    "use_classroom_capacity": true,
-    "duration_minutes": 60,
+    "max_students": 14,
+    "use_classroom_capacity": false,
+    "duration_minutes": 90,
     "price": 3000,
     "is_active": true,
     "allowed_teacher_emails": [
-      "teacher21@maga.local",
-      "teacher18@maga.local"
+      "teacher9@maga.local",
+      "teacher26@maga.local",
+      "teacher15@maga.local"
     ]
   },
   {
@@ -201,55 +207,52 @@
     "price": 2500,
     "is_active": true,
     "allowed_teacher_emails": [
-      "teacher16@maga.local",
-      "teacher7@maga.local",
-      "teacher13@maga.local"
+      "teacher10@maga.local",
+      "teacher7@maga.local"
     ]
   },
   {
     "name": "Цифровая иллюстрация",
     "description": "Цифровая иллюстрация — расширенная программа",
     "category_name": "Дизайн",
-    "max_students": 18,
-    "use_classroom_capacity": false,
+    "max_students": 12,
+    "use_classroom_capacity": true,
     "duration_minutes": 60,
     "price": 3000,
     "is_active": true,
     "allowed_teacher_emails": [
-      "teacher9@maga.local",
-      "teacher15@maga.local",
-      "teacher10@maga.local"
+      "teacher19@maga.local",
+      "teacher16@maga.local"
     ]
   },
   {
     "name": "3D-моделирование",
     "description": "3D-моделирование — расширенная программа",
     "category_name": "Дизайн",
-    "max_students": 10,
+    "max_students": 12,
     "use_classroom_capacity": false,
     "duration_minutes": 60,
-    "price": 2500,
+    "price": 3000,
     "is_active": true,
     "allowed_teacher_emails": [
-      "teacher7@maga.local",
-      "teacher2@maga.local",
-      "teacher19@maga.local"
+      "teacher20@maga.local",
+      "teacher3@maga.local"
     ]
   },
   {
     "name": "English Start",
     "description": "English Start — расширенная программа",
     "category_name": "Английский язык",
-    "max_students": 10,
-    "use_classroom_capacity": true,
+    "max_students": 14,
+    "use_classroom_capacity": false,
     "duration_minutes": 60,
-    "price": 2500,
+    "price": 3500,
     "is_active": true,
     "allowed_teacher_emails": [
-      "teacher16@maga.local",
-      "teacher17@maga.local",
-      "teacher6@maga.local",
-      "teacher2@maga.local"
+      "teacher20@maga.local",
+      "teacher2@maga.local",
+      "teacher3@maga.local",
+      "teacher14@maga.local"
     ]
   },
   {
@@ -257,66 +260,33 @@
     "description": "Spoken English — расширенная программа",
     "category_name": "Английский язык",
     "max_students": 12,
-    "use_classroom_capacity": true,
-    "duration_minutes": 60,
-    "price": 4000,
+    "use_classroom_capacity": false,
+    "duration_minutes": 90,
+    "price": 3500,
     "is_active": true,
     "allowed_teacher_emails": [
-      "teacher8@maga.local",
-      "teacher13@maga.local",
-      "teacher4@maga.local",
-      "teacher19@maga.local"
+      "teacher9@maga.local",
+      "teacher13@maga.local"
     ]
   },
   {
     "name": "Grammar Boost",
     "description": "Grammar Boost — расширенная программа",
     "category_name": "Английский язык",
-    "max_students": 12,
-    "use_classroom_capacity": false,
-    "duration_minutes": 60,
-    "price": 3500,
-    "is_active": true,
-    "allowed_teacher_emails": [
-      "teacher19@maga.local",
-      "teacher17@maga.local",
-      "teacher11@maga.local",
-      "teacher9@maga.local"
-    ]
-  },
-  {
-    "name": "English for Teens",
-    "description": "English for Teens — расширенная программа",
-    "category_name": "Английский язык",
-    "max_students": 15,
-    "use_classroom_capacity": false,
-    "duration_minutes": 90,
-    "price": 2500,
-    "is_active": true,
-    "allowed_teacher_emails": [
-      "teacher5@maga.local",
-      "teacher22@maga.local",
-      "teacher21@maga.local"
-    ]
-  },
-  {
-    "name": "Шахматы Start",
-    "description": "Шахматы Start — расширенная программа",
-    "category_name": "Шахматы",
     "max_students": 10,
     "use_classroom_capacity": true,
     "duration_minutes": 60,
     "price": 3500,
     "is_active": true,
     "allowed_teacher_emails": [
-      "teacher15@maga.local",
-      "teacher20@maga.local"
+      "teacher1@maga.local",
+      "teacher15@maga.local"
     ]
   },
   {
-    "name": "Тактика в шахматах",
-    "description": "Тактика в шахматах — расширенная программа",
-    "category_name": "Шахматы",
+    "name": "English for Teens",
+    "description": "English for Teens — расширенная программа",
+    "category_name": "Английский язык",
     "max_students": 12,
     "use_classroom_capacity": false,
     "duration_minutes": 90,
@@ -328,56 +298,55 @@
     ]
   },
   {
+    "name": "Шахматы Start",
+    "description": "Шахматы Start — расширенная программа",
+    "category_name": "Шахматы",
+    "max_students": 14,
+    "use_classroom_capacity": true,
+    "duration_minutes": 90,
+    "price": 2500,
+    "is_active": true,
+    "allowed_teacher_emails": [
+      "teacher27@maga.local",
+      "teacher18@maga.local",
+      "teacher23@maga.local"
+    ]
+  },
+  {
+    "name": "Тактика в шахматах",
+    "description": "Тактика в шахматах — расширенная программа",
+    "category_name": "Шахматы",
+    "max_students": 10,
+    "use_classroom_capacity": true,
+    "duration_minutes": 90,
+    "price": 3500,
+    "is_active": true,
+    "allowed_teacher_emails": [
+      "teacher9@maga.local",
+      "teacher4@maga.local"
+    ]
+  },
+  {
     "name": "Шахматный клуб",
     "description": "Шахматный клуб — расширенная программа",
     "category_name": "Шахматы",
-    "max_students": 10,
+    "max_students": 14,
     "use_classroom_capacity": false,
-    "duration_minutes": 60,
-    "price": 3000,
+    "duration_minutes": 90,
+    "price": 2500,
     "is_active": true,
     "allowed_teacher_emails": [
-      "teacher18@maga.local",
+      "teacher7@maga.local",
       "teacher23@maga.local",
-      "teacher10@maga.local"
+      "teacher11@maga.local",
+      "teacher22@maga.local"
     ]
   },
   {
     "name": "Турнирная подготовка",
     "description": "Турнирная подготовка — расширенная программа",
     "category_name": "Шахматы",
-    "max_students": 12,
-    "use_classroom_capacity": false,
-    "duration_minutes": 90,
-    "price": 3000,
-    "is_active": true,
-    "allowed_teacher_emails": [
-      "teacher4@maga.local",
-      "teacher24@maga.local",
-      "teacher18@maga.local"
-    ]
-  },
-  {
-    "name": "Физика Start",
-    "description": "Физика Start — расширенная программа",
-    "category_name": "Физика",
-    "max_students": 15,
-    "use_classroom_capacity": false,
-    "duration_minutes": 90,
-    "price": 2500,
-    "is_active": true,
-    "allowed_teacher_emails": [
-      "teacher11@maga.local",
-      "teacher7@maga.local",
-      "teacher22@maga.local",
-      "teacher21@maga.local"
-    ]
-  },
-  {
-    "name": "Практическая физика",
-    "description": "Практическая физика — расширенная программа",
-    "category_name": "Физика",
-    "max_students": 15,
+    "max_students": 14,
     "use_classroom_capacity": true,
     "duration_minutes": 60,
     "price": 3500,
@@ -388,8 +357,8 @@
     ]
   },
   {
-    "name": "Эксперименты и наука",
-    "description": "Эксперименты и наука — расширенная программа",
+    "name": "Физика Start",
+    "description": "Физика Start — расширенная программа",
     "category_name": "Физика",
     "max_students": 12,
     "use_classroom_capacity": false,
@@ -402,8 +371,8 @@
     ]
   },
   {
-    "name": "Физика для олимпиад",
-    "description": "Физика для олимпиад — расширенная программа",
+    "name": "Практическая физика",
+    "description": "Практическая физика — расширенная программа",
     "category_name": "Физика",
     "max_students": 12,
     "use_classroom_capacity": true,
@@ -416,10 +385,10 @@
     ]
   },
   {
-    "name": "Олимпиадный трек",
-    "description": "Олимпиадный трек — расширенная программа",
-    "category_name": "Подготовка к олимпиадам",
-    "max_students": 15,
+    "name": "Эксперименты и наука",
+    "description": "Эксперименты и наука — расширенная программа",
+    "category_name": "Физика",
+    "max_students": 14,
     "use_classroom_capacity": true,
     "duration_minutes": 90,
     "price": 3000,
@@ -431,10 +400,10 @@
     ]
   },
   {
-    "name": "Подготовка к перечневым",
-    "description": "Подготовка к перечневым — расширенная программа",
-    "category_name": "Подготовка к олимпиадам",
-    "max_students": 18,
+    "name": "Физика для олимпиад",
+    "description": "Физика для олимпиад — расширенная программа",
+    "category_name": "Физика",
+    "max_students": 16,
     "use_classroom_capacity": true,
     "duration_minutes": 60,
     "price": 3000,
@@ -447,8 +416,8 @@
     ]
   },
   {
-    "name": "Интенсив по задачам",
-    "description": "Интенсив по задачам — расширенная программа",
+    "name": "Олимпиадный трек",
+    "description": "Олимпиадный трек — расширенная программа",
     "category_name": "Подготовка к олимпиадам",
     "max_students": 12,
     "use_classroom_capacity": false,
@@ -461,18 +430,46 @@
     ]
   },
   {
-    "name": "Сборная школы",
-    "description": "Сборная школы — расширенная программа",
+    "name": "Подготовка к перечневым",
+    "description": "Подготовка к перечневым — расширенная программа",
     "category_name": "Подготовка к олимпиадам",
-    "max_students": 18,
-    "use_classroom_capacity": true,
+    "max_students": 10,
+    "use_classroom_capacity": false,
+    "duration_minutes": 60,
+    "price": 4000,
+    "is_active": true,
+    "allowed_teacher_emails": [
+      "teacher6@maga.local",
+      "teacher26@maga.local",
+      "teacher23@maga.local"
+    ]
+  },
+  {
+    "name": "Интенсив по задачам",
+    "description": "Интенсив по задачам — расширенная программа",
+    "category_name": "Подготовка к олимпиадам",
+    "max_students": 16,
+    "use_classroom_capacity": false,
     "duration_minutes": 90,
     "price": 3000,
     "is_active": true,
     "allowed_teacher_emails": [
-      "teacher6@maga.local",
-      "teacher23@maga.local",
-      "teacher4@maga.local"
+      "teacher7@maga.local",
+      "teacher27@maga.local"
+    ]
+  },
+  {
+    "name": "Сборная школы",
+    "description": "Сборная школы — расширенная программа",
+    "category_name": "Подготовка к олимпиадам",
+    "max_students": 12,
+    "use_classroom_capacity": false,
+    "duration_minutes": 90,
+    "price": 3500,
+    "is_active": true,
+    "allowed_teacher_emails": [
+      "teacher1@maga.local",
+      "teacher22@maga.local"
     ]
   }
 ]

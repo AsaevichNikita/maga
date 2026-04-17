@@ -1,5 +1,5 @@
 from urllib.parse import urlencode
-
+from datetime import datetime
 import requests
 from flask import Blueprint, jsonify, request
 
@@ -106,4 +106,13 @@ def build_logout_url():
 
     return jsonify({
         "logout_url": f"{base}?{urlencode(params)}"
+    })
+
+
+@auth_bp.get("/academic-year")
+def academic_year():
+    now = datetime.now()
+    year = now.year
+    return jsonify({
+        "academic_year": f"{year}-{year + 1}"
     })
